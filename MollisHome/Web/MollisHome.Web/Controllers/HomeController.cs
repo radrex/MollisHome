@@ -1,14 +1,14 @@
-﻿namespace MollisHome.Web.Controllers
-{
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
-    using MollisHome.Web.Models;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using MollisHome.Web.Models;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
+namespace MollisHome.Web.Controllers
+{
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

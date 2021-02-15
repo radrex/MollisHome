@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>aspnet-MollisHome.Web-A4A13DF1-B77F-418C-B6E2-7E03DAC4E996</UserSecretsId>
+    <UserSecretsId>aspnet-MollisHome.Web-1B703F92-2F86-4B49-B331-16B4BCD062A0</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
