@@ -17,7 +17,11 @@
         [Required]
         public string ImgUrl { get; set; }
 
-        //------------ Category [FK] - ONE-TO-MANY -----------
+        //------------ Category [FK] - ONE-TO-MANY - PARENT -----------
+        public int? ParentCategoryId { get; set; }
+        public virtual Category ParentCategory { get; set; }
+
+        //------------ Category [FK] - ONE-TO-MANY - CHILDREN -----------
         public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
 
         //------------ Product [FK] - ONE-TO-MANY -----------
