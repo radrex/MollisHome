@@ -1,0 +1,26 @@
+﻿namespace MollisHome.Data.Models
+{
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    public class Category
+    {
+        //-------------- PROPERTIES ---------------
+        public int Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Description { get; set; }
+
+        [Required]
+        public string ImgUrl { get; set; }
+
+        //------------ Category [FK] - ONE-TO-MANY -----------
+        public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
+
+        //------------ Product [FK] - ONE-TO-MANY -----------
+        public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
+    }
+}
