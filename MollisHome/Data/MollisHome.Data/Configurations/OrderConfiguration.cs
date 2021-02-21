@@ -15,10 +15,10 @@
         public void Configure(EntityTypeBuilder<Order> order)
         {
             //------------------- ID's -------------------
-            //order.HasOne(o => o.User)
-            //     .WithMany(u => u.Orders)
-            //     .HasForeignKey(o => o.UserId)
-            //     .OnDelete(DeleteBehavior.Restrict);
+            order.HasOne(o => o.User)
+                 .WithMany(u => u.Orders)
+                 .HasForeignKey(o => o.UserId)
+                 .OnDelete(DeleteBehavior.Restrict);
 
             //--------------- COLLECTIONS ----------------
             order.HasMany(o => o.Products)
