@@ -7,8 +7,8 @@
 
     /// <summary>
     /// Applies configuration for <see cref="Product"/> entity.
-    /// <para>Each <see cref="Product"/> has one <see cref="Color"/>.</para>
     /// <para>Each <see cref="Product"/> has one <see cref="Category"/>.</para>
+    /// <para>Each <see cref="Product"/> has many <see cref="Color"/>s.</para>
     /// <para>Each <see cref="Product"/> has many <see cref="Material"/>s.</para>
     /// <para>Each <see cref="Product"/> has many <see cref="Size"/>s.</para>
     /// <para>Each <see cref="Product"/> has many <see cref="Sex"/>s.</para>
@@ -19,17 +19,17 @@
         public void Configure(EntityTypeBuilder<Product> product)
         {
             //------------------- ID's -------------------
-            product.HasOne(p => p.Color)
-                   .WithMany(c => c.Products)
-                   .HasForeignKey(p => p.ColorId)
-                   .OnDelete(DeleteBehavior.Restrict);
-
             product.HasOne(p => p.Category)
                    .WithMany(c => c.Products)
                    .HasForeignKey(p => p.CategoryId)
                    .OnDelete(DeleteBehavior.Restrict);
 
             //--------------- COLLECTIONS ----------------
+            product.HasMany(p => p.Colors)
+                   .WithOne(c => c.Product)
+                   .HasForeignKey(c => c.ProductId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
             product.HasMany(p => p.Materials)
                    .WithOne(m => m.Product)
                    .HasForeignKey(m => m.ProductId)

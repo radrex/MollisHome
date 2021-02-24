@@ -1,0 +1,330 @@
+﻿{
+  "sexes": [
+    {
+      "id": 1,
+      "name": "Man"
+    },
+    {
+      "id": 2,
+      "name": "Woman"
+    },
+    {
+      "id": 3,
+      "name": "Unisex"
+    }
+  ],
+
+  "sizes": [
+    {
+      "id": 1,
+      "name": "XS"
+    },
+    {
+      "id": 2,
+      "name": "S"
+    },
+    {
+      "id": 3,
+      "name": "M"
+    },
+    {
+      "id": 4,
+      "name": "L"
+    },
+    {
+      "id": 5,
+      "name": "XL"
+    },
+    {
+      "id": 6,
+      "name": "2XL"
+    },
+    {
+      "id": 7,
+      "name": "3XL"
+    },
+    {
+      "id": 8,
+      "name": "30/30"
+    },
+    {
+      "id": 9,
+      "name": "30/50"
+    },
+    {
+      "id": 10,
+      "name": "50/90"
+    },
+    {
+      "id": 11,
+      "name": "70/140"
+    },
+    {
+      "id": 12,
+      "name": "90/150"
+    },
+    {
+      "id": 13,
+      "name": "80/160"
+    },
+    {
+      "id": 14,
+      "name": "100/150"
+    },
+    {
+      "id": 15,
+      "name": "40/60"
+    },
+    {
+      "id": 16,
+      "name": "40/70"
+    },
+    {
+      "id": 17,
+      "name": "90/200/20"
+    },
+    {
+      "id": 18,
+      "name": "120/200/20"
+    },
+    {
+      "id": 19,
+      "name": "144/200/20"
+    },
+    {
+      "id": 20,
+      "name": "164/200/20"
+    },
+    {
+      "id": 21,
+      "name": "180/200/20"
+    },
+    {
+      "id": 22,
+      "name": "200/200/20"
+    },
+    {
+      "id": 23,
+      "name": "130/220"
+    },
+    {
+      "id": 24,
+      "name": "150/220"
+    },
+    {
+      "id": 25,
+      "name": "180/220"
+    },
+    {
+      "id": 26,
+      "name": "200/220"
+    },
+    {
+      "id": 27,
+      "name": "220/240"
+    },
+    {
+      "id": 28,
+      "name": "200/240"
+    }
+  ],
+
+  "materials": [
+    {
+      "id": 1,
+      "name": "Памук",
+      "percentage": 100
+    },
+    {
+      "id": 2,
+      "name": "Бамбук",
+      "percentage": 100
+    },
+    {
+      "id": 3,
+      "name": "Микро-памук",
+      "percentage": 100
+    },
+    {
+      "id": 4,
+      "name": "Трико",
+      "percentage": 100
+    },
+    {
+      "id": 5,
+      "name": "Памучен сатен",
+      "percentage": 100
+    },
+    {
+      "id": 6,
+      "name": "Ранфорс",
+      "percentage": 100
+    }
+  ],
+
+  "colors": [
+    {
+      "id": 1,
+      "name": "Зелен",
+      "hexValue": "#2ba700"
+    },
+    {
+      "id": 2,
+      "name": "Деним",
+      "hexValue": "#0a0035"
+    },
+    {
+      "id": 3,
+      "name": "Сив",
+      "hexValue": "#39383a"
+    },
+    {
+      "id": 4,
+      "name": "Лила",
+      "hexValue": "#5b2c6f"
+    },
+    {
+      "id": 5,
+      "name": "Крем",
+      "hexValue": "#f2ba25"
+    },
+    {
+      "id": 6,
+      "name": "Мока",
+      "hexValue": "#a04000"
+    }
+  ],
+
+  "categories": [
+    {
+      "id": 1,
+      "name": "Баня",
+      "description": "Lorem ipsum",
+      "imgUrl": ""
+    },
+    {
+      "id": 2,
+      "name": "Кухня",
+      "description": "Lorem ipsum",
+      "imgUrl": ""
+    },
+    {
+      "id": 3,
+      "name": "Спалня",
+      "description": "Lorem ipsum",
+      "imgUrl": ""
+    },
+    {
+      "id": 4,
+      "name": "Халат",
+      "description": "Lorem ipsum",
+      "imgUrl": "",
+      "parentCategoryId": 1
+    },
+    {
+      "id": 5,
+      "name": "Кърпа",
+      "description": "Lorem ipsum",
+      "imgUrl": "",
+      "parentCategoryId": 1
+    },
+    {
+      "id": 6,
+      "name": "Кърпа за тяло",
+      "description": "Lorem ipsum",
+      "imgUrl": "",
+      "parentCategoryId": 5
+    },
+    {
+      "id": 7,
+      "name": "Кърпа за лице",
+      "description": "Lorem ipsum",
+      "imgUrl": "",
+      "parentCategoryId": 5
+    },
+    {
+      "id": 8,
+      "name": "Кърпа за ръце",
+      "description": "Lorem ipsum",
+      "imgUrl": "",
+      "parentCategoryId": 5
+    },
+    {
+      "id": 9,
+      "name": "Олекотени завивки",
+      "description": "Lorem ipsum",
+      "imgUrl": "",
+      "parentCategoryId": 3
+    },
+    {
+      "id": 10,
+      "name": "Протектори",
+      "description": "Lorem ipsum",
+      "imgUrl": "",
+      "parentCategoryId": 3
+    },
+    {
+      "id": 11,
+      "name": "Спално бельо",
+      "description": "Lorem ipsum",
+      "imgUrl": "",
+      "parentCategoryId": 3
+    },
+    {
+      "id": 12,
+      "name": "Одеяла",
+      "description": "Lorem ipsum",
+      "imgUrl": "",
+      "parentCategoryId": 3
+    },
+    {
+      "id": 13,
+      "name": "Кувертюри",
+      "description": "Lorem ipsum",
+      "imgUrl": "",
+      "parentCategoryId": 3
+    }
+  ],
+
+  "products": [
+    {
+      "id": 1,
+      "name": "Сидни",
+      "description": "Лорем ипсум бате",
+      "imgUrl": "",
+      "quantity": 10,
+      "price": 10.00,
+      "sexIds": [ 3 ],
+      "sizeIds": [ 9, 10, 11 ],
+      "materialIds": [ 1 ],
+      "colorIds": [ 1, 2, 6 ],
+      "categoryId": 1
+    },
+    {
+      "id": 2,
+      "name": "Рига",
+      "description": "Лорем ипсум бате",
+      "imgUrl": "",
+      "quantity": 10,
+      "price": 20.00,
+      "sexIds": [ 3 ],
+      "sizeIds": [ 9, 10, 11 ],
+      "materialIds": [ 2 ],
+      "colorIds": [ 1, 2, 3 ],
+      "categoryId": 1
+    },
+    {
+      "id": 3,
+      "name": "Лима",
+      "description": "Лорем ипсум бате",
+      "imgUrl": "",
+      "quantity": 30,
+      "price": 5.00,
+      "sexIds": [ 3 ],
+      "sizeIds": [ 9, 10, 11 ],
+      "materialIds": [ 1 ],
+      "colorIds": [ 3, 4, 6 ],
+      "categoryId": 2
+    }
+  ]
+}

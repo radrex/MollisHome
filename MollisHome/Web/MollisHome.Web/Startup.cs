@@ -52,7 +52,7 @@ namespace MollisHome.Web
                 ApplicationDbContext dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 if (env.IsDevelopment())
                 {
-                    dbContext.Database.Migrate();
+                    dbContext.Database.Migrate(); // Apply migration/seed everytime (for development purposes)
                 }
 
                 new DatabaseSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();

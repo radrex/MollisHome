@@ -2,9 +2,13 @@
 {
     using MollisHome.Data.Models;
 
+    using Newtonsoft.Json;
+
     using System;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
@@ -12,17 +16,26 @@
     public class DatabaseSeeder : ISeeder
     {
         //---------------- FIELDS -----------------
+        private readonly string path = @"../../Data/MollisHome.Data/Seeding/seed.json";
+        private readonly JSONData jsonData;
+        private readonly IReadOnlyCollection<ISeeder> seeders;
+
         private UserManager<ApplicationUser> userManager;
         private RoleManager<IdentityRole> roleManager;
 
         //------------- CONSTRUCTORS --------------
         public DatabaseSeeder()
         {
-
+            this.jsonData = JsonConvert.DeserializeObject<JSONData>(File.ReadAllText(this.path));
+            this.seeders = new List<ISeeder> { 
+                new SexesSeeder(this.jsonData.Sexes),
+                new SizesSeeder(this.jsonData.Sizes),
+                new MaterialsSeeder(this.jsonData.Materials),
+                new ColorsSeeder(this.jsonData.Colors),
+                new CategoriesSeeder(this.jsonData.Categories),
+                new ProductsSeeder(this.jsonData.Products),
+            }.AsReadOnly();
         }
-
-        //-------------- PROPERTIES ---------------
-
 
         //--------------- METHODS -----------------
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
@@ -65,7 +78,12 @@
                     throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
                 }
             }
+
             //---------------------- SEED DATA ----------------------
+            foreach (ISeeder seeder in this.seeders)
+            {
+                await seeder.SeedAsync(dbContext, serviceProvider);
+            }
         }
     }
 }

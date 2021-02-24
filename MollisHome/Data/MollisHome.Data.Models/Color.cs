@@ -14,7 +14,7 @@
         [Required]
         public string HexValue { get; set; }
 
-        //------------ Product [FK] - ONE-TO-MANY -----------
-        public virtual ICollection<Product> Products { get; set; } = new HashSet<Product>();
+        //------------ ProductMaterial [FK] MAPPING TABLE - MANY-TO-MANY -----------
+        public virtual ICollection<ProductColor> Products { get; set; } = new HashSet<ProductColor>();
     }
 }

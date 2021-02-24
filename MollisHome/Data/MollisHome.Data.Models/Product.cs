@@ -25,15 +25,26 @@
         [Column(TypeName = "decimal(6,2)")]
         public decimal Price { get; set; }
 
-        //------------ Color [FK] - ONE-TO-MANY -----------
-        [Required]
-        public int ColorId { get; set; }
-        public virtual Color Color { get; set; }
+        //------------ ONLY FOR SEEDING - NOT MAPPED -----------
+        [NotMapped]
+        public int[] SexIds { get; set; }
+
+        [NotMapped]
+        public int[] SizeIds { get; set; }
+
+        [NotMapped]
+        public int[] MaterialIds { get; set; }
+
+        [NotMapped]
+        public int[] ColorIds { get; set; }
 
         //------------ Category [FK] - ONE-TO-MANY -----------
         [Required]
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+
+        //------------ ProductColor [FK] MAPPING TABLE - MANY-TO-MANY -----------
+        public virtual ICollection<ProductColor> Colors { get; set; } = new HashSet<ProductColor>();
 
         //------------ ProductMaterial [FK] MAPPING TABLE - MANY-TO-MANY -----------
         public virtual ICollection<ProductMaterial> Materials { get; set; } = new HashSet<ProductMaterial>();

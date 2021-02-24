@@ -19,12 +19,13 @@
 
         //-------------- PROPERTIES ---------------
         public DbSet<Material> Materials { get; set; }
-        public DbSet<Color> Color { get; set; }
+        public DbSet<Color> Colors { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Sex> Sexes { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductColor> ProductColors { get; set; }
         public DbSet<ProductMaterial> ProductMaterials { get; set; }
         public DbSet<ProductSize> ProductSizes { get; set; }
         public DbSet<ProductSex> ProductSexes { get; set; }
@@ -45,6 +46,7 @@
             builder.ApplyConfiguration(new MaterialConfiguration());
             builder.ApplyConfiguration(new OrderConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
+            builder.ApplyConfiguration(new ProductColorConfiguration());
             builder.ApplyConfiguration(new ProductMaterialConfiguration());
             builder.ApplyConfiguration(new ProductOrderConfiguration());
             builder.ApplyConfiguration(new ProductSexConfiguration());

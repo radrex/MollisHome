@@ -14,4 +14,6 @@
     <ProjectReference Include="..\MollisHome.Data.Models\MollisHome.Data.Models.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties seeding_4seed_1json__JsonSchema="https://json-schema.org/draft/2019-09/schema" /></VisualStudio></ProjectExtensions>
+
 </Project>
