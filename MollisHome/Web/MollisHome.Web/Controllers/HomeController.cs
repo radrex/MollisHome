@@ -1,23 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MollisHome.Web.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MollisHome.Web.Controllers
+﻿namespace MollisHome.Web.Controllers
 {
+    using MollisHome.Web.Models;
+
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+
+    using System;
+    using System.Linq;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
+    using System.Collections.Generic;
+
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //---------------- FIELDS -----------------
 
-        public HomeController(ILogger<HomeController> logger)
+        //------------- CONSTRUCTORS --------------
+        public HomeController()
         {
-            _logger = logger;
+
         }
 
+        //-----------------------------------------------------------------------------------------------------//
+        //                                           ACTION METHODS                                            //
+        //-----------------------------------------------------------------------------------------------------//
         public IActionResult Index()
         {
             return View();
