@@ -6,8 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.3" />
@@ -19,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\MollisHome.Data\MollisHome.Data.csproj" />
     <ProjectReference Include="..\..\Services\MollisHome.Services.Data\MollisHome.Services.Data.csproj" />
+    <ProjectReference Include="..\MollisHome.Web.ViewModels\MollisHome.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

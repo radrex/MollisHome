@@ -7,6 +7,8 @@ namespace MollisHome.Web
     using MollisHome.Services.Data;
     using MollisHome.Services.Data.Categories;
 
+    using MollisHome.Web.ViewModels;
+
     using System;
     using System.Collections.Generic;
     using System.Linq;

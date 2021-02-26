@@ -12,14 +12,14 @@
     public class CategoriesService : ICategoriesService
     {
         //---------------- FIELDS -----------------
-        private readonly ApplicationDbContext dbContext;
         private readonly IMapper mapper;
+        private readonly ApplicationDbContext dbContext;
 
         //------------- CONSTRUCTORS --------------
-        public CategoriesService(ApplicationDbContext dbContext, IMapper mapper)
+        public CategoriesService(IMapper mapper, ApplicationDbContext dbContext)
         {
-            this.dbContext = dbContext;
             this.mapper = mapper;
+            this.dbContext = dbContext;
         }
 
         //--------------- METHODS -----------------
