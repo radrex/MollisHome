@@ -4,6 +4,9 @@ namespace MollisHome.Web
     using MollisHome.Data.Models;
     using MollisHome.Data.Seeding;
 
+    using MollisHome.Services.Data;
+    using MollisHome.Services.Data.Categories;
+
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -39,6 +42,15 @@ namespace MollisHome.Web
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                     .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddAutoMapper(x =>
+            {
+                x.AddProfile(new AutoMapperConfiguration());
+                x.AddProfile(new AutoMapperVMConfiguration());
+            });
+
+            // Application services
+            services.AddTransient<ICategoriesService, CategoriesService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

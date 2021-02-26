@@ -1,6 +1,12 @@
 ﻿namespace MollisHome.Web.Controllers
 {
+    using AutoMapper;
+
     using MollisHome.Web.Models;
+    using MollisHome.Web.ViewModels.Categories;
+
+    using MollisHome.Services.Data.Categories;
+    using MollisHome.Services.DTOs.Categories;
 
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
@@ -14,17 +20,33 @@
     public class HomeController : Controller
     {
         //---------------- FIELDS -----------------
+        private readonly IMapper mapper;
+        private readonly ICategoriesService categoriesService;
 
         //------------- CONSTRUCTORS --------------
-        public HomeController()
+        public HomeController(IMapper mapper, ICategoriesService categoriesService)
         {
-
+            this.categoriesService = categoriesService;
+            this.mapper = mapper;
         }
 
         //-----------------------------------------------------------------------------------------------------//
         //                                           ACTION METHODS                                            //
         //-----------------------------------------------------------------------------------------------------//
         public IActionResult Index()
+        {
+            var categoryDTOs = this.categoriesService.GetRootCategories();
+            var categoryVMs = categoryDTOs.Select(x => mapper.Map<CategoryDTO, CategoryVM>(x)).ToList();
+
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Contact()
         {
             return View();
         }
