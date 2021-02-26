@@ -45,7 +45,7 @@ namespace MollisHome.Web
 
             services.AddAutoMapper(x =>
             {
-                x.AddProfile(new AutoMapperConfiguration());
+                x.AddProfile(new AutoMapperDTOConfiguration());
                 x.AddProfile(new AutoMapperVMConfiguration());
             });
 

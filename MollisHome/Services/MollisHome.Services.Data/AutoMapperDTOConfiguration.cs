@@ -5,9 +5,9 @@
     using MollisHome.Data.Models;
     using MollisHome.Services.DTOs.Categories;
 
-    public class AutoMapperConfiguration : Profile
+    public class AutoMapperDTOConfiguration : Profile
     {
-        public AutoMapperConfiguration()
+        public AutoMapperDTOConfiguration()
         {
             CreateMap<Category, CategoryDTO>();
         }
