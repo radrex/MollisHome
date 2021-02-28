@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MollisHome.Services.Data", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MollisHome.Services.DTOs", "Services\MollisHome.Services.DTOs\MollisHome.Services.DTOs.csproj", "{06391F36-F7DE-45FE-A055-D8CE289FD318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MollisHome.Web.ViewModels", "Web\MollisHome.Web.ViewModels\MollisHome.Web.ViewModels.csproj", "{22BEAEF1-8F5E-474F-B738-5ABE7EA94AD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MollisHome.Web.ViewModels", "Web\MollisHome.Web.ViewModels\MollisHome.Web.ViewModels.csproj", "{22BEAEF1-8F5E-474F-B738-5ABE7EA94AD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

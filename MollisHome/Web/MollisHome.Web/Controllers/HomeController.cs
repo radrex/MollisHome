@@ -35,25 +35,25 @@
         //-----------------------------------------------------------------------------------------------------//
         public IActionResult Index()
         {
+            //---------------- Menu categories data ----------------
             var categoryDTOs = this.categoriesService.GetRootCategories();
             var categoryVMs = categoryDTOs.Select(x => mapper.Map<CategoryDTO, CategoryVM>(x)).ToList();
-
-            return View();
+            return this.View(categoryVMs);
         }
 
         public IActionResult About()
         {
-            return View();
+            return this.View();
         }
 
         public IActionResult Contact()
         {
-            return View();
+            return this.View();
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            return this.View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

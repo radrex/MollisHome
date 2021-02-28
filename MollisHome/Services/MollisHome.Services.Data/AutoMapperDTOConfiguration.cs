@@ -9,7 +9,13 @@
     {
         public AutoMapperDTOConfiguration()
         {
-            CreateMap<Category, CategoryDTO>();
+            //CreateMap<Category, CategoryDTO>();
+
+            CreateMap<Category, CategoryDTO>()
+                .ForMember(
+                    dest => dest.Categories,
+                    opt => opt.MapFrom(src => src.Categories)
+                 );
         }
     }
 }

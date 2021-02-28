@@ -25,7 +25,7 @@
         //--------------- METHODS -----------------
         public IEnumerable<CategoryDTO> GetRootCategories()
         {
-            return this.dbContext.Categories.Where(x => x.ParentCategory == null).Select(x => mapper.Map<Category, CategoryDTO>(x)).ToList();
+            return this.dbContext.Categories.ToList().Where(x => x.ParentCategory == null).Select(x => mapper.Map<Category, CategoryDTO>(x)).ToList();
         }
     }
 }
