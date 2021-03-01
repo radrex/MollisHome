@@ -4,11 +4,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class Order
+    public class Order : BaseModel
     {
         //-------------- PROPERTIES ---------------
-        public int Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 

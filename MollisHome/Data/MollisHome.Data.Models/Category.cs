@@ -3,11 +3,9 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Category
+    public class Category : BaseModel
     {
         //-------------- PROPERTIES ---------------
-        public int Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 

@@ -3,11 +3,9 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Material
+    public class Material : BaseModel
     {
         //-------------- PROPERTIES ---------------
-        public int Id { get; set; }
-
         [Required]
         public string Name { get; set; }
         public int? Percentage { get; set; } // nullable int, in case we don't know the percentage

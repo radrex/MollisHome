@@ -2,13 +2,10 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
-    public class Size
+    public class Size : BaseModel
     {
         //-------------- PROPERTIES ---------------
-        public int Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 

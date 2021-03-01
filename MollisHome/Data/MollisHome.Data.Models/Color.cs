@@ -3,11 +3,9 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Color
+    public class Color : BaseModel
     {
         //-------------- PROPERTIES ---------------
-        public int Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 
