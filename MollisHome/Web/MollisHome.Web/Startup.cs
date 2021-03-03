@@ -5,6 +5,7 @@ namespace MollisHome.Web
     using MollisHome.Data.Seeding;
 
     using MollisHome.Services.Data;
+    using MollisHome.Services.Data.Products;
     using MollisHome.Services.Data.Categories;
 
     using MollisHome.Web.ViewModels;
@@ -53,6 +54,7 @@ namespace MollisHome.Web
 
             // Application services
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<IProductsService, ProductsService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

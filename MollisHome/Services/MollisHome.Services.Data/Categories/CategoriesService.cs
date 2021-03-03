@@ -22,7 +22,7 @@
         //--------------- METHODS -----------------
         public IEnumerable<CategoryDTO> GetRootCategories()
         {
-            return this.dbSet.Where(x => x.ParentCategory == null).Select(x => mapper.Map<Category, CategoryDTO>(x)).ToList();
+            return this.dbSet.Where(x => x.ParentCategory == null).Select(x => this.mapper.Map<Category, CategoryDTO>(x)).ToList();
         }
     }
 }

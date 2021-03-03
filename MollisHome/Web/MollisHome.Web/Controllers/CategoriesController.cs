@@ -24,7 +24,6 @@
         //-----------------------------------------------------------------------------------------------------//
         public IActionResult ByName(string name)
         {
-            var test = this.categoriesService.GetCategoryByName(name);
             return View();
         }
     }
