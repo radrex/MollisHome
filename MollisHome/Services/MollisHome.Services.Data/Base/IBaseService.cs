@@ -2,15 +2,19 @@
 {
     using MollisHome.Data.Models;
 
+    using MollisHome.Services.DTOs.Base;
+
     using System.Collections.Generic;
 
-    public interface IBaseService<T> where T: BaseModel
+    public interface IBaseService<TModel, TDTO> where TModel : BaseModel
+                                                where TDTO : BaseDTO
     {
-        IEnumerable<T> GetAll();
-        T GetById(int id);
-        void Create(T item);
-        void Update(T item);
-        void Save(T item);
+        IEnumerable<TDTO> GetAll();
+        TDTO GetById(int id);
+        TDTO GetByName(string name);
+        void Create(TModel item);
+        void Update(TModel item);
+        void Save(TModel item);
         void Delete(int id);
     }
 }

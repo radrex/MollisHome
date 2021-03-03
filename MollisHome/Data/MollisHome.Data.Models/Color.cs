@@ -7,9 +7,6 @@
     {
         //-------------- PROPERTIES ---------------
         [Required]
-        public string Name { get; set; }
-
-        [Required]
         public string HexValue { get; set; }
 
         //------------ ProductMaterial [FK] MAPPING TABLE - MANY-TO-MANY -----------

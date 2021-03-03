@@ -1,49 +1,60 @@
 ﻿namespace MollisHome.Services.Data.Base
 {
+    using AutoMapper;
+
     using MollisHome.Data;
     using MollisHome.Data.Models;
+
+    using MollisHome.Services.DTOs.Base;
 
     using Microsoft.EntityFrameworkCore;
 
     using System.Linq;
     using System.Collections.Generic;
 
-    public abstract class BaseService<T> : IBaseService<T> where T: BaseModel
+    public abstract class BaseService<TModel, TDTO> : IBaseService<TModel, TDTO> where TModel: BaseModel where TDTO: BaseDTO
     {
         //---------------- FIELDS -----------------
+        protected readonly IMapper mapper;
         protected readonly ApplicationDbContext dbContext;
-        protected readonly DbSet<T> dbSet;
+        protected readonly DbSet<TModel> dbSet;
 
         //------------- CONSTRUCTORS --------------
-        public BaseService(ApplicationDbContext dbContext)
+        public BaseService(IMapper mapper, ApplicationDbContext dbContext)
         {
+            this.mapper = mapper;
             this.dbContext = dbContext;
-            this.dbSet = this.dbContext.Set<T>();
+            this.dbSet = this.dbContext.Set<TModel>();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<TDTO> GetAll()
         {
-            return this.dbSet.ToList();
+            return this.dbSet.Select(x => this.mapper.Map<TModel, TDTO>(x)).ToList();
         }
 
-        public T GetById(int id)
+        public TDTO GetById(int id)
         {
-            return this.dbSet.FirstOrDefault(x => x.Id == id);
+            return this.mapper.Map<TModel, TDTO>(this.dbSet.FirstOrDefault(x => x.Id == id));
         }
 
-        public void Create(T item)
+        public TDTO GetByName(string name)
+        {
+            return this.mapper.Map<TModel, TDTO>(this.dbSet.FirstOrDefault(x => x.Name == name));
+        }
+
+        public void Create(TModel item)
         {
             this.dbSet.Add(item);
             this.dbContext.SaveChanges();
         }
 
-        public void Update(T item)
+        public void Update(TModel item)
         {
             this.dbContext.Entry(item).State = EntityState.Modified;
             this.dbContext.SaveChanges();
         }
 
-        public void Save(T item)
+        public void Save(TModel item)
         {
             if (item.Id != 0)
             {
@@ -57,7 +68,7 @@
 
         public void Delete(int id)
         {
-            var entity = this.GetById(id);
+            var entity = this.dbSet.FirstOrDefault(x => x.Id == id);
             if (entity == null) return;
 
             this.dbSet.Remove(entity);

@@ -11,26 +11,18 @@
     using System.Linq;
     using System.Collections.Generic;
 
-    public class CategoriesService : BaseService<Category>, ICategoriesService
+    public class CategoriesService : BaseService<Category, CategoryDTO>, ICategoriesService
     {
-        //---------------- FIELDS -----------------
-        private readonly IMapper mapper;
-
         //------------- CONSTRUCTORS --------------
-        public CategoriesService(IMapper mapper, ApplicationDbContext dbContext) : base(dbContext)
+        public CategoriesService(IMapper mapper, ApplicationDbContext dbContext) : base(mapper, dbContext)
         {
-            this.mapper = mapper;
+
         }
 
         //--------------- METHODS -----------------
         public IEnumerable<CategoryDTO> GetRootCategories()
         {
-            return this.dbSet.ToList().Where(x => x.ParentCategory == null).Select(x => mapper.Map<Category, CategoryDTO>(x)).ToList();
-        }
-
-        public CategoryDetailsDTO GetCategoryByName(string name)
-        {
-            return this.dbSet.Where(x => x.Name == name).Select(x => mapper.Map<Category, CategoryDetailsDTO>(x)).FirstOrDefault();
+            return this.dbSet.Where(x => x.ParentCategory == null).Select(x => mapper.Map<Category, CategoryDTO>(x)).ToList();
         }
     }
 }

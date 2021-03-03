@@ -7,9 +7,8 @@
 
     using System.Collections.Generic;
 
-    public interface ICategoriesService : IBaseService<Category>
+    public interface ICategoriesService : IBaseService<Category, CategoryDTO>
     {
         IEnumerable<CategoryDTO> GetRootCategories();
-        CategoryDetailsDTO GetCategoryByName(string name);
     }
 }
