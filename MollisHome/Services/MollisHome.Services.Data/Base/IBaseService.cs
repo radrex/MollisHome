@@ -11,7 +11,6 @@
     {
         IEnumerable<TDTO> GetAll();
         TDTO GetById(int id);
-        TDTO GetByName(string name);
         void Create(TModel item);
         void Update(TModel item);
         void Save(TModel item);

@@ -25,10 +25,8 @@
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductColor> ProductColors { get; set; }
         public DbSet<ProductMaterial> ProductMaterials { get; set; }
-        public DbSet<ProductSize> ProductSizes { get; set; }
-        public DbSet<ProductSex> ProductSexes { get; set; }
+        public DbSet<ProductStock> ProductStock { get; set; }
         public DbSet<ProductOrder> ProductOrders { get; set; }
 
         //--------------- METHODS -----------------
@@ -46,11 +44,9 @@
             builder.ApplyConfiguration(new MaterialConfiguration());
             builder.ApplyConfiguration(new OrderConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
-            builder.ApplyConfiguration(new ProductColorConfiguration());
             builder.ApplyConfiguration(new ProductMaterialConfiguration());
+            builder.ApplyConfiguration(new ProductStockConfiguration());
             builder.ApplyConfiguration(new ProductOrderConfiguration());
-            builder.ApplyConfiguration(new ProductSexConfiguration());
-            builder.ApplyConfiguration(new ProductSizeConfiguration());
         }
     }
 }

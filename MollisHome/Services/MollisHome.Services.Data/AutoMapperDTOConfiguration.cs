@@ -3,6 +3,7 @@
     using AutoMapper;
 
     using MollisHome.Data.Models;
+
     using MollisHome.Services.DTOs.Products;
     using MollisHome.Services.DTOs.Categories;
 
@@ -18,26 +19,29 @@
                     opt => opt.MapFrom(src => src.Categories)
                  );
 
+            CreateMap<Material, ProductMaterialDTO>();
             CreateMap<Sex, ProductSexDTO>();
             CreateMap<Size, ProductSizeDTO>();
-            CreateMap<Material, ProductMaterialDTO>();
             CreateMap<Color, ProductColorDTO>();
+
+            CreateMap<ProductStock, ProductStockDTO>()
+                .ForMember(
+                    dest => dest.Sex,
+                    opt => opt.MapFrom(src => src.Sex)
+                )
+                .ForMember(
+                    dest => dest.Size,
+                    opt => opt.MapFrom(src => src.Size)
+                )
+                .ForMember(
+                    dest => dest.Color,
+                    opt => opt.MapFrom(src => src.Color)
+                );
+
             CreateMap<Product, ProductDTO>()
-                .ForMember(
-                    dest => dest.Sexes,
-                    opt => opt.MapFrom(src => src.Sexes.Select(x => x.Sex).ToList())
-                )
-                .ForMember(
-                    dest => dest.Sizes,
-                    opt => opt.MapFrom(src => src.Sizes.Select(x => x.Size).ToList())
-                )
                 .ForMember(
                     dest => dest.Materials,
                     opt => opt.MapFrom(src => src.Materials.Select(x => x.Material).ToList())
-                )
-                .ForMember(
-                    dest => dest.Colors,
-                    opt => opt.MapFrom(src => src.Colors.Select(x => x.Color).ToList())
                 );
         }
     }

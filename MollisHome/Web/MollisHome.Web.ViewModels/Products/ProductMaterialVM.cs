@@ -4,6 +4,6 @@
 
     public class ProductMaterialVM : BaseVM
     {
-
+        public int? Percentage { get; set; }
     }
 }

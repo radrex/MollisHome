@@ -33,45 +33,38 @@
                     Name = product.Name,
                     Description = product.Description,
                     ImgUrl = product.ImgUrl,
-                    Quantity = product.Quantity,
-                    Price = product.Price,
                     CategoryId = product.CategoryId,
                 });
                 await dbContext.SaveChangesAsync(); // Do it on each step to preserve insertion order. :(
 
-                await this.SeedMappingTable<ProductSex>(dbContext, product.Id, product.SexIds);
-                await this.SeedMappingTable<ProductSize>(dbContext, product.Id, product.SizeIds);
-                await this.SeedMappingTable<ProductMaterial>(dbContext, product.Id, product.MaterialIds);
-                await this.SeedMappingTable<ProductColor>(dbContext, product.Id, product.ColorIds);
+                await this.SeedMappingTable<ProductMaterial>(dbContext, product.Id, new int[][] { product.MaterialIds });
+                await this.SeedMappingTable<ProductStock>(dbContext, product.Id, new int[][] { product.Quantities, product.Sold, product.Prices, product.SexIds, product.SizeIds, product.ColorIds });
             }
         }
 
-        private async Task SeedMappingTable<TEntity>(ApplicationDbContext dbContext, int productId, int[] ids) where TEntity : new()
+        private async Task SeedMappingTable<TEntity>(ApplicationDbContext dbContext, int productId, int[][] data) where TEntity : new()
         {
-            foreach (int id in ids)
+            //TODO: CRIES FOR REFACTORING, linked with seed.json be careful... use multidimentional not jagged... Make generic with dbContext somehow
+            for (int i = 0; i < data[0].Length; i++)
             {
                 TEntity entity = (TEntity)Activator.CreateInstance(typeof(TEntity));
                 entity.GetType().GetProperty("ProductId").SetValue(entity, productId);
-                switch (typeof(TEntity).Name) //TODO: Find a way to make this section generic with dbContext...
+
+                switch (typeof(TEntity).Name)
                 {
-                    case "ProductSex":
-                        entity.GetType().GetProperty("SexId").SetValue(entity, id);
-                        await dbContext.ProductSexes.AddAsync(entity as ProductSex);
-                        break;
-
-                    case "ProductSize":
-                        entity.GetType().GetProperty("SizeId").SetValue(entity, id);
-                        await dbContext.ProductSizes.AddAsync(entity as ProductSize);
-                        break;
-
                     case "ProductMaterial":
-                        entity.GetType().GetProperty("MaterialId").SetValue(entity, id);
+                        entity.GetType().GetProperty("MaterialId").SetValue(entity, data[0][i]);
                         await dbContext.ProductMaterials.AddAsync(entity as ProductMaterial);
                         break;
 
-                    case "ProductColor":
-                        entity.GetType().GetProperty("ColorId").SetValue(entity, id);
-                        await dbContext.ProductColors.AddAsync(entity as ProductColor);
+                    case "ProductStock":
+                        entity.GetType().GetProperty("Quantity").SetValue(entity, data[0][i]);
+                        entity.GetType().GetProperty("Sold").SetValue(entity, data[0 + 1][i]);
+                        entity.GetType().GetProperty("Price").SetValue(entity, (decimal)data[0 + 2][i]);
+                        entity.GetType().GetProperty("SexId").SetValue(entity, data[0 + 3][i]);
+                        entity.GetType().GetProperty("SizeId").SetValue(entity, data[0 + 4][i]);
+                        entity.GetType().GetProperty("ColorId").SetValue(entity, data[0 + 5][i]);
+                        await dbContext.ProductStock.AddAsync(entity as ProductStock);
                         break;
 
                     default:

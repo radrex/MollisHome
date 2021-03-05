@@ -292,39 +292,42 @@
       "name": "Сидни",
       "description": "Лорем ипсум бате",
       "imgUrl": "",
-      "quantity": 10,
-      "price": 10.00,
-      "sexIds": [ 3 ],
-      "sizeIds": [ 9, 10, 11 ],
+      "categoryId": 8,
       "materialIds": [ 1 ],
-      "colorIds": [ 1, 2, 6 ],
-      "categoryId": 1
+      "prices": [ 10, 15, 20 ],
+      "quantities": [ 10, 5, 2 ],
+      "sold": [ 5, 1, 3 ],
+      "sexIds": [ 3, 3, 3 ],
+      "sizeIds": [ 9, 10, 11 ],
+      "colorIds": [ 1, 2, 6 ]
     },
     {
       "id": 2,
       "name": "Рига",
       "description": "Лорем ипсум бате",
       "imgUrl": "",
-      "quantity": 10,
-      "price": 20.00,
-      "sexIds": [ 3 ],
-      "sizeIds": [ 9, 10, 11 ],
+      "categoryId": 8,
       "materialIds": [ 2 ],
-      "colorIds": [ 1, 2, 3 ],
-      "categoryId": 1
+      "prices": [ 20, 22, 15 ],
+      "quantities": [ 10, 2, 9 ],
+      "sold": [ 1, 5, 8 ],
+      "sexIds": [ 3, 3, 3 ],
+      "sizeIds": [ 9, 10, 11 ],
+      "colorIds": [ 1, 2, 3 ]
     },
     {
       "id": 3,
       "name": "Лима",
       "description": "Лорем ипсум бате",
       "imgUrl": "",
-      "quantity": 30,
-      "price": 5.00,
-      "sexIds": [ 3 ],
-      "sizeIds": [ 9, 10, 11 ],
+      "categoryId": 8,
       "materialIds": [ 1 ],
-      "colorIds": [ 3, 4, 6 ],
-      "categoryId": 2
+      "prices": [ 5, 2, 5 ],
+      "quantities": [ 10, 4, 1 ],
+      "sold": [ 0, 5, 2 ],
+      "sexIds": [ 3, 3, 3 ],
+      "sizeIds": [ 9, 10, 11 ],
+      "colorIds": [ 3, 4, 6 ]
     }
   ]
 }

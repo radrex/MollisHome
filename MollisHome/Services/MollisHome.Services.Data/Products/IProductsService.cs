@@ -1,6 +1,7 @@
 ﻿namespace MollisHome.Services.Data.Products
 {
     using MollisHome.Data.Models;
+
     using MollisHome.Services.Data.Base;
     using MollisHome.Services.DTOs.Products;
 
@@ -9,5 +10,6 @@
     public interface IProductsService : IBaseService<Product, ProductDTO>
     {
         IEnumerable<ProductDTO> GetByCategoryName(string category);
+        IEnumerable<ProductDTO> GetNewestProducts(int n);
     }
 }

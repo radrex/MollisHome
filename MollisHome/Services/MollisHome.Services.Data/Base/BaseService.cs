@@ -37,11 +37,6 @@
             return this.mapper.Map<TModel, TDTO>(this.dbSet.FirstOrDefault(x => x.Id == id));
         }
 
-        public TDTO GetByName(string name)
-        {
-            return this.mapper.Map<TModel, TDTO>(this.dbSet.FirstOrDefault(x => x.Name == name));
-        }
-
         public void Create(TModel item)
         {
             this.dbSet.Add(item);

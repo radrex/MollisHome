@@ -4,5 +4,6 @@
 
     public class ProductSizeDTO : BaseDTO
     {
+        public string Name { get; set; }
     }
 }

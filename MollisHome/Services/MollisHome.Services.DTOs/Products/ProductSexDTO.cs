@@ -4,6 +4,6 @@
 
     public class ProductSexDTO : BaseDTO
     {
-
+        public string Name { get; set; }
     }
 }

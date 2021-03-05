@@ -9,12 +9,8 @@
     {
         public string Description { get; set; }
         public string ImgUrl { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
         public CategoryVM Category { get; set; }
-        public IEnumerable<ProductSexVM> Sexes { get; set; }
-        public IEnumerable<ProductSizeVM> Sizes { get; set; }
         public IEnumerable<ProductMaterialVM> Materials { get; set; }
-        public IEnumerable<ProductColorVM> Colors { get; set; }
+        public IEnumerable<ProductStockVM> Stock { get; set; }
     }
 }

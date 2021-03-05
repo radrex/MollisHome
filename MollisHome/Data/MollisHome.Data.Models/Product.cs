@@ -8,27 +8,32 @@
     {
         //-------------- PROPERTIES ---------------
         [Required]
+        public string Name { get; set; }
+
+        [Required]
         public string Description { get; set; }
 
         [Required]
         public string ImgUrl { get; set; }
 
-        [Required]
-        public int Quantity { get; set; }
+        //------------ ONLY FOR SEEDING (Deserialized data from seed.json) - NOT MAPPED -----------
+        [NotMapped]
+        public int[] MaterialIds { get; set; }
 
-        [Required]
-        [Column(TypeName = "decimal(6,2)")]
-        public decimal Price { get; set; }
+        [NotMapped]
+        public int[] Quantities { get; set; }
 
-        //------------ ONLY FOR SEEDING - NOT MAPPED -----------
+        [NotMapped]
+        public int[] Sold { get; set; }
+
+        [NotMapped]
+        public int[] Prices { get; set; }
+
         [NotMapped]
         public int[] SexIds { get; set; }
 
         [NotMapped]
         public int[] SizeIds { get; set; }
-
-        [NotMapped]
-        public int[] MaterialIds { get; set; }
 
         [NotMapped]
         public int[] ColorIds { get; set; }
@@ -38,17 +43,11 @@
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
-        //------------ ProductColor [FK] MAPPING TABLE - MANY-TO-MANY -----------
-        public virtual ICollection<ProductColor> Colors { get; set; } = new HashSet<ProductColor>();
-
         //------------ ProductMaterial [FK] MAPPING TABLE - MANY-TO-MANY -----------
         public virtual ICollection<ProductMaterial> Materials { get; set; } = new HashSet<ProductMaterial>();
 
-        //------------ ProductSex [FK] MAPPING TABLE - MANY-TO-MANY -----------
-        public virtual ICollection<ProductSex> Sexes { get; set; } = new HashSet<ProductSex>();
-
-        //------------ ProductSize [FK] MAPPING TABLE - MANY-TO-MANY -----------
-        public virtual ICollection<ProductSize> Sizes { get; set; } = new HashSet<ProductSize>();
+        //------------ ProductStock [FK] MAPPING TABLE - MANY-TO-MANY -----------
+        public virtual ICollection<ProductStock> Stock { get; set; } = new HashSet<ProductStock>();
 
         //------------ ProductOrder [FK] MAPPING TABLE - MANY-TO-MANY -----------
         public virtual ICollection<ProductOrder> Orders { get; set; } = new HashSet<ProductOrder>();

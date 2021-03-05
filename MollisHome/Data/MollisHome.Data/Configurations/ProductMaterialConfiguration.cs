@@ -14,8 +14,10 @@
     {
         public void Configure(EntityTypeBuilder<ProductMaterial> productMaterial)
         {
+            //--------------- COMPOUND KEY ---------------
             productMaterial.HasKey(pm => new { pm.ProductId, pm.MaterialId });
 
+            //------------------- ID's -------------------
             productMaterial.HasOne(pm => pm.Product)
                            .WithMany(p => p.Materials)
                            .HasForeignKey(pm => pm.ProductId)
