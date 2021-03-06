@@ -23,6 +23,7 @@
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Sex> Sexes { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<PromoCode> PromoCodes { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductMaterial> ProductMaterials { get; set; }
@@ -42,6 +43,7 @@
             builder.ApplyConfiguration(new SizeConfiguration());
             builder.ApplyConfiguration(new ColorConfiguration());
             builder.ApplyConfiguration(new MaterialConfiguration());
+            builder.ApplyConfiguration(new PromoCodeConfiguration());
             builder.ApplyConfiguration(new OrderConfiguration());
             builder.ApplyConfiguration(new ProductConfiguration());
             builder.ApplyConfiguration(new ProductMaterialConfiguration());

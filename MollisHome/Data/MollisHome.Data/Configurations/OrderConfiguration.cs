@@ -9,6 +9,7 @@
     /// Applies configuration for <see cref="Order"/> entity.
     /// <para>Each <see cref="Order"/> has one <see cref="ApplicationUser"/>.</para>
     /// <para>Each <see cref="Order"/> has many <see cref="Product"/>s.</para>
+    /// <para>Each <see cref="Order"/> has one <see cref="PromoCode"/>.</para>
     /// </summary>
     public class OrderConfiguration : IEntityTypeConfiguration<Order>
     {
@@ -18,6 +19,11 @@
             order.HasOne(o => o.User)
                  .WithMany(u => u.Orders)
                  .HasForeignKey(o => o.UserId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+            order.HasOne(o => o.PromoCode)
+                 .WithOne(pc => pc.Order)
+                 .HasForeignKey<PromoCode>(pc => pc.OrderId)
                  .OnDelete(DeleteBehavior.Restrict);
 
             //--------------- COLLECTIONS ----------------

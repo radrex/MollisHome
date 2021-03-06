@@ -27,6 +27,9 @@
         [Required]
         [Column(TypeName = "decimal(6,2)")]
         public decimal Price { get; set; }
+
+        public int? DiscountPercentage { get; set; }
+
         public int Sold { get; set; }
     }
 }

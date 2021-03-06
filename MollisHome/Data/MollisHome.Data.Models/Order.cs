@@ -19,8 +19,6 @@
         [Required]
         public string Phone { get; set; }
 
-        public string PromoCode { get; set; }
-
         [Required]
         [Column(TypeName = "decimal(6,2)")]
         public decimal TotalPrice { get; set; }
@@ -29,6 +27,11 @@
         [Required]
         public string UserId { get; set; }
         public virtual ApplicationUser User { get; set; }
+
+        //------------ PromoCode [FK] - ONE-TO-ONE -----------
+        [Required]
+        public int? PromoCodeId { get; set; }
+        public virtual PromoCode PromoCode { get; set; }
 
         //------------ ProductOrder [FK] MAPPING TABLE - MANY-TO-MANY -----------
         public virtual ICollection<ProductOrder> Products { get; set; } = new HashSet<ProductOrder>();
