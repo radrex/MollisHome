@@ -10,7 +10,7 @@ using MollisHome.Data;
 namespace MollisHome.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210306210105_AddPromoCodesForOrdersAndAddDiscountForProductStock")]
+    [Migration("20210306225402_AddPromoCodesForOrdersAndAddDiscountForProductStock")]
     partial class AddPromoCodesForOrdersAndAddDiscountForProductStock
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -331,6 +331,9 @@ namespace MollisHome.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PromoCodeId")
+                        .IsUnique();
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
@@ -409,7 +412,7 @@ namespace MollisHome.Data.Migrations
                     b.Property<int>("ColorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DiscountPercentage")
+                    b.Property<int>("DiscountPercentage")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
@@ -454,14 +457,7 @@ namespace MollisHome.Data.Migrations
                     b.Property<bool>("IsUsed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("OrderId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
 
                     b.ToTable("PromoCodes");
                 });
@@ -573,11 +569,19 @@ namespace MollisHome.Data.Migrations
 
             modelBuilder.Entity("MollisHome.Data.Models.Order", b =>
                 {
+                    b.HasOne("MollisHome.Data.Models.PromoCode", "PromoCode")
+                        .WithOne("Order")
+                        .HasForeignKey("MollisHome.Data.Models.Order", "PromoCodeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("MollisHome.Data.Models.ApplicationUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("PromoCode");
 
                     b.Navigation("User");
                 });
@@ -666,17 +670,6 @@ namespace MollisHome.Data.Migrations
                     b.Navigation("Size");
                 });
 
-            modelBuilder.Entity("MollisHome.Data.Models.PromoCode", b =>
-                {
-                    b.HasOne("MollisHome.Data.Models.Order", "Order")
-                        .WithOne("PromoCode")
-                        .HasForeignKey("MollisHome.Data.Models.PromoCode", "OrderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("MollisHome.Data.Models.Category", b =>
                 {
                     b.Navigation("Categories");
@@ -697,8 +690,6 @@ namespace MollisHome.Data.Migrations
             modelBuilder.Entity("MollisHome.Data.Models.Order", b =>
                 {
                     b.Navigation("Products");
-
-                    b.Navigation("PromoCode");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.Product", b =>
@@ -708,6 +699,11 @@ namespace MollisHome.Data.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Stock");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.PromoCode", b =>
+                {
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.Sex", b =>

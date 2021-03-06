@@ -1,7 +1,6 @@
 ﻿namespace MollisHome.Data.Models
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
 
     public class PromoCode : BaseModel
     {
@@ -12,8 +11,6 @@
         public DateTime ExpirationDateEnd { get; set; }
 
         //------------ Order [FK] - ONE-TO-ONE -----------
-        [Required]
-        public int? OrderId { get; set; }
         public virtual Order Order { get; set; }
     }
 }

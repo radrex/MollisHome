@@ -15,7 +15,8 @@ namespace MollisHome.Data.Migrations
                 name: "DiscountPercentage",
                 table: "ProductStock",
                 type: "int",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
                 name: "PromoCodeId",
@@ -34,31 +35,40 @@ namespace MollisHome.Data.Migrations
                     IsUsed = table.Column<bool>(type: "bit", nullable: false),
                     DiscountPercentage = table.Column<int>(type: "int", nullable: false),
                     ExpirationDateStart = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ExpirationDateEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false)
+                    ExpirationDateEnd = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PromoCodes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PromoCodes_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PromoCodes_OrderId",
-                table: "PromoCodes",
-                column: "OrderId",
+                name: "IX_Orders_PromoCodeId",
+                table: "Orders",
+                column: "PromoCodeId",
                 unique: true);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Orders_PromoCodes_PromoCodeId",
+                table: "Orders",
+                column: "PromoCodeId",
+                principalTable: "PromoCodes",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Orders_PromoCodes_PromoCodeId",
+                table: "Orders");
+
             migrationBuilder.DropTable(
                 name: "PromoCodes");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Orders_PromoCodeId",
+                table: "Orders");
 
             migrationBuilder.DropColumn(
                 name: "DiscountPercentage",

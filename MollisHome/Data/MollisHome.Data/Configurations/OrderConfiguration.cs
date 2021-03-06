@@ -23,7 +23,7 @@
 
             order.HasOne(o => o.PromoCode)
                  .WithOne(pc => pc.Order)
-                 .HasForeignKey<PromoCode>(pc => pc.OrderId)
+                 .HasForeignKey<Order>(o => o.PromoCodeId)
                  .OnDelete(DeleteBehavior.Restrict);
 
             //--------------- COLLECTIONS ----------------
