@@ -29,5 +29,10 @@
         {
             return this.dbSet.OrderByDescending(x => x.Id).Take(n).Select(x => this.mapper.Map<Product, ProductDTO>(x)).ToList();
         }
+
+        public IEnumerable<ProductDTO> GetTopSellingProducts(int n)
+        {
+            return this.GetAll().OrderByDescending(x => x.Stock.Sum(y => y.Sold)).Take(n).ToList();
+        }
     }
 }
