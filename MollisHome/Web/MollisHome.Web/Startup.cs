@@ -63,7 +63,7 @@ namespace MollisHome.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            using (var serviceScope = app.ApplicationServices.CreateScope())
+            using (IServiceScope serviceScope = app.ApplicationServices.CreateScope())
             {
                 ApplicationDbContext dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 if (env.IsDevelopment())
