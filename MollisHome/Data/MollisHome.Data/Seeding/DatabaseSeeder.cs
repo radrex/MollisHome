@@ -1,5 +1,6 @@
 ﻿namespace MollisHome.Data.Seeding
 {
+    using MollisHome.Data.Utils;
     using MollisHome.Data.Models;
 
     using Newtonsoft.Json;
@@ -16,7 +17,7 @@
     public class DatabaseSeeder : ISeeder
     {
         //---------------- FIELDS -----------------
-        private readonly string path = @"../../Data/MollisHome.Data/Seeding/seed.json";
+        private readonly string path = string.Empty;
         private readonly JSONData jsonData;
         private readonly IReadOnlyCollection<ISeeder> seeders;
 
@@ -26,6 +27,9 @@
         //------------- CONSTRUCTORS --------------
         public DatabaseSeeder()
         {
+            UriBuilder uri = new UriBuilder(FileUtils.GetSolutionDir());
+            this.path = Uri.UnescapeDataString(uri.Path) + "/Data/MollisHome.Data/Seeding/seed.json";
+
             this.jsonData = JsonConvert.DeserializeObject<JSONData>(File.ReadAllText(this.path));
             this.seeders = new List<ISeeder> { 
                 new SexesSeeder(this.jsonData.Sexes),
