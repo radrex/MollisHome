@@ -44,12 +44,12 @@
         //--------------- METHODS -----------------
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            if (dbContext == null)
+            if (dbContext is null)
             {
                 throw new ArgumentNullException(nameof(dbContext));
             }
 
-            if (serviceProvider == null)
+            if (serviceProvider is null)
             {
                 throw new ArgumentNullException(nameof(serviceProvider));
             }
@@ -69,7 +69,7 @@
             }
 
             //---------------------- SEED ADMIN USER ----------------------
-            if (await this.userManager.FindByNameAsync("Admin") == null)
+            if (await this.userManager.FindByNameAsync("Admin") is null)
             {
                 ApplicationUser admin = new ApplicationUser("admin@gmail.com", "Admin");
                 IdentityResult result = await this.userManager.CreateAsync(admin, "123456"); //TODO: change hardcoded email and password with secret ones

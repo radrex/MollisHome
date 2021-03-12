@@ -27,7 +27,7 @@
                 x.AddProfile(new AutoMapperDTOConfiguration());
             });
 
-            services.AddTransient<IProductsService, ProductsService>();
+            services.AddSingleton<IProductsService, ProductsService>();
 
             this.ServiceProvider = services.BuildServiceProvider();
         }
