@@ -9,8 +9,9 @@
 
     public interface IProductsService : IBaseService<Product, ProductDTO>
     {
+        ProductDTO GetLatestProduct();
+        IEnumerable<ProductDTO> GetLatestProducts(int n);
         IEnumerable<ProductDTO> GetByCategoryName(string category);
-        IEnumerable<ProductDTO> GetNewestProducts(int n);
         IEnumerable<ProductDTO> GetTopSellingProducts(int n);
     }
 }

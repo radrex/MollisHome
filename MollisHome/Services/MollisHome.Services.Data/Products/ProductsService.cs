@@ -20,14 +20,19 @@
         }
 
         //--------------- METHODS -----------------
+        public ProductDTO GetLatestProduct()
+        {
+            return this.mapper.Map<Product, ProductDTO>(this.dbSet.LastOrDefault());
+        }
+
+        public IEnumerable<ProductDTO> GetLatestProducts(int n)
+        {
+            return this.dbSet.OrderByDescending(x => x.Id).Take(n).Select(x => this.mapper.Map<Product, ProductDTO>(x)).ToList();
+        }
+
         public IEnumerable<ProductDTO> GetByCategoryName(string categoryName)
         {
             return this.dbSet.Where(x => x.Category.Name == categoryName).Select(x => this.mapper.Map<Product, ProductDTO>(x)).ToList();
-        }
-
-        public IEnumerable<ProductDTO> GetNewestProducts(int n)
-        {
-            return this.dbSet.OrderByDescending(x => x.Id).Take(n).Select(x => this.mapper.Map<Product, ProductDTO>(x)).ToList();
         }
 
         public IEnumerable<ProductDTO> GetTopSellingProducts(int n)

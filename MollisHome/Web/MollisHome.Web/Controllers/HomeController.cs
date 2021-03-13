@@ -16,6 +16,7 @@
     using System.Diagnostics;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using MollisHome.Services.Data.Products;
 
     public class HomeController : Controller
     {
