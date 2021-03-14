@@ -4,6 +4,7 @@
     using MollisHome.Data.Models;
 
     using MollisHome.Services.Data.Products;
+    using MollisHome.Services.Data.Categories;
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Identity;
@@ -28,6 +29,7 @@
             });
 
             services.AddSingleton<IProductsService, ProductsService>();
+            services.AddSingleton<ICategoriesService, CategoriesService>();
 
             this.ServiceProvider = services.BuildServiceProvider();
         }

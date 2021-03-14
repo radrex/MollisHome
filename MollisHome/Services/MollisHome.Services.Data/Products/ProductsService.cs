@@ -24,6 +24,10 @@
         {
             return this.mapper.Map<Product, ProductDTO>(this.dbSet.LastOrDefault());
         }
+        public ProductDTO GetByName(string productName)
+        {
+            return this.mapper.Map<Product, ProductDTO>(this.dbSet.FirstOrDefault(x => x.Name == productName));
+        }
 
         public IEnumerable<ProductDTO> GetLatestProducts(int n)
         {

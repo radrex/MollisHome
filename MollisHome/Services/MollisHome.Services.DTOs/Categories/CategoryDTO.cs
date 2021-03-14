@@ -10,5 +10,7 @@
         public string Description { get; set; }
         public string ImgUrl { get; set; }
         public IEnumerable<CategoryDTO> Categories { get; set; }
+
+        //TODO: ADD IENumerable<ProductDTO> Products, Configure AutoMapper
     }
 }

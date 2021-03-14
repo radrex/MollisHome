@@ -20,6 +20,40 @@
         }
 
         //--------------- METHODS -----------------
+        public bool HasProducts(int categoryId)
+        {
+            return this.HasEntities() && this.dbSet.First(x => x.Id == categoryId).Products.Any();
+        }
+
+        public bool HasProducts(string categoryName)
+        {
+            return this.HasEntities() && this.dbSet.First(x => x.Name == categoryName).Products.Any();
+        }
+
+        public bool HasParentCategory(int categoryId)
+        {
+            return this.dbSet.Any(x => x.Id == categoryId && x.ParentCategory != null);
+        }
+
+        public bool HasParentCategory(string categoryName)
+        {
+            return this.dbSet.Any(x => x.Name == categoryName && x.ParentCategory != null);
+        }
+
+        public CategoryDTO GetByName(string categoryName)
+        {
+            return this.mapper.Map<Category, CategoryDTO>(this.dbSet.FirstOrDefault(x => x.Name == categoryName));
+        }
+
+        public CategoryDTO GetParentCategory(int categoryId)
+        {
+            return this.mapper.Map<Category, CategoryDTO>(this.dbSet.FirstOrDefault(x => x.Id == categoryId).ParentCategory);
+        }
+        public CategoryDTO GetParentCategory(string categoryName)
+        {
+            return this.mapper.Map<Category, CategoryDTO>(this.dbSet.FirstOrDefault(x => x.Name == categoryName).ParentCategory);
+        }
+
         public IEnumerable<CategoryDTO> GetRootCategories()
         {
             return this.dbSet.Where(x => x.ParentCategory == null).Select(x => this.mapper.Map<Category, CategoryDTO>(x)).ToList();

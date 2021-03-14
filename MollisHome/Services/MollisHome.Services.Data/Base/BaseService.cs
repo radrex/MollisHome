@@ -27,6 +27,11 @@
             this.dbSet = this.dbContext.Set<TModel>();
         }
 
+        public bool HasEntities()
+        {
+            return this.dbSet.Any();
+        }
+
         public IEnumerable<TDTO> GetAll()
         {
             return this.dbSet.Select(x => this.mapper.Map<TModel, TDTO>(x)).ToList();
@@ -69,5 +74,6 @@
             this.dbSet.Remove(entity);
             this.dbContext.SaveChanges();
         }
+
     }
 }

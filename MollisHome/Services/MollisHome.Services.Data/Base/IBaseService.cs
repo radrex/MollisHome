@@ -9,6 +9,7 @@
     public interface IBaseService<TModel, TDTO> where TModel : BaseModel
                                                 where TDTO : BaseDTO
     {
+        bool HasEntities();
         IEnumerable<TDTO> GetAll();
         TDTO GetById(int id);
         void Create(TModel item);
