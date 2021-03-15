@@ -23,11 +23,13 @@
         //---------------- FIELDS -----------------
         private readonly IMapper mapper;
         private readonly ICategoriesService categoriesService;
+        private readonly IProductsService productsService;
 
         //------------- CONSTRUCTORS --------------
-        public HomeController(IMapper mapper, ICategoriesService categoriesService)
+        public HomeController(IMapper mapper, ICategoriesService categoriesService, IProductsService productsService)
         {
             this.categoriesService = categoriesService;
+            this.productsService = productsService;
             this.mapper = mapper;
         }
 

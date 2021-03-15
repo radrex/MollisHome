@@ -10,9 +10,15 @@
     public interface IProductsService : IBaseService<Product, ProductDTO>
     {
         ProductDTO GetLatestProduct();
-        ProductDTO GetByName(string productName);
         IEnumerable<ProductDTO> GetLatestProducts(int n);
+
+        ProductDTO GetByName(string productName);
         IEnumerable<ProductDTO> GetByCategoryName(string category);
+        IEnumerable<ProductDTO> GetByColor(int colorId);
+        IEnumerable<ProductDTO> GetByColor(string colorName);
+
         IEnumerable<ProductDTO> GetTopSellingProducts(int n);
+        IEnumerable<ProductDTO> GetTopSellingProductsByCategory(int categoryId, int n);
+        IEnumerable<ProductDTO> GetTopSellingProductsByCategory(string categoryName, int n);
     }
 }

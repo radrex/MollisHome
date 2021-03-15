@@ -106,26 +106,6 @@
             Assert.Null(productsService.GetLatestProduct());
         }
 
-        //---- GetByName(productName) ----
-        [Theory]
-        [InlineData(1, "Сидни", "Сидни")]
-        [InlineData(2, "Рига", "Рига")]
-        [InlineData(3, "Лима", "Лима")]
-        public void GetByName_ReturnsCorrectProduct(int expectedId, string expectedName, string productName)
-        {
-            Assert.Equal($"Product Name: {expectedName}", $"Product Name: {productsService.GetByName(productName).Name}");
-            Assert.Equal($"Product ID: {expectedId}", $"Product ID: {productsService.GetByName(productName).Id}");
-        }
-
-        [Theory]
-        [InlineData("Fail")]
-        [InlineData("Null")]
-        [InlineData("Unexisting Product")]
-        public void GetByName_ReturnsNull(string productName)
-        {
-            Assert.Null(productsService.GetByName(productName));
-        }
-
         //---- GetLatestProducts() ----
         [Theory]
         [InlineData(1, 1)]
@@ -149,6 +129,26 @@
             Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
         }
 
+        //---- GetByName(productName) ----
+        [Theory]
+        [InlineData(1, "Сидни", "Сидни")]
+        [InlineData(2, "Рига", "Рига")]
+        [InlineData(3, "Лима", "Лима")]
+        public void GetByName_ReturnsCorrectProduct(int expectedId, string expectedName, string productName)
+        {
+            Assert.Equal($"Product Name: {expectedName}", $"Product Name: {productsService.GetByName(productName).Name}");
+            Assert.Equal($"Product ID: {expectedId}", $"Product ID: {productsService.GetByName(productName).Id}");
+        }
+
+        [Theory]
+        [InlineData("Fail")]
+        [InlineData("Null")]
+        [InlineData("Unexisting Product")]
+        public void GetByName_ReturnsNull(string productName)
+        {
+            Assert.Null(productsService.GetByName(productName));
+        }
+
         //---- GetByCategoryName(categoryName) ----
         [Theory]
         [InlineData(0, "Баня")]
@@ -168,6 +168,52 @@
         public void GetByCategoryName_ReturnsCorrectProducts(int[] expectedIds, string productCategory)
         {
             IEnumerable<int> productIds = productsService.GetByCategoryName(productCategory).Select(x => x.Id);
+            Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
+        }
+
+        //---- GetByColor(int colorId) ----
+        [Theory]
+        [InlineData(2, 1)]
+        [InlineData(2, 2)]
+        [InlineData(0, 5)]
+        [InlineData(0, -1)]
+        public void GetByColorById_ReturnsCorrectNumberOfProducts(int expected, int colorId)
+        {
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetByColor(colorId).Count()}");
+        }
+
+        [Theory]
+        [InlineData(new int[] { }, 5)]
+        [InlineData(new int[] { }, -1)]
+        [InlineData(new int[] { 1, 2 }, 1)]
+        [InlineData(new int[] { 1, 2 }, 2)]
+        [InlineData(new int[] { 1, 3 }, 6)]
+        public void GetByColorById_ReturnsCorrectCorrectProducts(int[] expectedIds, int colorId)
+        {
+            IEnumerable<int> productIds = productsService.GetByColor(colorId).Select(x => x.Id);
+            Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
+        }
+
+        //---- GetByColor(string colorName) ----
+        [Theory]
+        [InlineData(2, "Зелен")]
+        [InlineData(2, "Деним")]
+        [InlineData(0, "Крем")]
+        [InlineData(0, "Unexisting color")]
+        public void GetByColorByName_ReturnsCorrectNumberOfProducts(int expected, string colorName)
+        {
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetByColor(colorName).Count()}");
+        }
+
+        [Theory]
+        [InlineData(new int[] { }, "Крем")]
+        [InlineData(new int[] { }, "Unexisting color")]
+        [InlineData(new int[] { 1, 2 }, "Зелен")]
+        [InlineData(new int[] { 1, 2 }, "Деним")]
+        [InlineData(new int[] { 1, 3 }, "Мока")]
+        public void GetByColorByName_ReturnsCorrectCorrectProducts(int[] expectedIds, string colorName)
+        {
+            IEnumerable<int> productIds = productsService.GetByColor(colorName).Select(x => x.Id);
             Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
         }
 
@@ -193,6 +239,53 @@
         public void GetTopSellingProducts_ReturnsCorrectNumberOfProducts(int expected, int n)
         {
             Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetTopSellingProducts(n).Count()}");
+        }
+
+        //---- GetTopSellingProductsByCategory(int categoryId, int n) ----
+        [Theory]
+        [InlineData(2, 8, 2)]
+        [InlineData(1, 8, 1)]
+        [InlineData(3, 8, 3)]
+        [InlineData(0, 9, 3)]
+        [InlineData(0, -1, 3)]
+        public void GetTopSellingProductsByCategoryId_ReturnsCorrectNumberOfProducts(int expected, int categoryId, int n)
+        {
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetTopSellingProductsByCategory(categoryId, n).Count()}");
+        }
+
+        [Theory]
+        [InlineData(new int[] { 2, 1 }, 8, 2)]
+        [InlineData(new int[] { 2 }, 8, 1)]
+        [InlineData(new int[] { 2, 1, 3 }, 8, 3)]
+        [InlineData(new int[] { }, 9, 3)]
+        [InlineData(new int[] { }, -1, 3)]
+        public void GetTopSellingProductsByCategoryId_ReturnsCorrectProducts(int[] expectedIds, int categoryId, int n)
+        {
+            IEnumerable<int> productIds = productsService.GetTopSellingProductsByCategory(categoryId, n).Select(x => x.Id);
+            Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
+        }
+
+        [Theory]
+        [InlineData(2, "Кърпа за ръце", 2)]
+        [InlineData(1, "Кърпа за ръце", 1)]
+        [InlineData(3, "Кърпа за ръце", 3)]
+        [InlineData(0, "Олекотени завивки", 3)]
+        [InlineData(0, "Unexisting category", 3)]
+        public void GetTopSellingProductsByCategoryName_ReturnsCorrectNumberOfProducts(int expected, string categoryName, int n)
+        {
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetTopSellingProductsByCategory(categoryName, n).Count()}");
+        }
+
+        [Theory]
+        [InlineData(new int[] { 2, 1 }, "Кърпа за ръце", 2)]
+        [InlineData(new int[] { 2 }, "Кърпа за ръце", 1)]
+        [InlineData(new int[] { 2, 1, 3 }, "Кърпа за ръце", 3)]
+        [InlineData(new int[] { }, "Олекотени завивки", 3)]
+        [InlineData(new int[] { }, "Unexisting category", 3)]
+        public void GetTopSellingProductsByCategoryName_ReturnsCorrectProducts(int[] expectedIds, string categoryName, int n)
+        {
+            IEnumerable<int> productIds = productsService.GetTopSellingProductsByCategory(categoryName, n).Select(x => x.Id);
+            Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
         }
 
         #endregion 

@@ -2,6 +2,7 @@
 {
     public class ProductStockDTO
     {
+        public ProductDTO Product { get; set; }
         public ProductSexDTO Sex { get; set; }
         public ProductSizeDTO Size { get; set; }
         public ProductColorDTO Color { get; set; }

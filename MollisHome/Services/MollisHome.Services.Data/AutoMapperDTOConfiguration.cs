@@ -26,6 +26,10 @@
 
             CreateMap<ProductStock, ProductStockDTO>()
                 .ForMember(
+                    dest => dest.Product,
+                    opt => opt.MapFrom(src => src.Product)
+                )
+                .ForMember(
                     dest => dest.Sex,
                     opt => opt.MapFrom(src => src.Sex)
                 )
