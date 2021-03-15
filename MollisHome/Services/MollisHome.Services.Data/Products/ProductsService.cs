@@ -43,12 +43,42 @@
 
         public IEnumerable<ProductDTO> GetByColor(int colorId)
         {
-            return this.GetAll().SelectMany(x => x.Stock).Where(x => x.Color.Id == colorId).Select(x => x.Product).ToList();
+            return this.dbSet.SelectMany(x => x.Stock).Where(x => x.Color.Id == colorId).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
         }
 
         public IEnumerable<ProductDTO> GetByColor(string colorName)
         {
-            return this.GetAll().SelectMany(x => x.Stock).Where(x => x.Color.Name == colorName).Select(x => x.Product).ToList();
+            return this.dbSet.SelectMany(x => x.Stock).Where(x => x.Color.Name == colorName).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
+        }
+
+        public IEnumerable<ProductDTO> GetBySex(int sexId)
+        {
+            return this.dbSet.SelectMany(x => x.Stock).Where(x => x.Sex.Id == sexId).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
+        }
+
+        public IEnumerable<ProductDTO> GetBySex(string sexName)
+        {
+            return this.dbSet.SelectMany(x => x.Stock).Where(x => x.Sex.Name == sexName).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
+        }
+
+        public IEnumerable<ProductDTO> GetBySize(int sizeId)
+        {
+            return this.dbSet.SelectMany(x => x.Stock).Where(x => x.Size.Id == sizeId).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
+        }
+
+        public IEnumerable<ProductDTO> GetBySize(string sizeName)
+        {
+            return this.dbSet.SelectMany(x => x.Stock).Where(x => x.Size.Name == sizeName).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
+        }
+
+        public IEnumerable<ProductDTO> GetByMaterial(int materialId)
+        {
+            return this.dbSet.SelectMany(x => x.Materials).Where(x => x.Material.Id == materialId).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
+        }
+
+        public IEnumerable<ProductDTO> GetByMaterial(string materialName)
+        {
+            return this.dbSet.SelectMany(x => x.Materials).Where(x => x.Material.Name == materialName).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
         }
 
         //---- GET TOP ----
@@ -59,14 +89,12 @@
 
         public IEnumerable<ProductDTO> GetTopSellingProductsByCategory(int categoryId, int n)
         {
-            //TODO: Maybe use CategoriesService to get the category with the given categoryId instead of GetAll().Where()...
-            return this.GetAll().Where(x => x.Category.Id == categoryId).OrderByDescending(x => x.Stock.Sum(y => y.Sold)).Take(n).ToList();
+            return this.dbSet.Where(x => x.Category.Id == categoryId).OrderByDescending(x => x.Stock.Sum(y => y.Sold)).Take(n).Select(x => this.mapper.Map<Product, ProductDTO>(x)).ToList();
         }
 
         public IEnumerable<ProductDTO> GetTopSellingProductsByCategory(string categoryName, int n)
         {
-            //TODO: Maybe use CategoriesService to get the category with the given categoryName instead of GetAll().Where()...
-            return this.GetAll().Where(x => x.Category.Name == categoryName).OrderByDescending(x => x.Stock.Sum(y => y.Sold)).Take(n).ToList();
+            return this.dbSet.Where(x => x.Category.Name == categoryName).OrderByDescending(x => x.Stock.Sum(y => y.Sold)).Take(n).Select(x => this.mapper.Map<Product, ProductDTO>(x)).ToList();
         }
     }
 }

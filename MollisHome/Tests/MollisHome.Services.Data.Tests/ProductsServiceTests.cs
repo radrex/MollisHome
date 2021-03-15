@@ -211,9 +211,141 @@
         [InlineData(new int[] { 1, 2 }, "Зелен")]
         [InlineData(new int[] { 1, 2 }, "Деним")]
         [InlineData(new int[] { 1, 3 }, "Мока")]
-        public void GetByColorByName_ReturnsCorrectCorrectProducts(int[] expectedIds, string colorName)
+        public void GetByColorByName_ReturnsCorrectProducts(int[] expectedIds, string colorName)
         {
             IEnumerable<int> productIds = productsService.GetByColor(colorName).Select(x => x.Id);
+            Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
+        }
+
+        //---- GetBySex(int sexId) ----
+        [Theory]
+        [InlineData(0, 1)]
+        [InlineData(0, 2)]
+        [InlineData(9, 3)]
+        [InlineData(0, -1)]
+        public void GetBySexId_ReturnsCorrectNumberOfProducts(int expected, int sexId)
+        {
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetBySex(sexId).Count()}");
+        }
+
+        [Theory]
+        [InlineData(new int[] { }, 1)]
+        [InlineData(new int[] { }, 2)]
+        [InlineData(new int[] { 1, 1, 1, 2, 2, 2, 3, 3, 3 }, 3)]
+        [InlineData(new int[] { }, -1)]
+        public void GetBySexId_ReturnsCorrectProducts(int[] expectedIds, int sexId)
+        {
+            IEnumerable<int> productIds = productsService.GetBySex(sexId).Select(x => x.Id);
+            Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
+        }
+
+        //---- GetBySex(string sexName) ----
+        [Theory]
+        [InlineData(0, "Man")]
+        [InlineData(0, "Woman")]
+        [InlineData(9, "Unisex")]
+        [InlineData(0, "Unexisting Gender")]
+        public void GetBySexName_ReturnsCorrectNumberOfProducts(int expected, string sexName)
+        {
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetBySex(sexName).Count()}");
+        }
+
+        [Theory]
+        [InlineData(new int[] { }, "Man")]
+        [InlineData(new int[] { }, "Woman")]
+        [InlineData(new int[] { 1, 1, 1, 2, 2, 2, 3, 3, 3 }, "Unisex")]
+        [InlineData(new int[] {  }, "Unexisting Gender")]
+        public void GetBySexName_ReturnsCorrectProducts(int[] expectedIds, string sexName)
+        {
+            IEnumerable<int> productIds = productsService.GetBySex(sexName).Select(x => x.Id);
+            Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
+        }
+
+        //---- GetBySize(int sizeId) ----
+        [Theory]
+        [InlineData(0, 5)]
+        [InlineData(3, 9)]
+        [InlineData(3, 10)]
+        [InlineData(3, 11)]
+        [InlineData(0, -1)]
+        public void GetBySizeId_ReturnsCorrectNumberOfProducts(int expected, int sizeId)
+        {
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetBySize(sizeId).Count()}");
+        }
+
+        [Theory]
+        [InlineData(new int[] { }, 5)]
+        [InlineData(new int[] { }, -1)]
+        [InlineData(new int[] { 1, 2, 3 }, 9)]
+        [InlineData(new int[] { 1, 2, 3 }, 10)]
+        [InlineData(new int[] { 1, 2, 3 }, 11)]
+        public void GetBySizeId_ReturnsCorrectProducts(int[] expectedIds, int sizeId)
+        {
+            IEnumerable<int> productIds = productsService.GetBySize(sizeId).Select(x => x.Id);
+            Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
+        }
+
+        //---- GetBySize(string sizeName) ----
+        [Theory]
+        [InlineData(0, "XL")]
+        [InlineData(3, "30/50")]
+        [InlineData(3, "50/90")]
+        [InlineData(3, "70/140")]
+        [InlineData(0, "Unexisting Size")]
+        public void GetBySizeName_ReturnsCorrectNumberOfProducts(int expected, string sizeName)
+        {
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetBySize(sizeName).Count()}");
+        }
+
+        [Theory]
+        [InlineData(new int[] { }, "XL")]
+        [InlineData(new int[] { 1, 2, 3 }, "30/50")]
+        [InlineData(new int[] { 1, 2, 3 }, "50/90")]
+        [InlineData(new int[] { 1, 2, 3 }, "70/140")]
+        [InlineData(new int[] { }, "Unexisting Size")]
+        public void GetBySizeName_ReturnsCorrectProducts(int[] expectedIds, string sizeName)
+        {
+            IEnumerable<int> productIds = productsService.GetBySize(sizeName).Select(x => x.Id);
+            Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
+        }
+
+        //---- GetByMaterial(int materialId) ----
+        [Theory]
+        [InlineData(2, 1)]
+        [InlineData(1, 2)]
+        [InlineData(0, -1)]
+        public void GetByMaterialId_ReturnsCorrectNumberOfProducts(int expected, int materialId)
+        {
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetByMaterial(materialId).Count()}");
+        }
+
+        [Theory]
+        [InlineData(new int[] { 1, 3 }, 1)]
+        [InlineData(new int[] { 2 }, 2)]
+        [InlineData(new int[] { }, -1)]
+        public void GetByMaterialId_ReturnsCorrectProducts(int[] expectedIds, int materialId)
+        {
+            IEnumerable<int> productIds = productsService.GetByMaterial(materialId).Select(x => x.Id);
+            Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
+        }
+
+        //---- GetByMaterial(string materialName) ----
+        [Theory]
+        [InlineData(2, "Памук")]
+        [InlineData(1, "Бамбук")]
+        [InlineData(0, "Unexisting material")]
+        public void GetByMaterialName_ReturnsCorrectNumberOfProducts(int expected, string materialName)
+        {
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetByMaterial(materialName).Count()}");
+        }
+
+        [Theory]
+        [InlineData(new int[] { 1, 3 }, "Памук")]
+        [InlineData(new int[] { 2 }, "Бамбук")]
+        [InlineData(new int[] { }, "Unexisting material")]
+        public void GetByMaterialName_ReturnsCorrectProducts(int[] expectedIds, string materialName)
+        {
+            IEnumerable<int> productIds = productsService.GetByMaterial(materialName).Select(x => x.Id);
             Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
         }
 
@@ -288,6 +420,6 @@
             Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
         }
 
-        #endregion 
+        #endregion
     }
 }

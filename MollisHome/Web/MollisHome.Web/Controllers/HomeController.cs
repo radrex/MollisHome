@@ -16,20 +16,17 @@
     using System.Diagnostics;
     using System.Threading.Tasks;
     using System.Collections.Generic;
-    using MollisHome.Services.Data.Products;
 
     public class HomeController : Controller
     {
         //---------------- FIELDS -----------------
         private readonly IMapper mapper;
         private readonly ICategoriesService categoriesService;
-        private readonly IProductsService productsService;
 
         //------------- CONSTRUCTORS --------------
-        public HomeController(IMapper mapper, ICategoriesService categoriesService, IProductsService productsService)
+        public HomeController(IMapper mapper, ICategoriesService categoriesService)
         {
             this.categoriesService = categoriesService;
-            this.productsService = productsService;
             this.mapper = mapper;
         }
 
