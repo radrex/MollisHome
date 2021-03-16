@@ -1,8 +1,8 @@
-﻿namespace MollisHome.Services.DTOs.Products
+﻿namespace MollisHome.Services.DTOs.Genders
 {
     using MollisHome.Services.DTOs.Base;
 
-    public class SexDTO : BaseDTO
+    public class GenderDTO : BaseDTO
     {
         public string Name { get; set; }
     }

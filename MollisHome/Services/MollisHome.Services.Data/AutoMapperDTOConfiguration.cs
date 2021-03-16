@@ -7,6 +7,7 @@
     using MollisHome.Services.DTOs.Stock;
     using MollisHome.Services.DTOs.Sizes;
     using MollisHome.Services.DTOs.Colors;
+    using MollisHome.Services.DTOs.Genders;
     using MollisHome.Services.DTOs.Products;
     using MollisHome.Services.DTOs.Materials;
     using MollisHome.Services.DTOs.Categories;
@@ -24,7 +25,7 @@
                  );
 
             CreateMap<Material, MaterialDTO>();
-            CreateMap<Sex, SexDTO>();
+            CreateMap<Sex, GenderDTO>();
             CreateMap<Size, SizeDTO>();
             CreateMap<Color, ColorDTO>();
 

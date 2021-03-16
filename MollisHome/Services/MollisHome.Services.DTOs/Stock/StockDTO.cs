@@ -2,12 +2,13 @@
 {
     using MollisHome.Services.DTOs.Sizes;
     using MollisHome.Services.DTOs.Colors;
+    using MollisHome.Services.DTOs.Genders;
     using MollisHome.Services.DTOs.Products;
 
     public class StockDTO
     {
         public ProductDTO Product { get; set; }
-        public SexDTO Sex { get; set; }
+        public GenderDTO Sex { get; set; }
         public SizeDTO Size { get; set; }
         public ColorDTO Color { get; set; }
         public int Quantity { get; set; }
