@@ -1,5 +1,5 @@
 ﻿{
-  "sexes": [
+  "genders": [
     {
       "id": 1,
       "name": "Man"
@@ -297,7 +297,7 @@
       "prices": [ 10, 15, 20 ],
       "quantities": [ 10, 5, 2 ],
       "sold": [ 5, 1, 3 ],
-      "sexIds": [ 3, 3, 3 ],
+      "genderIds": [ 3, 3, 3 ],
       "sizeIds": [ 9, 10, 11 ],
       "colorIds": [ 1, 2, 6 ]
     },
@@ -311,7 +311,7 @@
       "prices": [ 20, 22, 15 ],
       "quantities": [ 10, 2, 9 ],
       "sold": [ 1, 5, 8 ],
-      "sexIds": [ 3, 3, 3 ],
+      "genderIds": [ 3, 3, 3 ],
       "sizeIds": [ 9, 10, 11 ],
       "colorIds": [ 1, 2, 3 ]
     },
@@ -325,7 +325,7 @@
       "prices": [ 5, 2, 5 ],
       "quantities": [ 10, 4, 1 ],
       "sold": [ 0, 5, 2 ],
-      "sexIds": [ 3, 3, 3 ],
+      "genderIds": [ 3, 3, 3 ],
       "sizeIds": [ 9, 10, 11 ],
       "colorIds": [ 3, 4, 6 ]
     }

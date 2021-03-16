@@ -217,15 +217,15 @@
             Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
         }
 
-        //---- GetBySex(int sexId) ----
+        //---- GetByGender(int genderId) ----
         [Theory]
         [InlineData(0, 1)]
         [InlineData(0, 2)]
         [InlineData(9, 3)]
         [InlineData(0, -1)]
-        public void GetBySexId_ReturnsCorrectNumberOfProducts(int expected, int sexId)
+        public void GetBySexId_ReturnsCorrectNumberOfProducts(int expected, int genderId)
         {
-            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetBySex(sexId).Count()}");
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetByGender(genderId).Count()}");
         }
 
         [Theory]
@@ -235,19 +235,19 @@
         [InlineData(new int[] { }, -1)]
         public void GetBySexId_ReturnsCorrectProducts(int[] expectedIds, int sexId)
         {
-            IEnumerable<int> productIds = productsService.GetBySex(sexId).Select(x => x.Id);
+            IEnumerable<int> productIds = productsService.GetByGender(sexId).Select(x => x.Id);
             Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
         }
 
-        //---- GetBySex(string sexName) ----
+        //---- GetByGender(string genderName) ----
         [Theory]
         [InlineData(0, "Man")]
         [InlineData(0, "Woman")]
         [InlineData(9, "Unisex")]
         [InlineData(0, "Unexisting Gender")]
-        public void GetBySexName_ReturnsCorrectNumberOfProducts(int expected, string sexName)
+        public void GetBySexName_ReturnsCorrectNumberOfProducts(int expected, string genderName)
         {
-            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetBySex(sexName).Count()}");
+            Assert.Equal($"Product count: {expected}", $"Product count: {productsService.GetByGender(genderName).Count()}");
         }
 
         [Theory]
@@ -257,7 +257,7 @@
         [InlineData(new int[] {  }, "Unexisting Gender")]
         public void GetBySexName_ReturnsCorrectProducts(int[] expectedIds, string sexName)
         {
-            IEnumerable<int> productIds = productsService.GetBySex(sexName).Select(x => x.Id);
+            IEnumerable<int> productIds = productsService.GetByGender(sexName).Select(x => x.Id);
             Assert.True(expectedIds.SequenceEqual(productIds), $"Method should return Products with ids: {String.Join(", ", expectedIds)}");
         }
 

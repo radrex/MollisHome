@@ -6,7 +6,7 @@
 
     public class JSONData
     {
-        public List<Sex> Sexes { get; set; }
+        public List<Gender> Genders { get; set; }
         public List<Size> Sizes { get; set; }
         public List<Material> Materials { get; set; }
         public List<Color> Colors { get; set; }

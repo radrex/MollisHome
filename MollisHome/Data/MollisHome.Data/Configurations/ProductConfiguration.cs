@@ -11,7 +11,7 @@
     /// <para>Each <see cref="Product"/> has many <see cref="Material"/>s.</para>
     /// <para>Each <see cref="Product"/> has many <see cref="Color"/>s.</para>
     /// <para>Each <see cref="Product"/> has many <see cref="Size"/>s.</para>
-    /// <para>Each <see cref="Product"/> has many <see cref="Sex"/>s.</para>
+    /// <para>Each <see cref="Product"/> has many <see cref="Gender"/>s.</para>
     /// <para>Each <see cref="Product"/> has many <see cref="Order"/>s.</para>
     /// </summary>
     public class ProductConfiguration : IEntityTypeConfiguration<Product>

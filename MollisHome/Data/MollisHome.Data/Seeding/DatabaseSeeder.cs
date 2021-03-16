@@ -32,7 +32,7 @@
 
             this.jsonData = JsonConvert.DeserializeObject<JSONData>(File.ReadAllText(this.path));
             this.seeders = new List<ISeeder> { 
-                new SexesSeeder(this.jsonData.Sexes),
+                new GendersSeeder(this.jsonData.Genders),
                 new SizesSeeder(this.jsonData.Sizes),
                 new MaterialsSeeder(this.jsonData.Materials),
                 new ColorsSeeder(this.jsonData.Colors),

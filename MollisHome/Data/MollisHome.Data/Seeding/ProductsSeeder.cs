@@ -38,7 +38,7 @@
                 await dbContext.SaveChangesAsync(); // Do it on each step to preserve insertion order. :(
 
                 await this.SeedMappingTable<ProductMaterial>(dbContext, product.Id, new int[][] { product.MaterialIds });
-                await this.SeedMappingTable<ProductStock>(dbContext, product.Id, new int[][] { product.Quantities, product.Sold, product.Prices, product.SexIds, product.SizeIds, product.ColorIds });
+                await this.SeedMappingTable<ProductStock>(dbContext, product.Id, new int[][] { product.Quantities, product.Sold, product.Prices, product.GenderIds, product.SizeIds, product.ColorIds });
             }
         }
 
@@ -61,7 +61,7 @@
                         entity.GetType().GetProperty("Quantity").SetValue(entity, data[0][i]);
                         entity.GetType().GetProperty("Sold").SetValue(entity, data[0 + 1][i]);
                         entity.GetType().GetProperty("Price").SetValue(entity, (decimal)data[0 + 2][i]);
-                        entity.GetType().GetProperty("SexId").SetValue(entity, data[0 + 3][i]);
+                        entity.GetType().GetProperty("GenderId").SetValue(entity, data[0 + 3][i]);
                         entity.GetType().GetProperty("SizeId").SetValue(entity, data[0 + 4][i]);
                         entity.GetType().GetProperty("ColorId").SetValue(entity, data[0 + 5][i]);
                         await dbContext.ProductStock.AddAsync(entity as ProductStock);

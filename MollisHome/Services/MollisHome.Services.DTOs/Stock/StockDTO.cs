@@ -8,7 +8,7 @@
     public class StockDTO
     {
         public ProductDTO Product { get; set; }
-        public GenderDTO Sex { get; set; }
+        public GenderDTO Gender { get; set; }
         public SizeDTO Size { get; set; }
         public ColorDTO Color { get; set; }
         public int Quantity { get; set; }

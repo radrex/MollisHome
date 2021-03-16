@@ -10,8 +10,8 @@
         public virtual Product Product { get; set; }
 
         //------------ Sex [FK] -----------
-        public int SexId { get; set; }
-        public virtual Sex Sex { get; set; }
+        public int GenderId { get; set; }
+        public virtual Gender Gender { get; set; }
 
         //------------ Size [FK] -----------
         public int SizeId { get; set; }

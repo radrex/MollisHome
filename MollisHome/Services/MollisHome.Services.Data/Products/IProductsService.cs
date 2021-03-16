@@ -16,8 +16,8 @@
         IEnumerable<ProductDTO> GetByCategoryName(string category);
         IEnumerable<ProductDTO> GetByColor(int colorId);
         IEnumerable<ProductDTO> GetByColor(string colorName);
-        IEnumerable<ProductDTO> GetBySex(int sexId);
-        IEnumerable<ProductDTO> GetBySex(string sexName);
+        IEnumerable<ProductDTO> GetByGender(int genderId);
+        IEnumerable<ProductDTO> GetByGender(string genderName);
         IEnumerable<ProductDTO> GetBySize(int sizeId);
         IEnumerable<ProductDTO> GetBySize(string sizeName);
         IEnumerable<ProductDTO> GetByMaterial(int materialId);

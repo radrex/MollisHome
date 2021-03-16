@@ -21,7 +21,7 @@
         public DbSet<Material> Materials { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Size> Sizes { get; set; }
-        public DbSet<Sex> Sexes { get; set; }
+        public DbSet<Gender> Genders { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<PromoCode> PromoCodes { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -39,7 +39,7 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new SexConfiguration());
+            builder.ApplyConfiguration(new GenderConfiguration());
             builder.ApplyConfiguration(new SizeConfiguration());
             builder.ApplyConfiguration(new ColorConfiguration());
             builder.ApplyConfiguration(new MaterialConfiguration());

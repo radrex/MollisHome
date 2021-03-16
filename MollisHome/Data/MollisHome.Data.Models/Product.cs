@@ -30,7 +30,7 @@
         public int[] Prices { get; set; }
 
         [NotMapped]
-        public int[] SexIds { get; set; }
+        public int[] GenderIds { get; set; }
 
         [NotMapped]
         public int[] SizeIds { get; set; }

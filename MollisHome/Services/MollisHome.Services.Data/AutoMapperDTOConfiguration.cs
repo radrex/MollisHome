@@ -25,7 +25,7 @@
                  );
 
             CreateMap<Material, MaterialDTO>();
-            CreateMap<Sex, GenderDTO>();
+            CreateMap<Gender, GenderDTO>();
             CreateMap<Size, SizeDTO>();
             CreateMap<Color, ColorDTO>();
 
@@ -35,8 +35,8 @@
                     opt => opt.MapFrom(src => src.Product)
                 )
                 .ForMember(
-                    dest => dest.Sex,
-                    opt => opt.MapFrom(src => src.Sex)
+                    dest => dest.Gender,
+                    opt => opt.MapFrom(src => src.Gender)
                 )
                 .ForMember(
                     dest => dest.Size,

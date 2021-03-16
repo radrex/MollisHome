@@ -51,14 +51,14 @@
             return this.dbSet.SelectMany(x => x.Stock).Where(x => x.Color.Name == colorName).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
         }
 
-        public IEnumerable<ProductDTO> GetBySex(int sexId)
+        public IEnumerable<ProductDTO> GetByGender(int genderId)
         {
-            return this.dbSet.SelectMany(x => x.Stock).Where(x => x.Sex.Id == sexId).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
+            return this.dbSet.SelectMany(x => x.Stock).Where(x => x.Gender.Id == genderId).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
         }
 
-        public IEnumerable<ProductDTO> GetBySex(string sexName)
+        public IEnumerable<ProductDTO> GetByGender(string genderName)
         {
-            return this.dbSet.SelectMany(x => x.Stock).Where(x => x.Sex.Name == sexName).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
+            return this.dbSet.SelectMany(x => x.Stock).Where(x => x.Gender.Name == genderName).Select(x => this.mapper.Map<Product, ProductDTO>(x.Product)).ToList();
         }
 
         public IEnumerable<ProductDTO> GetBySize(int sizeId)

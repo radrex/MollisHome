@@ -6,17 +6,17 @@
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
-    /// Applies configuration for <see cref="Sex"/> entity.
-    /// <para>Each <see cref="Sex"/> has many <see cref="Product"/>s.</para>
+    /// Applies configuration for <see cref="Gender"/> entity.
+    /// <para>Each <see cref="Gender"/> has many <see cref="Product"/>s.</para>
     /// </summary>
-    public class SexConfiguration : IEntityTypeConfiguration<Sex>
+    public class GenderConfiguration : IEntityTypeConfiguration<Gender>
     {
-        public void Configure(EntityTypeBuilder<Sex> sex)
+        public void Configure(EntityTypeBuilder<Gender> sex)
         {
             //--------------- COLLECTIONS ----------------
             sex.HasMany(s => s.Products)
-               .WithOne(p => p.Sex)
-               .HasForeignKey(p => p.SexId)
+               .WithOne(p => p.Gender)
+               .HasForeignKey(p => p.GenderId)
                .OnDelete(DeleteBehavior.Restrict);
         }
     }

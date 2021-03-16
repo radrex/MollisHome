@@ -7,30 +7,30 @@
     using System.Threading.Tasks;
     using System.Collections.Generic;
 
-    public class SexesSeeder : ISeeder
+    public class GendersSeeder : ISeeder
     {
         //---------------- FIELDS -----------------
-        private readonly IReadOnlyCollection<Sex> sexes;
+        private readonly IReadOnlyCollection<Gender> genders;
 
         //------------- CONSTRUCTORS --------------
-        public SexesSeeder(List<Sex> sexes)
+        public GendersSeeder(List<Gender> genders)
         {
-            this.sexes = sexes.AsReadOnly();
+            this.genders = genders.AsReadOnly();
         }
 
         //--------------- METHODS -----------------
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            if (dbContext.Sexes.Any())
+            if (dbContext.Genders.Any())
             {
                 return;
             }
 
-            foreach (Sex sex in this.sexes)
+            foreach (Gender gender in this.genders)
             {
-                await dbContext.Sexes.AddAsync(new Sex
+                await dbContext.Genders.AddAsync(new Gender
                 {
-                    Name = sex.Name,
+                    Name = gender.Name,
                 });
                 await dbContext.SaveChangesAsync(); // Do it on each step to preserve insertion order. :(
             }
