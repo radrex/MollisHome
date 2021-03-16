@@ -1,6 +1,8 @@
 ﻿namespace MollisHome.Services.DTOs.Products
 {
     using MollisHome.Services.DTOs.Base;
+    using MollisHome.Services.DTOs.Stock;
+    using MollisHome.Services.DTOs.Materials;
     using MollisHome.Services.DTOs.Categories;
 
     using System.Collections.Generic;
@@ -11,7 +13,7 @@
         public string Description { get; set; }
         public string ImgUrl { get; set; }
         public CategoryDTO Category { get; set; }
-        public IEnumerable<ProductMaterialDTO> Materials { get; set; }
-        public IEnumerable<ProductStockDTO> Stock { get; set; }
+        public IEnumerable<MaterialDTO> Materials { get; set; }
+        public IEnumerable<StockDTO> Stock { get; set; }
     }
 }

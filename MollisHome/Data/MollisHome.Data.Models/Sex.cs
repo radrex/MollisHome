@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Sex : BaseModel
+    public class Sex : BaseModel //TODO: Rename to Gender, Add Migration
     {
         //-------------- PROPERTIES ---------------
         [Required]

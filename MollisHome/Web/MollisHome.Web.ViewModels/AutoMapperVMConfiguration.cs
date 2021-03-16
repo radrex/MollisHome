@@ -2,7 +2,11 @@
 {
     using AutoMapper;
 
+    using MollisHome.Services.DTOs.Stock;
+    using MollisHome.Services.DTOs.Sizes;
+    using MollisHome.Services.DTOs.Colors;
     using MollisHome.Services.DTOs.Products;
+    using MollisHome.Services.DTOs.Materials;
     using MollisHome.Services.DTOs.Categories;
 
     using MollisHome.Web.ViewModels.Products;
@@ -14,12 +18,12 @@
         {
             CreateMap<CategoryDTO, CategoryVM>();
 
-            CreateMap<ProductMaterialDTO, ProductMaterialVM>();
-            CreateMap<ProductSexDTO, ProductSexVM>();
-            CreateMap<ProductSizeDTO, ProductSizeVM>();
-            CreateMap<ProductColorDTO, ProductColorVM>();
+            CreateMap<MaterialDTO, ProductMaterialVM>();
+            CreateMap<SexDTO, ProductSexVM>();
+            CreateMap<SizeDTO, ProductSizeVM>();
+            CreateMap<ColorDTO, ProductColorVM>();
 
-            CreateMap<ProductStockDTO, ProductStockVM>();
+            CreateMap<StockDTO, ProductStockVM>();
             CreateMap<ProductDTO, ProductVM>();
         }
     }

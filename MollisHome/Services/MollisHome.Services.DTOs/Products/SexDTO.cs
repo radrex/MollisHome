@@ -2,7 +2,7 @@
 {
     using MollisHome.Services.DTOs.Base;
 
-    public class ProductSizeDTO : BaseDTO
+    public class SexDTO : BaseDTO
     {
         public string Name { get; set; }
     }

@@ -4,7 +4,11 @@
 
     using MollisHome.Data.Models;
 
+    using MollisHome.Services.DTOs.Stock;
+    using MollisHome.Services.DTOs.Sizes;
+    using MollisHome.Services.DTOs.Colors;
     using MollisHome.Services.DTOs.Products;
+    using MollisHome.Services.DTOs.Materials;
     using MollisHome.Services.DTOs.Categories;
 
     using System.Linq;
@@ -19,12 +23,12 @@
                     opt => opt.MapFrom(src => src.Categories)
                  );
 
-            CreateMap<Material, ProductMaterialDTO>();
-            CreateMap<Sex, ProductSexDTO>();
-            CreateMap<Size, ProductSizeDTO>();
-            CreateMap<Color, ProductColorDTO>();
+            CreateMap<Material, MaterialDTO>();
+            CreateMap<Sex, SexDTO>();
+            CreateMap<Size, SizeDTO>();
+            CreateMap<Color, ColorDTO>();
 
-            CreateMap<ProductStock, ProductStockDTO>()
+            CreateMap<ProductStock, StockDTO>()
                 .ForMember(
                     dest => dest.Product,
                     opt => opt.MapFrom(src => src.Product)
