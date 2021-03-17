@@ -5,10 +5,20 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+    /// <summary>
+    /// Applies configuration for <see cref="Category"/> entity.
+    /// Applies Unique Constraint for <see cref="Category.Name"/> property.
+    /// <para>Each <see cref="Category"/> has one Parent <see cref="Category"/>.</para>
+    /// <para>Each <see cref="Category"/> has many <see cref="Product"/>s.</para>
+    /// <para>Each <see cref="Category"/> has many <see cref="Category"/>s.</para>
+    /// </summary>
     public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> category)
         {
+            //------------------ UNIQUE ------------------
+            category.HasAlternateKey(x => x.Name);
+
             //------------------- ID's -------------------
             category.HasOne(c => c.ParentCategory)
                     .WithMany(pc => pc.Categories)

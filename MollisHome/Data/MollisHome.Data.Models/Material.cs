@@ -9,7 +9,7 @@
         [Required]
         public string Name { get; set; }
 
-        public int? Percentage { get; set; } // nullable int, in case we don't know the percentage
+        public byte? Percentage { get; set; }
 
         //------------ ProductMaterial [FK] MAPPING TABLE - MANY-TO-MANY -----------
         public virtual ICollection<ProductMaterial> Products { get; set; } = new HashSet<ProductMaterial>();

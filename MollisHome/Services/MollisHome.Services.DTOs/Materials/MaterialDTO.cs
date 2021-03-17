@@ -5,6 +5,6 @@
     public class MaterialDTO : BaseDTO
     {
         public string Name { get; set; }
-        public int? Percentage { get; set; }
+        public byte? Percentage { get; set; }
     }
 }

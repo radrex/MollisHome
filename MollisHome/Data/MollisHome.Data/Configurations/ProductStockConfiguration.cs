@@ -7,6 +7,7 @@
 
     /// <summary>
     /// Applies configuration for <see cref="ProductStock"/> many-to-many mapping entity.
+    /// Applies Check Constraint for <see cref="ProductStock.DiscountPercentage"/> property.
     /// <para>Each <see cref="ProductStock"/> has one <see cref="Product"/> with many <see cref="Gender"/>es, <see cref="Size">s and <see cref="Color">s.</para>
     /// <para>Each <see cref="ProductStock"/> has one <see cref="Gender"/> with many <see cref="Product"/>s.</para>
     /// <para>Each <see cref="ProductStock"/> has one <see cref="Size"/> with many <see cref="Product"/>s.</para>
@@ -16,6 +17,9 @@
     {
         public void Configure(EntityTypeBuilder<ProductStock> productStock)
         {
+            //------------------ CHECK  ------------------
+            productStock.HasCheckConstraint("CHK_ProductStock_DiscountPercentage", "[DiscountPercentage] >= 0 AND [DiscountPercentage] <= 100");
+
             //--------------- COMPOUND KEY ---------------
             productStock.HasKey(ps => new { ps.ProductId, ps.GenderId, ps.SizeId, ps.ColorId });
 

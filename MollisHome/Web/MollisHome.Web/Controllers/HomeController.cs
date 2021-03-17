@@ -5,7 +5,9 @@
     using MollisHome.Web.Models;
     using MollisHome.Web.ViewModels.Categories;
 
+    using MollisHome.Services.Data.Products;
     using MollisHome.Services.Data.Categories;
+
     using MollisHome.Services.DTOs.Categories;
 
     using Microsoft.AspNetCore.Mvc;
@@ -22,19 +24,32 @@
         //---------------- FIELDS -----------------
         private readonly IMapper mapper;
         private readonly ICategoriesService categoriesService;
+        private readonly IProductsService productsService;
 
         //------------- CONSTRUCTORS --------------
-        public HomeController(IMapper mapper, ICategoriesService categoriesService)
+        public HomeController(IMapper mapper, ICategoriesService categoriesService, IProductsService productsService)
         {
             this.categoriesService = categoriesService;
+            this.productsService = productsService;
             this.mapper = mapper;
         }
 
         //-----------------------------------------------------------------------------------------------------//
         //                                           ACTION METHODS                                            //
         //-----------------------------------------------------------------------------------------------------//
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            //await this.categoriesService.CreateAsync(new CategoryDTO
+            //{
+            //    Name = "Баня3",
+            //    Description = "Lorem ipsum",
+            //    ImgUrl = "",
+            //    ParentCategory = new CategoryDTO
+            //    {
+            //        Id = 1,
+            //    }
+            //});
+
             //---------------- Menu categories data ----------------
             var categoryDTOs = this.categoriesService.GetRootCategories();
             var categoryVMs = categoryDTOs.Select(x => mapper.Map<CategoryDTO, CategoryVM>(x)).ToList();

@@ -10,6 +10,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Collections.Generic;
 
     public abstract class BaseService<TModel, TDTO> : IBaseService<TModel, TDTO> where TModel: BaseModel where TDTO: BaseDTO
@@ -42,10 +43,11 @@
             return this.mapper.Map<TModel, TDTO>(this.dbSet.FirstOrDefault(x => x.Id == id));
         }
 
-        public void Create(TModel item)
+        public Task CreateAsync(TDTO item)
         {
-            this.dbSet.Add(item);
-            this.dbContext.SaveChanges();
+            TModel model = this.mapper.Map<TDTO, TModel>(item);
+            this.dbSet.Add(model);
+            return this.dbContext.SaveChangesAsync(); // TODO: Throws exception if UNIQUE and CHECK CONSTRAINTS are not passing. Handle the exceptions.
         }
 
         public void Update(TModel item)
@@ -54,17 +56,17 @@
             this.dbContext.SaveChanges();
         }
 
-        public void Save(TModel item)
-        {
-            if (item.Id != 0)
-            {
-                this.Update(item);
-            } 
-            else
-            {
-                this.Create(item);
-            }
-        }
+        //public void Save(TModel item)
+        //{
+        //    if (item.Id != 0)
+        //    {
+        //        this.Update(item);
+        //    } 
+        //    else
+        //    {
+        //        this.CreateAsync(item);
+        //    }
+        //}
 
         public void Delete(int id)
         {
@@ -74,6 +76,5 @@
             this.dbSet.Remove(entity);
             this.dbContext.SaveChanges();
         }
-
     }
 }

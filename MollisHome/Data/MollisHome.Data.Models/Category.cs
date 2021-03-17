@@ -2,11 +2,13 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Category : BaseModel
     {
         //-------------- PROPERTIES ---------------
         [Required]
+        [Column(TypeName = "nvarchar(450)")] // Using this for UNIQUE Constraint, because migration is causing problems. Also add UNIQUE Constraint for this column manually in migration.
         public string Name { get; set; }
 
         [Required]

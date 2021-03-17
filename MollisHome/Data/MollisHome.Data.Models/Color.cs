@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Color : BaseModel
     {
@@ -10,6 +11,7 @@
         public string Name { get; set; }
 
         [Required]
+        [Column(TypeName = "char(7)")]
         public string HexValue { get; set; }
 
         //------------ ProductStock [FK] MAPPING TABLE - MANY-TO-MANY -----------

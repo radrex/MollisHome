@@ -7,12 +7,16 @@
 
     /// <summary>
     /// Applies configuration for <see cref="Color"/> entity.
+    /// Applies Unique Constraint for <see cref="Color.Name"/> property.
     /// <para>Each <see cref="Color"/> has many <see cref="Product"/>s.</para>
     /// </summary>
     public class ColorConfiguration : IEntityTypeConfiguration<Color>
     {
         public void Configure(EntityTypeBuilder<Color> color)
         {
+            //------------------ UNIQUE ------------------
+            color.HasAlternateKey(x => x.Name);
+
             //--------------- COLLECTIONS ----------------
             color.HasMany(c => c.Products)
                  .WithOne(p => p.Color)

@@ -7,6 +7,7 @@
 
     /// <summary>
     /// Applies configuration for <see cref="Product"/> entity.
+    /// Applies Composite Unique Constraint for <see cref="Product.Name"/> and <see cref="Product.CategoryId"/> properties.
     /// <para>Each <see cref="Product"/> has one <see cref="Category"/>.</para>
     /// <para>Each <see cref="Product"/> has many <see cref="Material"/>s.</para>
     /// <para>Each <see cref="Product"/> has many <see cref="Color"/>s.</para>
@@ -18,6 +19,9 @@
     {
         public void Configure(EntityTypeBuilder<Product> product)
         {
+            //------------------ UNIQUE ------------------
+            product.HasAlternateKey(x => new { x.Name, x.CategoryId });
+
             //------------------- ID's -------------------
             product.HasOne(p => p.Category)
                    .WithMany(c => c.Products)

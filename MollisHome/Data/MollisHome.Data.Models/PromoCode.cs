@@ -6,7 +6,7 @@
     {
         public string Code { get; set; }
         public bool IsUsed { get; set; }
-        public int DiscountPercentage { get; set; }
+        public byte DiscountPercentage { get; set; }
         public DateTime ExpirationDateStart { get; set; }
         public DateTime ExpirationDateEnd { get; set; }
 

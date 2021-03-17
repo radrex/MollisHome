@@ -13,7 +13,7 @@
         public ColorDTO Color { get; set; }
         public int Quantity { get; set; }
         public int Sold { get; set; }
-        public int DiscountPercentage { get; set; }
+        public byte DiscountPercentage { get; set; }
         public decimal Price { get; set; }
     }
 }
