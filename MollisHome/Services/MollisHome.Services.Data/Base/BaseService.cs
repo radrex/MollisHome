@@ -43,11 +43,20 @@
             return this.mapper.Map<TModel, TDTO>(this.dbSet.FirstOrDefault(x => x.Id == id));
         }
 
-        public Task CreateAsync(TDTO item)
+        public async Task<string> CreateAsync(TDTO item)
         {
             TModel model = this.mapper.Map<TDTO, TModel>(item);
             this.dbSet.Add(model);
-            return this.dbContext.SaveChangesAsync(); // TODO: Throws exception if UNIQUE and CHECK CONSTRAINTS are not passing. Handle the exceptions.
+
+            try
+            {
+                await this.dbContext.SaveChangesAsync();
+                return $"Entity with ID: {model.Id} created.";
+            }
+            catch (DbUpdateException e)
+            {
+                return ExceptionPrettifier.PrettifyExceptionMessage(e.InnerException.Message);
+            }
         }
 
         public void Update(TModel item)

@@ -13,7 +13,7 @@
         bool HasEntities();
         IEnumerable<TDTO> GetAll();
         TDTO GetById(int id);
-        Task CreateAsync(TDTO item);
+        Task<string> CreateAsync(TDTO item);
         void Update(TModel item);
         //void Save(TModel item);
         void Delete(int id);
