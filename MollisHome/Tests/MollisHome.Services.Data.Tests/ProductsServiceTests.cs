@@ -3,6 +3,7 @@
     using MollisHome.Data;
     using MollisHome.Data.Seeding;
     using MollisHome.Services.Data.Products;
+    using MollisHome.Services.DTOs.Products;
 
     using Xunit;
 
@@ -10,7 +11,9 @@
 
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Collections.Generic;
+    using MollisHome.Services.DTOs.Categories;
 
     public class ProductsServiceTests : IClassFixture<DbFixture>
     {
@@ -80,9 +83,46 @@
             Assert.Null(productsService.GetById(id));
         }
 
+        //---- Create(Category categoryDTO) ----
+        [Theory]
+        [InlineData(4, "Лимон", "Лорем ипсум", 8)]
+        [InlineData(4, "Портокал", "Лорем ипсум", 13)]
+        [InlineData(4, "MEGA PROTECTOR", "Лорем ипсум", 10)]
+        public async Task CreateCategory_ReturnsCorrectMessage(int expectedId, string product, string description, int categoryId)
+        {
+            Assert.Equal($"Entity with ID: {expectedId} created.", await productsService.CreateAsync(new ProductDTO
+            {
+                Name = product,
+                ImgUrl = "",
+                Description = description,
+                Category = new CategoryDTO
+                {
+                    Id = categoryId,
+                }
+            }));
+
+            //create new db context for these tests
+            //savechanges
+        }
+
+        [Theory]
+        [InlineData("Сидни", "Volcano cake", 8)]
+        public async Task CreateCategory_ReturnsCorrectExceptionMessage(string product, string description, int categoryId)
+        {
+            Assert.Equal($"Cannot insert duplicate key in Products. The duplicate key is ({product}, {categoryId})", await productsService.CreateAsync(new ProductDTO
+            {
+                Name = product,
+                ImgUrl = "",
+                Description = description,
+                Category = new CategoryDTO
+                {
+                    Id = categoryId,
+                }
+            }));
+        }
+
 
         //TODO: write tests for these methods
-        //---- Create(Category category) ----
         //---- Update(Category category) ----
         //---- Save(Category category) ----
         //---- Delete(int id) ----

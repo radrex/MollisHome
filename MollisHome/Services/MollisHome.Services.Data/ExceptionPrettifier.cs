@@ -44,7 +44,7 @@
                                   .ToList();
             }
 
-            return String.Format(constraints.FirstOrDefault(x => exceptionMessage.Contains(x.Key)).Value, arguments);
+            return String.Format(constraints.FirstOrDefault(x => exceptionMessage.Contains(x.Key)).Value, arguments.ToArray());
         }
     }
 }

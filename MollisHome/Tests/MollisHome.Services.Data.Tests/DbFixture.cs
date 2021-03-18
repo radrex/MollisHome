@@ -28,8 +28,8 @@
                 x.AddProfile(new AutoMapperDTOConfiguration());
             });
 
-            services.AddSingleton<IProductsService, ProductsService>();
-            services.AddSingleton<ICategoriesService, CategoriesService>();
+            services.AddTransient<IProductsService, ProductsService>();
+            services.AddTransient<ICategoriesService, CategoriesService>();
 
             this.ServiceProvider = services.BuildServiceProvider();
         }
