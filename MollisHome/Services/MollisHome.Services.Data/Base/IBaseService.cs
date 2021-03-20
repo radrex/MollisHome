@@ -16,6 +16,6 @@
         Task<string> CreateAsync(TDTO item);
         void Update(TModel item);
         //void Save(TModel item);
-        void Delete(int id);
+        Task<string> RemoveAsync(int id);
     }
 }

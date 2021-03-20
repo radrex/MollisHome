@@ -2,6 +2,7 @@
 {
     using MollisHome.Data;
     using MollisHome.Data.Models;
+    using MollisHome.Data.Seeding;
 
     using MollisHome.Services.Data.Products;
     using MollisHome.Services.Data.Categories;
@@ -28,10 +29,14 @@
                 x.AddProfile(new AutoMapperDTOConfiguration());
             });
 
-            services.AddTransient<IProductsService, ProductsService>();
-            services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddSingleton<IProductsService, ProductsService>();
+            services.AddSingleton<ICategoriesService, CategoriesService>();
 
             this.ServiceProvider = services.BuildServiceProvider();
+
+            //maybe I should seed here instead of serviceTests class
+            ApplicationDbContext dbContext = this.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            new DatabaseSeeder().SeedAsync(dbContext, this.ServiceProvider).GetAwaiter().GetResult();
         }
 
         //-------------- PROPERTIES ---------------

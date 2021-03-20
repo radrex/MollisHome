@@ -54,7 +54,7 @@
                 HexValue = "#2ba700",
             });
 
-
+            var test = await colorsService.RemoveAsync(1);
 
             //var errMsg = await productsService.CreateAsync(new Services.DTOs.Products.ProductDTO
             //{

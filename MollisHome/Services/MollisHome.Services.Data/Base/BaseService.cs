@@ -45,16 +45,19 @@
 
         public async Task<string> CreateAsync(TDTO item)
         {
-            TModel model = this.mapper.Map<TDTO, TModel>(item);
-            this.dbSet.Add(model);
+            // Make some kind of validation before the try catch for the db I guess...
 
-            try
+            TModel model = this.mapper.Map<TDTO, TModel>(item);
+            
+            try // maybe use another catch for different exception, check exception order execution for that
             {
+                await this.dbSet.AddAsync(model);
                 await this.dbContext.SaveChangesAsync();
                 return $"Entity with ID: {model.Id} created.";
             }
             catch (DbUpdateException e)
             {
+                this.dbContext.Entry<TModel>(model).State = EntityState.Detached;
                 return ExceptionPrettifier.PrettifyExceptionMessage(e.InnerException.Message);
             }
         }
@@ -77,13 +80,19 @@
         //    }
         //}
 
-        public void Delete(int id)
+        public async Task<string> RemoveAsync(int id)
         {
-            var entity = this.dbSet.FirstOrDefault(x => x.Id == id);
-            if (entity == null) return;
+            // have to remove mapping table entities as well
+
+            var entity = this.dbSet.Find(id);
+            if (entity is null)
+            {
+                return $"Entity with ID: {id} doesn't exist.";
+            }
 
             this.dbSet.Remove(entity);
-            this.dbContext.SaveChanges();
+            await this.dbContext.SaveChangesAsync();
+            return $"Entity with ID: {id} removed successfully. All entities associated with it are also deleted.";
         }
     }
 }
