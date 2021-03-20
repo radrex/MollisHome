@@ -25,7 +25,11 @@
 
                 { "CHK_Material_Percentage", "Percentage must be in range [0-100]" },
                 { "CHK_ProductStock_DiscountPercentage", "Discount Percentage must be in range [0-100]" },
+                { "CHK_ProductStock_Quantity", "Quantity must be more than or equal 0" },
+                { "CHK_ProductStock_Sold", "Sold items must be more than or equal 0" },
+                { "CHK_ProductStock_Price", "Price must be more than 0" },
                 { "CHK_PromoCode_DiscountPercentage", "Discount Percentage must be in range [0-100]" },
+                { "CHK_Order_TotalPrice", "Total Price must be in range more than 0" },
             };
         }
 

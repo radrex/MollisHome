@@ -15,6 +15,9 @@
     {
         public void Configure(EntityTypeBuilder<Order> order)
         {
+            //------------------ CHECK  ------------------
+            order.HasCheckConstraint("CHK_Order_TotalPrice", "[TotalPrice] > 0");
+
             //------------------- ID's -------------------
             order.HasOne(o => o.User)
                  .WithMany(u => u.Orders)
