@@ -28,6 +28,9 @@
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
 
+        //------------ Cart [FK] - ONE-TO-ONE -----------
+        public virtual Cart Cart { get; set; }
+
         //------------ Order [FK] - ONE-TO-MANY -----------
         public virtual ICollection<Order> Orders { get; set; }
     }

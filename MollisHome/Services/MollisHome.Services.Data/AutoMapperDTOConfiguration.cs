@@ -22,7 +22,11 @@
                 .ForMember(
                     dest => dest.Categories,
                     opt => opt.MapFrom(src => src.Categories)
-                 ).ReverseMap()
+                 )
+                .ForMember(
+                    dest => dest.Products,
+                    opt => opt.MapFrom(src => src.Products)
+                ).ReverseMap()
                  .ForMember(dest => dest.ParentCategory, opt => opt.Ignore());
 
             CreateMap<Material, MaterialDTO>().ReverseMap();

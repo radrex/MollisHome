@@ -1,13 +1,13 @@
 ﻿namespace MollisHome.Data.Models
 {
-    public class ProductOrder
+    public class ProductCart
     {
         //------------ Product [FK] -----------
         public int ProductId { get; set; }
         public virtual Product Product { get; set; }
 
-        //------------ Order [FK] -----------
-        public int OrderId { get; set; }
-        public virtual Order Order { get; set; }
+        //------------ Material [FK] -----------
+        public int CartId { get; set; }
+        public virtual Cart Cart { get; set; }
     }
 }

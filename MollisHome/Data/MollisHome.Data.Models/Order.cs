@@ -11,14 +11,20 @@
         public string Email { get; set; }
 
         [Required]
-        public string Address { get; set; }
-
-        [Required]
         public string Phone { get; set; }
+
+        public bool IsProcessed { get; set; }
+
+        public string TrackingNumber { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(6,2)")]
-        public decimal TotalPrice { get; set; }
+        public decimal TotalPrice { get; set; } // Calculated property ? through user ?
+
+        //------------ Address [FK] - ONE-TO-MANY -----------
+        [Required]
+        public int AddressId { get; set; }
+        public virtual Address Address { get; set; }
 
         //------------ User [FK] - ONE-TO-MANY -----------
         [Required]
@@ -30,7 +36,7 @@
         public int? PromoCodeId { get; set; }
         public virtual PromoCode PromoCode { get; set; }
 
-        //------------ ProductOrder [FK] MAPPING TABLE - MANY-TO-MANY -----------
-        public virtual ICollection<ProductOrder> Products { get; set; } = new HashSet<ProductOrder>();
+        //------------ OrderItems [FK] MAPPING TABLE - MANY-TO-MANY -----------
+        public virtual ICollection<OrderItem> Items { get; set; } = new HashSet<OrderItem>();
     }
 }

@@ -200,89 +200,102 @@
       "id": 1,
       "name": "Баня",
       "description": "Lorem ipsum",
-      "imgUrl": ""
+      "imgUrl": "",
+      "isLastNode" : false
     },
     {
       "id": 2,
       "name": "Кухня",
       "description": "Lorem ipsum",
-      "imgUrl": ""
+      "imgUrl": "",
+      "isLastNode": false
     },
     {
       "id": 3,
       "name": "Спалня",
       "description": "Lorem ipsum",
-      "imgUrl": ""
+      "imgUrl": "",
+      "isLastNode": false
     },
     {
       "id": 4,
       "name": "Халат",
       "description": "Lorem ipsum",
       "imgUrl": "",
-      "parentCategoryId": 1
+      "parentCategoryId": 1,
+      "isLastNode": true
     },
     {
       "id": 5,
       "name": "Кърпа",
       "description": "Lorem ipsum",
       "imgUrl": "",
-      "parentCategoryId": 1
+      "parentCategoryId": 1,
+      "isLastNode": false
     },
     {
       "id": 6,
       "name": "Кърпа за тяло",
       "description": "Lorem ipsum",
       "imgUrl": "",
-      "parentCategoryId": 5
+      "parentCategoryId": 5,
+      "isLastNode": true
     },
     {
       "id": 7,
       "name": "Кърпа за лице",
       "description": "Lorem ipsum",
       "imgUrl": "",
-      "parentCategoryId": 5
+      "parentCategoryId": 5,
+      "isLastNode": true
     },
     {
       "id": 8,
       "name": "Кърпа за ръце",
       "description": "Lorem ipsum",
       "imgUrl": "",
-      "parentCategoryId": 5
+      "parentCategoryId": 5,
+      "isLastNode": true
     },
     {
       "id": 9,
       "name": "Олекотени завивки",
       "description": "Lorem ipsum",
       "imgUrl": "",
-      "parentCategoryId": 3
+      "parentCategoryId": 3,
+      "isLastNode": true
     },
     {
       "id": 10,
       "name": "Протектори",
       "description": "Lorem ipsum",
       "imgUrl": "",
-      "parentCategoryId": 3
+      "parentCategoryId": 3,
+      "isLastNode": true
     },
     {
       "id": 11,
       "name": "Спално бельо",
       "description": "Lorem ipsum",
       "imgUrl": "",
-      "parentCategoryId": 3
+      "parentCategoryId": 3,
+      "isLastNode": true
     },
     {
       "id": 12,
       "name": "Одеяла",
       "description": "Lorem ipsum",
       "imgUrl": "",
-      "parentCategoryId": 3
+      "parentCategoryId": 3,
+      "isLastNode": true
     },
     {
       "id": 13,
       "name": "Кувертюри",
       "description": "Lorem ipsum",
       "imgUrl": "",
-      "parentCategoryId": 3
+      "parentCategoryId": 3,
+      "isLastNode": true
     }
   ],
 
@@ -293,6 +306,7 @@
       "description": "Лорем ипсум бате",
       "imgUrl": "",
       "categoryId": 8,
+      "rating": 0,
       "materialIds": [ 1 ],
       "prices": [ 10, 15, 20 ],
       "quantities": [ 10, 5, 2 ],
@@ -307,6 +321,7 @@
       "description": "Лорем ипсум бате",
       "imgUrl": "",
       "categoryId": 8,
+      "rating": 3,
       "materialIds": [ 2 ],
       "prices": [ 20, 22, 15 ],
       "quantities": [ 10, 2, 9 ],
@@ -321,6 +336,7 @@
       "description": "Лорем ипсум бате",
       "imgUrl": "",
       "categoryId": 8,
+      "rating": 5,
       "materialIds": [ 1 ],
       "prices": [ 5, 2, 5 ],
       "quantities": [ 10, 4, 1 ],

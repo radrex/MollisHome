@@ -16,6 +16,8 @@
         [Required]
         public string ImgUrl { get; set; }
 
+        public int Rating { get; set; }
+
         //------------ ONLY FOR SEEDING (Deserialized data from seed.json) - NOT MAPPED -----------
         [NotMapped]
         public int[] MaterialIds { get; set; }
@@ -49,7 +51,7 @@
         //------------ ProductStock [FK] MAPPING TABLE - MANY-TO-MANY -----------
         public virtual ICollection<ProductStock> Stock { get; set; } = new HashSet<ProductStock>();
 
-        //------------ ProductOrder [FK] MAPPING TABLE - MANY-TO-MANY -----------
-        public virtual ICollection<ProductOrder> Orders { get; set; } = new HashSet<ProductOrder>();
+        //------------ ProductCart [FK] MAPPING TABLE - MANY-TO-MANY -----------
+        public virtual ICollection<ProductCart> Carts { get; set; } = new HashSet<ProductCart>();
     }
 }

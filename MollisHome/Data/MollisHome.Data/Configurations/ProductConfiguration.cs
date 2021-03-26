@@ -13,7 +13,7 @@
     /// <para>Each <see cref="Product"/> has many <see cref="Color"/>s.</para>
     /// <para>Each <see cref="Product"/> has many <see cref="Size"/>s.</para>
     /// <para>Each <see cref="Product"/> has many <see cref="Gender"/>s.</para>
-    /// <para>Each <see cref="Product"/> has many <see cref="Order"/>s.</para>
+    /// <para>Each <see cref="Product"/> has many <see cref="Cart"/>s.</para>
     /// </summary>
     public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
@@ -21,6 +21,9 @@
         {
             //------------------ UNIQUE ------------------
             product.HasAlternateKey(x => new { x.Name, x.CategoryId });
+
+            //------------------ CHECK  ------------------
+            product.HasCheckConstraint("CHK_Product_Rating", "[Rating] >= 0 AND [Rating] <= 5");
 
             //------------------- ID's -------------------
             product.HasOne(p => p.Category)
@@ -39,9 +42,9 @@
                    .HasForeignKey(s => s.ProductId)
                    .OnDelete(DeleteBehavior.Restrict);
 
-            product.HasMany(p => p.Orders)
-                   .WithOne(s => s.Product)
-                   .HasForeignKey(s => s.ProductId)
+            product.HasMany(p => p.Carts)
+                   .WithOne(c => c.Product)
+                   .HasForeignKey(c => c.ProductId)
                    .OnDelete(DeleteBehavior.Restrict);
         }
     }

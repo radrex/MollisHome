@@ -34,6 +34,7 @@
                     Description = product.Description,
                     ImgUrl = product.ImgUrl,
                     CategoryId = product.CategoryId,
+                    Rating = product.Rating,
                 });
                 await dbContext.SaveChangesAsync(); // Do it on each step to preserve insertion order. :(
 

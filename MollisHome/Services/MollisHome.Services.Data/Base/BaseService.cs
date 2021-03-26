@@ -9,6 +9,7 @@
 
     using Microsoft.EntityFrameworkCore;
 
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Collections.Generic;
@@ -19,6 +20,7 @@
         protected readonly IMapper mapper;
         protected readonly ApplicationDbContext dbContext;
         protected readonly DbSet<TModel> dbSet;
+        private readonly Dictionary<string, Func<int, Task<string>>> delegates;
 
         //------------- CONSTRUCTORS --------------
         public BaseService(IMapper mapper, ApplicationDbContext dbContext)
@@ -26,8 +28,17 @@
             this.mapper = mapper;
             this.dbContext = dbContext;
             this.dbSet = this.dbContext.Set<TModel>();
+
+            this.delegates = new Dictionary<string, Func<int, Task<string>>>();
+            delegates["Color"] = new Func<int, Task<string>>(DeleteColorAndAssociates);
+            delegates["Size"] = new Func<int, Task<string>>(DeleteSizeAndAssociates);
+            delegates["Gender"] = new Func<int, Task<string>>(DeleteGenderAndAssociates);
+            delegates["Material"] = new Func<int, Task<string>>(DeleteMaterialAndAssociates);
+            delegates["Product"] = new Func<int, Task<string>>(DeleteProductAndAssociates);
+            delegates["Category"] = new Func<int, Task<string>>(DeleteCategoryAndAssociates);
         }
 
+        //--------------- PUBLIC METHODS -----------------
         public bool HasEntities()
         {
             return this.dbSet.Any();
@@ -68,31 +79,139 @@
             this.dbContext.SaveChanges();
         }
 
-        //public void Save(TModel item)
-        //{
-        //    if (item.Id != 0)
-        //    {
-        //        this.Update(item);
-        //    } 
-        //    else
-        //    {
-        //        this.CreateAsync(item);
-        //    }
-        //}
-
-        public async Task<string> RemoveAsync(int id)
+        public async Task<string> DeleteAsync(int id)
         {
-            // have to remove mapping table entities as well
+            return await this.delegates[typeof(TModel).Name].Invoke(id);
+        }
 
-            var entity = this.dbSet.Find(id);
-            if (entity is null)
+        //--------------- PRIVATE METHODS -----------------
+        private async Task<string> DeleteColorAndAssociates(int colorId)
+        {
+            var color = await this.dbContext.Colors.FindAsync(colorId);
+            if (color is null)
             {
-                return $"Entity with ID: {id} doesn't exist.";
+                return $"Color with {colorId} doesn't exist.";
             }
 
-            this.dbSet.Remove(entity);
+            var stock = color.Products.Where(x => x.Color.Id == color.Id).ToList();
+            string[] products = stock.Select(x => x.Product.Name).ToArray();
+
+            this.dbContext.ProductStock.RemoveRange(stock);
+            this.dbContext.Remove(color);
+
             await this.dbContext.SaveChangesAsync();
-            return $"Entity with ID: {id} removed successfully. All entities associated with it are also deleted.";
+            return $"Color: {color.Name} deleted.{Environment.NewLine}Products: {String.Join(", ", products)} deleted from Stock.";
         }
-    }
+
+        private async Task<string> DeleteSizeAndAssociates(int sizeId)
+        {
+            var size = await this.dbContext.Sizes.FindAsync(sizeId);
+            if (size is null)
+            {
+                return $"Size with {sizeId} doesn't exist.";
+            }
+
+            var stock = size.Products.Where(x => x.Size.Id == sizeId).ToList();
+            string[] products = stock.Select(x => x.Product.Name).ToArray();
+
+            this.dbContext.ProductStock.RemoveRange(stock);
+            this.dbContext.Remove(size);
+
+            await this.dbContext.SaveChangesAsync();
+            return $"Size: {size.Name} deleted.{Environment.NewLine}Products: {String.Join(", ", products)} deleted from Stock.";
+        }
+
+        private async Task<string> DeleteGenderAndAssociates(int genderId)
+        {
+            var gender = await this.dbContext.Genders.FindAsync(genderId);
+            if (gender is null)
+            {
+                return $"Gender with {genderId} doesn't exist.";
+            }
+
+            var stock = gender.Products.Where(x => x.Gender.Id == genderId).ToList();
+            string[] products = stock.Select(x => x.Product.Name).ToArray();
+
+            this.dbContext.ProductStock.RemoveRange(stock);
+            this.dbContext.Remove(gender);
+
+            await this.dbContext.SaveChangesAsync();
+            return $"Gender: {gender.Name} deleted.{Environment.NewLine}Products: {String.Join(", ", products)} deleted from Stock.";
+        }
+
+        private async Task<string> DeleteMaterialAndAssociates(int materialId)
+        {
+            var material = await this.dbContext.Materials.FindAsync(materialId);
+            if (material is null)
+            {
+                return $"Material with {materialId} doesn't exist.";
+            }
+
+            var productMaterials = material.Products.Where(x => x.Material.Id == materialId).ToList();
+            string[] products = productMaterials.Select(x => x.Product.Name).ToArray();
+
+            this.dbContext.ProductMaterials.RemoveRange(productMaterials);
+            this.dbContext.Remove(material);
+
+            await this.dbContext.SaveChangesAsync();
+            return $"Material: {material.Name} deleted.{Environment.NewLine}Products: {String.Join(", ", products)} deleted from ProductMaterials.";
+        }
+
+        private async Task<string> DeleteProductAndAssociates(int productId)
+        {
+            var product = await this.dbContext.Products.FindAsync(productId);
+            if (product is null)
+            {
+                return $"Product with {productId} doesn't exist.";
+            }
+
+            var productMaterials = product.Materials.Where(x => x.Product.Id == productId).ToList();
+            string[] materials = productMaterials.Select(x => x.Material.Name).ToArray();
+            this.dbContext.ProductMaterials.RemoveRange(productMaterials);
+
+            var productStock = product.Stock.Where(x => x.Product.Id == productId).ToList();
+            var genderSizeColor = productStock.Select(x => new Tuple<string, string, string>(x.Gender.Name, x.Size.Name, x.Color.Name)).ToList();
+            this.dbContext.ProductStock.RemoveRange(productStock);
+
+            var productCarts = product.Carts.Where(x => x.Product.Id == productId).ToList();
+            var userCarts = productCarts.Select(x => x.Cart.User.UserName).ToList();
+            this.dbContext.RemoveRange(productCarts);
+
+            this.dbContext.Remove(product);
+            await this.dbContext.SaveChangesAsync();
+
+            // TODO: Check for empty collections in the message
+            return $"Product: {product.Name} deleted.{Environment.NewLine}" +
+                   $"Materials: {String.Join(", ", materials)} deleted from ProductMaterials.{Environment.NewLine}" +
+                   $"Genders: {String.Join(", ", genderSizeColor.Select(x => x.Item1))} deleted from ProductStock.{Environment.NewLine}" +
+                   $"Sizes: {String.Join(", ", genderSizeColor.Select(x => x.Item2))} deleted from ProductStock.{Environment.NewLine}" +
+                   $"Colors: {String.Join(", ", genderSizeColor.Select(x => x.Item3))} deleted from ProductStock.{Environment.NewLine}" +
+                   $"Carts for {String.Join(", ", userCarts)} users deleted from ProductCarts.";
+        }
+
+        private async Task<string> DeleteCategoryAndAssociates(int categoryId)
+        {
+            var category = await this.dbContext.Categories.FindAsync(categoryId);
+            if (category is null)
+            {
+                return $"Category with {categoryId} doesn't exist.";
+            }
+
+
+            //what if no id? and what if the products are in subcategory, and what about subcategories ?
+            //isLastNode?
+            var ids = category.Products.Select(x => x.Id).ToList();
+            if (category.Categories.Count() != 0)
+            {
+
+            }
+
+            var deletedEntries = category.Products.Select(x => x.Id).ToList().Select(x => this.DeleteProductAndAssociates(x).Result).ToList();
+
+            this.dbContext.Remove(category);
+            await this.dbContext.SaveChangesAsync();
+
+            return String.Join("", deletedEntries.Prepend($"Category: {category.Name} deleted.{Environment.NewLine}"));
+        }
+     }
 }

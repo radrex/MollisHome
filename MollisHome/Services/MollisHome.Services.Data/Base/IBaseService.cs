@@ -15,7 +15,6 @@
         TDTO GetById(int id);
         Task<string> CreateAsync(TDTO item);
         void Update(TModel item);
-        //void Save(TModel item);
-        Task<string> RemoveAsync(int id);
+        Task<string> DeleteAsync(int id);
     }
 }

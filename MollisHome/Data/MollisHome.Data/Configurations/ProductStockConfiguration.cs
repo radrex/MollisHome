@@ -11,7 +11,7 @@
     /// Applies Check Constraint for <see cref="ProductStock.Quantity"/> property.
     /// Applies Check Constraint for <see cref="ProductStock.Sold"/> property.
     /// Applies Check Constraint for <see cref="ProductStock.Price"/> property.
-    /// <para>Each <see cref="ProductStock"/> has one <see cref="Product"/> with many <see cref="Gender"/>es, <see cref="Size">s and <see cref="Color">s.</para>
+    /// <para>Each <see cref="ProductStock"/> has one <see cref="Product"/> with many <see cref="Gender"/>s, <see cref="Size">s and <see cref="Color">s.</para>
     /// <para>Each <see cref="ProductStock"/> has one <see cref="Gender"/> with many <see cref="Product"/>s.</para>
     /// <para>Each <see cref="ProductStock"/> has one <see cref="Size"/> with many <see cref="Product"/>s.</para>
     /// <para>Each <see cref="ProductStock"/> has one <see cref="Color"/> with many <see cref="Product"/>s.</para>

@@ -34,6 +34,7 @@
                     Description = category.Description,
                     ImgUrl = category.ImgUrl,
                     ParentCategoryId = category.ParentCategoryId,
+                    IsLastNode = category.IsLastNode,
                 });
                 await dbContext.SaveChangesAsync(); // Do it on each step to preserve insertion order. :(
             }

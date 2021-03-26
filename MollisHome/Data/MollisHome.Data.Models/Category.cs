@@ -17,6 +17,8 @@
         [Required]
         public string ImgUrl { get; set; }
 
+        public bool IsLastNode { get; set; }
+
         //------------ Category [FK] - ONE-TO-MANY - PARENT -----------
         public int? ParentCategoryId { get; set; }
         public virtual Category ParentCategory { get; set; }

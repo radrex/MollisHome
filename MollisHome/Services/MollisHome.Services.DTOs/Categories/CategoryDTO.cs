@@ -11,7 +11,6 @@
         public string ImgUrl { get; set; }
         public CategoryDTO ParentCategory { get; set; }
         public IEnumerable<CategoryDTO> Categories { get; set; }
-
-        //public IEnumerable<ProductDTO> Products { get; set; }
+        public IEnumerable<ProductDTO> Products { get; set; }
     }
 }
