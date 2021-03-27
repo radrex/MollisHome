@@ -42,7 +42,7 @@
 
         //------------ Category [FK] - ONE-TO-MANY -----------
         [Required]
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; } // Nullable for creating products without knowing their category yet. You can pick the category in later time by editing that product.
         public virtual Category Category { get; set; }
 
         //------------ ProductMaterial [FK] MAPPING TABLE - MANY-TO-MANY -----------

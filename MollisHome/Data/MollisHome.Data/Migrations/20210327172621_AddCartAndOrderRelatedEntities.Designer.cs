@@ -10,7 +10,7 @@ using MollisHome.Data;
 namespace MollisHome.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210326230219_AddCartAndOrderRelatedEntities")]
+    [Migration("20210327172621_AddCartAndOrderRelatedEntities")]
     partial class AddCartAndOrderRelatedEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -525,7 +525,8 @@ namespace MollisHome.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
