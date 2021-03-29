@@ -28,6 +28,7 @@
             order.HasOne(o => o.PromoCode)
                  .WithOne(pc => pc.Order)
                  .HasForeignKey<Order>(o => o.PromoCodeId)
+                 .IsRequired(false)
                  .OnDelete(DeleteBehavior.Restrict);
 
             //--------------- COLLECTIONS ----------------

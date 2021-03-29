@@ -320,9 +320,10 @@ namespace MollisHome.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name", "PostCode");
-
                     b.HasIndex("ProvinceId");
+
+                    b.HasIndex("Name", "PostCode")
+                        .IsUnique();
 
                     b.ToTable("Cities");
                 });
@@ -344,7 +345,8 @@ namespace MollisHome.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Colors");
                 });
@@ -362,7 +364,8 @@ namespace MollisHome.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Genders");
                 });
@@ -380,7 +383,8 @@ namespace MollisHome.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("ItemProperties");
                 });
@@ -398,7 +402,8 @@ namespace MollisHome.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("ItemValues");
                 });
@@ -415,12 +420,13 @@ namespace MollisHome.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<byte?>("Percentage")
-                        .IsRequired()
                         .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name", "Percentage");
+                    b.HasIndex("Name", "Percentage")
+                        .IsUnique()
+                        .HasFilter("[Percentage] IS NOT NULL");
 
                     b.ToTable("Materials");
 
@@ -544,9 +550,10 @@ namespace MollisHome.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name", "CategoryId");
-
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Products");
 
@@ -636,7 +643,6 @@ namespace MollisHome.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<byte>("DiscountPercentage")
@@ -653,7 +659,9 @@ namespace MollisHome.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Code");
+                    b.HasIndex("Code", "DiscountPercentage")
+                        .IsUnique()
+                        .HasFilter("[Code] IS NOT NULL");
 
                     b.ToTable("PromoCodes");
 
@@ -673,7 +681,8 @@ namespace MollisHome.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Provinces");
                 });
@@ -691,7 +700,8 @@ namespace MollisHome.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Sizes");
                 });
@@ -813,8 +823,7 @@ namespace MollisHome.Data.Migrations
                     b.HasOne("MollisHome.Data.Models.PromoCode", "PromoCode")
                         .WithOne("Order")
                         .HasForeignKey("MollisHome.Data.Models.Order", "PromoCodeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MollisHome.Data.Models.ApplicationUser", "User")
                         .WithMany("Orders")
@@ -861,8 +870,7 @@ namespace MollisHome.Data.Migrations
                     b.HasOne("MollisHome.Data.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Category");
                 });

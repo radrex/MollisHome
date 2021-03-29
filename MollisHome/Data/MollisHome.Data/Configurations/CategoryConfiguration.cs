@@ -17,12 +17,14 @@
         public void Configure(EntityTypeBuilder<Category> category)
         {
             //------------------ UNIQUE ------------------
-            category.HasAlternateKey(x => x.Name);
+            category.HasIndex(x => x.Name).IsUnique();
+            //category.HasAlternateKey(x => x.Name);
 
             //------------------- ID's -------------------
             category.HasOne(c => c.ParentCategory)
                     .WithMany(pc => pc.Categories)
                     .HasForeignKey(c => c.ParentCategoryId)
+                    .IsRequired(false)
                     .OnDelete(DeleteBehavior.Restrict);
 
             //--------------- COLLECTIONS ----------------

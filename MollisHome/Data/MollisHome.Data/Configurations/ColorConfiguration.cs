@@ -15,7 +15,8 @@
         public void Configure(EntityTypeBuilder<Color> color)
         {
             //------------------ UNIQUE ------------------
-            color.HasAlternateKey(x => x.Name);
+            color.HasIndex(x => x.Name).IsUnique();
+            //color.HasAlternateKey(x => x.Name);
 
             //--------------- COLLECTIONS ----------------
             color.HasMany(c => c.Products)

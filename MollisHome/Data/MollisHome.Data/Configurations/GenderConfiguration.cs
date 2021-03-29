@@ -15,7 +15,8 @@
         public void Configure(EntityTypeBuilder<Gender> gender)
         {
             //------------------ UNIQUE ------------------
-            gender.HasAlternateKey(x => x.Name);
+            gender.HasIndex(x => x.Name).IsUnique();
+            //gender.HasAlternateKey(x => x.Name);
 
             //--------------- COLLECTIONS ----------------
             gender.HasMany(s => s.Products)

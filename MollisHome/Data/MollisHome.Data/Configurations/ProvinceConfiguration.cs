@@ -15,7 +15,8 @@
         public void Configure(EntityTypeBuilder<Province> province)
         {
             //------------------ UNIQUE ------------------
-            province.HasAlternateKey(x => x.Name);
+            province.HasIndex(x => x.Name).IsUnique();
+            //province.HasAlternateKey(x => x.Name);
 
             //--------------- COLLECTIONS ----------------
             province.HasMany(p => p.Cities)

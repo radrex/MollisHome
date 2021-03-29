@@ -16,7 +16,8 @@
         public void Configure(EntityTypeBuilder<City> city)
         {
             //------------------ UNIQUE ------------------
-            city.HasAlternateKey(x => new { x.Name, x.PostCode });
+            city.HasIndex(x => new { x.Name, x.PostCode }).IsUnique();
+            //city.HasAlternateKey(x => new { x.Name, x.PostCode });
 
             //------------------- ID's -------------------
             city.HasOne(c => c.Province)

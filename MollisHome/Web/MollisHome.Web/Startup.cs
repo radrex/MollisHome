@@ -76,6 +76,7 @@ namespace MollisHome.Web
                 ApplicationDbContext dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 if (env.IsDevelopment())
                 {
+                    dbContext.Database.EnsureDeleted();
                     dbContext.Database.Migrate(); // Apply migration/seed everytime (for development purposes)
                 }
 

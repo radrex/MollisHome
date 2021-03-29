@@ -15,7 +15,8 @@
         public void Configure(EntityTypeBuilder<ItemValue> itemValue)
         {
             //------------------ UNIQUE ------------------
-            itemValue.HasAlternateKey(x => x.Name);
+            itemValue.HasIndex(x => x.Name).IsUnique();
+            //itemValue.HasAlternateKey(x => x.Name);
 
             //--------------- COLLECTIONS ----------------
             itemValue.HasMany(ip => ip.Orders)

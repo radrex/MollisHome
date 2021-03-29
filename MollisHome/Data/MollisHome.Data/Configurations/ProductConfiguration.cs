@@ -20,7 +20,8 @@
         public void Configure(EntityTypeBuilder<Product> product)
         {
             //------------------ UNIQUE ------------------
-            product.HasAlternateKey(x => new { x.Name, x.CategoryId });
+            product.HasIndex(x => x.Name).IsUnique();
+            //product.HasAlternateKey(x => new { x.Name, x.CategoryId });
 
             //------------------ CHECK  ------------------
             product.HasCheckConstraint("CHK_Product_Rating", "[Rating] >= 0 AND [Rating] <= 5");
@@ -29,6 +30,7 @@
             product.HasOne(p => p.Category)
                    .WithMany(c => c.Products)
                    .HasForeignKey(p => p.CategoryId)
+                   .IsRequired(false)
                    .OnDelete(DeleteBehavior.Restrict);
 
             //--------------- COLLECTIONS ----------------

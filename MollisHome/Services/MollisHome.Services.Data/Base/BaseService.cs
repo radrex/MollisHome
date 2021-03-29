@@ -56,7 +56,7 @@
 
         public async Task<string> CreateAsync(TDTO item)
         {
-            // Make some kind of validation before the try catch for the db I guess...
+            //TODO: Make some kind of validation before the try catch for the db I guess...
 
             TModel model = this.mapper.Map<TDTO, TModel>(item);
             
@@ -191,27 +191,47 @@
 
         private async Task<string> DeleteCategoryAndAssociates(int categoryId)
         {
-            var category = await this.dbContext.Categories.FindAsync(categoryId);
+            Category category = await this.dbContext.Categories.FindAsync(categoryId);
             if (category is null)
             {
                 return $"Category with {categoryId} doesn't exist.";
             }
 
+            string message = this.DeleteCategoriesRecursively(category, 0);
+            await this.dbContext.SaveChangesAsync();
+            return message;
+        }
 
-            //what if no id? and what if the products are in subcategory, and what about subcategories ?
-            //isLastNode?
-            var ids = category.Products.Select(x => x.Id).ToList();
-            if (category.Categories.Count() != 0)
+        private string DeleteCategoriesRecursively(Category category, int indentationSpaces)
+        {
+            List<string> messages = new List<string>();
+            if (category.IsLastNode)
             {
+                List<string> orphanProducts = new List<string>();
+                foreach (Product product in category.Products)
+                {
+                    orphanProducts.Add(product.Name);
+                    product.CategoryId = null;
+                }
 
+                this.dbContext.Remove(category);
+
+                messages.Add($"{new string(' ', indentationSpaces)}> Category: {category.Name} deleted.{Environment.NewLine}" +
+                             $"{(orphanProducts.Count() != 0 ? $"{new string(' ', indentationSpaces + 2)}> Products deasociated: {String.Join(", ", orphanProducts)}{Environment.NewLine}" : "")}");
+            }
+            else
+            {
+                foreach (Category childCategory in category.Categories)
+                {
+                    messages.Add(this.DeleteCategoriesRecursively(childCategory, indentationSpaces + 2));
+                }
+
+                category.IsLastNode = true;
+                messages.Add(this.DeleteCategoriesRecursively(category, indentationSpaces));
             }
 
-            var deletedEntries = category.Products.Select(x => x.Id).ToList().Select(x => this.DeleteProductAndAssociates(x).Result).ToList();
-
-            this.dbContext.Remove(category);
-            await this.dbContext.SaveChangesAsync();
-
-            return String.Join("", deletedEntries.Prepend($"Category: {category.Name} deleted.{Environment.NewLine}"));
+            messages.Reverse();
+            return String.Join("", messages);
         }
-     }
+    }
 }

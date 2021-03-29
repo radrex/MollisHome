@@ -17,8 +17,8 @@
         public void Configure(EntityTypeBuilder<PromoCode> promoCode)
         {
             //------------------ UNIQUE ------------------
-            promoCode.HasAlternateKey(x => x.Code);
-            //TODO: Should I use composite unique constraint for Code + DiscountPercentage
+            promoCode.HasIndex(x => new { x.Code, x.DiscountPercentage }).IsUnique();
+            //promoCode.HasAlternateKey(x => x.Code);
 
             //------------------ CHECK  ------------------
             promoCode.HasCheckConstraint("CHK_PromoCode_DiscountPercentage", "[DiscountPercentage] >= 0 AND [DiscountPercentage] <= 100");

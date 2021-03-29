@@ -10,8 +10,8 @@ using MollisHome.Data;
 namespace MollisHome.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210316122449_RenameEntitySexToGender")]
-    partial class RenameEntitySexToGender
+    [Migration("20210328085918_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -227,6 +227,49 @@ namespace MollisHome.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("MollisHome.Data.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCourierAddress")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Carts");
+                });
+
             modelBuilder.Entity("MollisHome.Data.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -242,9 +285,12 @@ namespace MollisHome.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsLastNode")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("ParentCategoryId")
                         .HasColumnType("int");
@@ -256,6 +302,34 @@ namespace MollisHome.Data.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("MollisHome.Data.Models.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PostCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProvinceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProvinceId");
+
+                    b.HasIndex("Name", "PostCode")
+                        .IsUnique();
+
+                    b.ToTable("Cities");
+                });
+
             modelBuilder.Entity("MollisHome.Data.Models.Color", b =>
                 {
                     b.Property<int>("Id")
@@ -265,13 +339,16 @@ namespace MollisHome.Data.Migrations
 
                     b.Property<string>("HexValue")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("char(7)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Colors");
                 });
@@ -285,11 +362,52 @@ namespace MollisHome.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Genders");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.ItemProperty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ItemProperties");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.ItemValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ItemValues");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.Material", b =>
@@ -301,14 +419,20 @@ namespace MollisHome.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("Percentage")
-                        .HasColumnType("int");
+                    b.Property<byte?>("Percentage")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name", "Percentage")
+                        .IsUnique()
+                        .HasFilter("[Percentage] IS NOT NULL");
+
                     b.ToTable("Materials");
+
+                    b.HasCheckConstraint("CHK_Material_Percentage", "[Percentage] >= 0 AND [Percentage] <= 100");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.Order", b =>
@@ -318,17 +442,15 @@ namespace MollisHome.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsProcessed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -341,11 +463,16 @@ namespace MollisHome.Data.Migrations
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(6,2)");
 
+                    b.Property<string>("TrackingNumber")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("PromoCodeId")
                         .IsUnique();
@@ -353,6 +480,48 @@ namespace MollisHome.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
+
+                    b.HasCheckConstraint("CHK_Order_TotalPrice", "[TotalPrice] > 0");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.OrderItem", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemPropertyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemValueId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(6,2)");
+
+                    b.HasKey("OrderId", "ItemPropertyId", "ItemValueId");
+
+                    b.HasIndex("ItemPropertyId");
+
+                    b.HasIndex("ItemValueId");
+
+                    b.ToTable("OrderItems");
+
+                    b.HasCheckConstraint("CHK_OrderItem_Quantity", "[Quantity] > 0");
+
+                    b.HasCheckConstraint("CHK_OrderItem_Price", "[Price] > 0");
+
+                    b.HasCheckConstraint("CHK_OrderItem_Discount", "[Discount] >= 0");
+
+                    b.HasCheckConstraint("CHK_OrderItem_TotalPrice", "[TotalPrice] > 0");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.Product", b =>
@@ -362,7 +531,8 @@ namespace MollisHome.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -375,13 +545,36 @@ namespace MollisHome.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Products");
+
+                    b.HasCheckConstraint("CHK_Product_Rating", "[Rating] >= 0 AND [Rating] <= 5");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.ProductCart", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "CartId");
+
+                    b.HasIndex("CartId");
+
+                    b.ToTable("ProductCarts");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.ProductMaterial", b =>
@@ -399,21 +592,6 @@ namespace MollisHome.Data.Migrations
                     b.ToTable("ProductMaterials");
                 });
 
-            modelBuilder.Entity("MollisHome.Data.Models.ProductOrder", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId", "OrderId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("ProductOrders");
-                });
-
             modelBuilder.Entity("MollisHome.Data.Models.ProductStock", b =>
                 {
                     b.Property<int>("ProductId")
@@ -428,8 +606,8 @@ namespace MollisHome.Data.Migrations
                     b.Property<int>("ColorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DiscountPercentage")
-                        .HasColumnType("int");
+                    b.Property<byte>("DiscountPercentage")
+                        .HasColumnType("tinyint");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");
@@ -449,6 +627,14 @@ namespace MollisHome.Data.Migrations
                     b.HasIndex("SizeId");
 
                     b.ToTable("ProductStock");
+
+                    b.HasCheckConstraint("CHK_ProductStock_DiscountPercentage", "[DiscountPercentage] >= 0 AND [DiscountPercentage] <= 100");
+
+                    b.HasCheckConstraint("CHK_ProductStock_Quantity", "[Quantity] >= 0");
+
+                    b.HasCheckConstraint("CHK_ProductStock_Sold", "[Sold] >= 0");
+
+                    b.HasCheckConstraint("CHK_ProductStock_Price", "[Price] > 0");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.PromoCode", b =>
@@ -459,10 +645,10 @@ namespace MollisHome.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("DiscountPercentage")
-                        .HasColumnType("int");
+                    b.Property<byte>("DiscountPercentage")
+                        .HasColumnType("tinyint");
 
                     b.Property<DateTime>("ExpirationDateEnd")
                         .HasColumnType("datetime2");
@@ -475,7 +661,32 @@ namespace MollisHome.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Code", "DiscountPercentage")
+                        .IsUnique()
+                        .HasFilter("[Code] IS NOT NULL");
+
                     b.ToTable("PromoCodes");
+
+                    b.HasCheckConstraint("CHK_PromoCode_DiscountPercentage", "[DiscountPercentage] >= 0 AND [DiscountPercentage] <= 100");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.Province", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Provinces");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.Size", b =>
@@ -487,9 +698,12 @@ namespace MollisHome.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Sizes");
                 });
@@ -558,6 +772,28 @@ namespace MollisHome.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MollisHome.Data.Models.Address", b =>
+                {
+                    b.HasOne("MollisHome.Data.Models.City", "City")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.Cart", b =>
+                {
+                    b.HasOne("MollisHome.Data.Models.ApplicationUser", "User")
+                        .WithOne("Cart")
+                        .HasForeignKey("MollisHome.Data.Models.Cart", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MollisHome.Data.Models.Category", b =>
                 {
                     b.HasOne("MollisHome.Data.Models.Category", "ParentCategory")
@@ -567,13 +803,29 @@ namespace MollisHome.Data.Migrations
                     b.Navigation("ParentCategory");
                 });
 
+            modelBuilder.Entity("MollisHome.Data.Models.City", b =>
+                {
+                    b.HasOne("MollisHome.Data.Models.Province", "Province")
+                        .WithMany("Cities")
+                        .HasForeignKey("ProvinceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Province");
+                });
+
             modelBuilder.Entity("MollisHome.Data.Models.Order", b =>
                 {
+                    b.HasOne("MollisHome.Data.Models.Address", "Address")
+                        .WithMany("Orders")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("MollisHome.Data.Models.PromoCode", "PromoCode")
                         .WithOne("Order")
                         .HasForeignKey("MollisHome.Data.Models.Order", "PromoCodeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("MollisHome.Data.Models.ApplicationUser", "User")
                         .WithMany("Orders")
@@ -581,9 +833,38 @@ namespace MollisHome.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Address");
+
                     b.Navigation("PromoCode");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.OrderItem", b =>
+                {
+                    b.HasOne("MollisHome.Data.Models.ItemProperty", "ItemProperty")
+                        .WithMany("Orders")
+                        .HasForeignKey("ItemPropertyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MollisHome.Data.Models.ItemValue", "ItemValue")
+                        .WithMany("Orders")
+                        .HasForeignKey("ItemValueId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MollisHome.Data.Models.Order", "Order")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ItemProperty");
+
+                    b.Navigation("ItemValue");
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.Product", b =>
@@ -591,10 +872,28 @@ namespace MollisHome.Data.Migrations
                     b.HasOne("MollisHome.Data.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.ProductCart", b =>
+                {
+                    b.HasOne("MollisHome.Data.Models.Cart", "Cart")
+                        .WithMany("Products")
+                        .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.HasOne("MollisHome.Data.Models.Product", "Product")
+                        .WithMany("Carts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.ProductMaterial", b =>
@@ -612,25 +911,6 @@ namespace MollisHome.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Material");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("MollisHome.Data.Models.ProductOrder", b =>
-                {
-                    b.HasOne("MollisHome.Data.Models.Order", "Order")
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MollisHome.Data.Models.Product", "Product")
-                        .WithMany("Orders")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Order");
 
                     b.Navigation("Product");
                 });
@@ -670,11 +950,26 @@ namespace MollisHome.Data.Migrations
                     b.Navigation("Size");
                 });
 
+            modelBuilder.Entity("MollisHome.Data.Models.Address", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.Cart", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("MollisHome.Data.Models.Category", b =>
                 {
                     b.Navigation("Categories");
 
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.City", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.Color", b =>
@@ -687,6 +982,16 @@ namespace MollisHome.Data.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("MollisHome.Data.Models.ItemProperty", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("MollisHome.Data.Models.ItemValue", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("MollisHome.Data.Models.Material", b =>
                 {
                     b.Navigation("Products");
@@ -694,14 +999,14 @@ namespace MollisHome.Data.Migrations
 
             modelBuilder.Entity("MollisHome.Data.Models.Order", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("MollisHome.Data.Models.Product", b =>
                 {
-                    b.Navigation("Materials");
+                    b.Navigation("Carts");
 
-                    b.Navigation("Orders");
+                    b.Navigation("Materials");
 
                     b.Navigation("Stock");
                 });
@@ -711,6 +1016,11 @@ namespace MollisHome.Data.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("MollisHome.Data.Models.Province", b =>
+                {
+                    b.Navigation("Cities");
+                });
+
             modelBuilder.Entity("MollisHome.Data.Models.Size", b =>
                 {
                     b.Navigation("Products");
@@ -718,6 +1028,8 @@ namespace MollisHome.Data.Migrations
 
             modelBuilder.Entity("MollisHome.Data.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("Cart");
+
                     b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618

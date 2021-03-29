@@ -42,43 +42,6 @@
         //-----------------------------------------------------------------------------------------------------//
         public async Task<IActionResult> Index()
         {
-            //var errMsg = await colorsService.CreateAsync(new Services.DTOs.Colors.ColorDTO
-            //{
-            //    Name = "Зелен",
-            //    HexValue = "#2ba700",
-            //});
-
-            //var errMsg2 = await colorsService.CreateAsync(new Services.DTOs.Colors.ColorDTO
-            //{
-            //    Name = "Зелен",
-            //    HexValue = "#2ba700",
-            //});
-
-            //var delMsg = await categoriesService.DeleteAsync(1);
-            //var test = await productsService.DeleteAsync(1);
-            //var test = await colorsService.DeleteAsync(1);
-
-            //var errMsg = await productsService.CreateAsync(new Services.DTOs.Products.ProductDTO
-            //{
-            //    Name = "Сидни",
-            //    Description = "lorem ipsum",
-            //    ImgUrl = "",
-            //    Category = new CategoryDTO
-            //    {
-            //        Id = 8,
-            //    }
-            //});
-
-            //var a = await productsService.CreateAsync(new Services.DTOs.Products.ProductDTO
-            //{
-            //    Name = "Сидни",
-            //    Description = "lorem ipsum",
-            //    ImgUrl = "",
-            //    Category = new CategoryDTO
-            //    {
-            //        Id = 8,
-            //    }
-            //});
             //---------------- Menu categories data ----------------
             var categoryDTOs = this.categoriesService.GetRootCategories();
             var categoryVMs = categoryDTOs.Select(x => mapper.Map<CategoryDTO, CategoryVM>(x)).ToList();
