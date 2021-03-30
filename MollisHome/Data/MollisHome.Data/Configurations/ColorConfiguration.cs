@@ -16,7 +16,6 @@
         {
             //------------------ UNIQUE ------------------
             color.HasIndex(x => x.Name).IsUnique();
-            //color.HasAlternateKey(x => x.Name);
 
             //--------------- COLLECTIONS ----------------
             color.HasMany(c => c.Products)

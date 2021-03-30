@@ -17,7 +17,6 @@
         {
             //------------------ UNIQUE ------------------
             material.HasIndex(x => new { x.Name, x.Percentage }).IsUnique();
-            //material.HasAlternateKey(x => new { x.Name, x.Percentage });
 
             //------------------ CHECK  ------------------
             material.HasCheckConstraint("CHK_Material_Percentage", "[Percentage] >= 0 AND [Percentage] <= 100");

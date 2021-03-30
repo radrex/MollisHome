@@ -2,8 +2,6 @@
 {
     using Xunit;
 
-    using MollisHome.Data;
-    using MollisHome.Data.Seeding;
     using MollisHome.Services.Data.Products;
 
     using MollisHome.Services.DTOs.Products;
@@ -15,6 +13,10 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using Microsoft.Data.Sqlite;
+    using MollisHome.Data;
+    using Microsoft.EntityFrameworkCore;
+    using MollisHome.Data.Models;
 
     public class BaseServiceTests : IClassFixture<DbFixture>
     {
@@ -33,19 +35,11 @@
 
         //--------------- BASE METHODS -----------------
 
-
         //---- HasEntities() ----
         [Fact]
         public void HasEntities_ReturnsTrue()
         {
             Assert.True(ProductsService.HasEntities(), "Method should return TRUE.");
-        }
-
-        [Fact]
-        public void HasEntities_ReturnsFalse()
-        {
-            //TODO: Delete all entities and assert
-            Assert.False(ProductsService.HasEntities(), "Method should return FALSE.");
         }
 
         //---- GetAll() ----
@@ -83,7 +77,7 @@
             Assert.Null(ProductsService.GetById(id));
         }
 
-        //---- Create(Category categoryDTO) ----
+        //---- Create(Product productDTO) ----
         [Fact]
         public async Task CreateProduct_ReturnsCorrectMessage()
         {
@@ -120,21 +114,24 @@
                 }
             }));
 
-            //TODO: Delete 3 times I guess to get back to the initial state of the db, for other methods to work (hope that works)
+            // Revert db to initial state
+            await ProductsService.DeleteAsync(4);
+            await ProductsService.DeleteAsync(5);
+            await ProductsService.DeleteAsync(6);
         }
 
-        //[Theory]
-        //[InlineData("Сидни", "Volcano cake", 8)]
-        //public async Task CreateProduct_ReturnsCorrectExceptionMessageAsync(string product, string description, int categoryId)
+        //[Fact]
+        //public async Task CreateProduct_ReturnsCorrectExceptionMessage()
         //{
-        //    await Assert.ThrowsAsync<InvalidOperationException>(async () => await ProductsService.CreateAsync(new ProductDTO
+        //    // TODO: I need Sqllite db in order to check the constraints...
+        //    Assert.Equal($"Cannot insert duplicate key in Products. The duplicate key is (Сидни)", await ProductsService.CreateAsync(new ProductDTO
         //    {
-        //        Name = product,
+        //        Name = "Сидни",
         //        ImgUrl = "",
-        //        Description = description,
+        //        Description = "Volcano cake",
         //        Category = new CategoryDTO
         //        {
-        //            Id = categoryId,
+        //            Id = 8,
         //        }
         //    }));
         //}

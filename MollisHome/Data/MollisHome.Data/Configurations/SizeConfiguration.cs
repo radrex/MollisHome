@@ -16,7 +16,6 @@
         {
             //------------------ UNIQUE ------------------
             size.HasIndex(x => x.Name).IsUnique();
-            //size.HasAlternateKey(x => x.Name);
 
             //--------------- COLLECTIONS ----------------
             size.HasMany(s => s.Products)

@@ -18,7 +18,6 @@
         {
             //------------------ UNIQUE ------------------
             promoCode.HasIndex(x => new { x.Code, x.DiscountPercentage }).IsUnique();
-            //promoCode.HasAlternateKey(x => x.Code);
 
             //------------------ CHECK  ------------------
             promoCode.HasCheckConstraint("CHK_PromoCode_DiscountPercentage", "[DiscountPercentage] >= 0 AND [DiscountPercentage] <= 100");

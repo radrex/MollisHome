@@ -14,14 +14,17 @@
         {
             constraints = new Dictionary<string, string>() 
             {
-                { "AK_Categories_Name", "Cannot insert duplicate key in Categories. The duplicate key is ({0})" },
-                { "AK_Colors_Name", "Cannot insert duplicate key in Colors. The duplicate key is ({0})" },
-                { "AK_Genders_Name", "Cannot insert duplicate key in Genders. The duplicate key is ({0})" },
-                { "AK_Sizes_Name", "Cannot insert duplicate key in Sizes. The duplicate key is ({0})" },
-                { "AK_PromoCodes_Code", "Cannot insert duplicate key in Promo Codes. The duplicate key is ({0})" },
+                { "IX_Categories_Name", "Cannot insert duplicate key in Categories. The duplicate key is ({0})" },
+                { "IX_Colors_Name", "Cannot insert duplicate key in Colors. The duplicate key is ({0})" },
+                { "IX_Genders_Name", "Cannot insert duplicate key in Genders. The duplicate key is ({0})" },
+                { "IX_Sizes_Name", "Cannot insert duplicate key in Sizes. The duplicate key is ({0})" },
+                { "IX_PromoCodes_Code", "Cannot insert duplicate key in Promo Codes. The duplicate key is ({0})" },
 
-                { "AK_Materials_Name_Percentage", "Cannot insert duplicate key in Materials. The duplicate key is ({0}, {1})" },
-                { "AK_Products_Name_CategoryId", "Cannot insert duplicate key in Products. The duplicate key is ({0}, {1})" },
+                { "IX_Products_Id", "Cannot insert duplicate key in Products. The duplicate key is ({0})" }, // TODO: try composite key with next migration --> Name_CategoryId
+                { "IX_Products_Name", "Cannot insert duplicate key in Products. The duplicate key is ({0})" }, // TODO: try composite key with next migration --> Name_CategoryId
+
+                { "IX_Materials_Name_Percentage", "Cannot insert duplicate key in Materials. The duplicate key is ({0}, {1})" },
+                { "IX_Products_Name_CategoryId", "Cannot insert duplicate key in Products. The duplicate key is ({0}, {1})" },
 
                 { "CHK_Material_Percentage", "Percentage must be in range [0-100]" },
                 { "CHK_ProductStock_DiscountPercentage", "Discount Percentage must be in range [0-100]" },

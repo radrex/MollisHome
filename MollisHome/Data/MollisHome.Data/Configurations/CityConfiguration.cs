@@ -17,7 +17,6 @@
         {
             //------------------ UNIQUE ------------------
             city.HasIndex(x => new { x.Name, x.PostCode }).IsUnique();
-            //city.HasAlternateKey(x => new { x.Name, x.PostCode });
 
             //------------------- ID's -------------------
             city.HasOne(c => c.Province)

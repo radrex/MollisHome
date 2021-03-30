@@ -18,7 +18,6 @@
         {
             //------------------ UNIQUE ------------------
             category.HasIndex(x => x.Name).IsUnique();
-            //category.HasAlternateKey(x => x.Name);
 
             //------------------- ID's -------------------
             category.HasOne(c => c.ParentCategory)

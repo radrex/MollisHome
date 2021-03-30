@@ -16,7 +16,6 @@
         {
             //------------------ UNIQUE ------------------
             gender.HasIndex(x => x.Name).IsUnique();
-            //gender.HasAlternateKey(x => x.Name);
 
             //--------------- COLLECTIONS ----------------
             gender.HasMany(s => s.Products)

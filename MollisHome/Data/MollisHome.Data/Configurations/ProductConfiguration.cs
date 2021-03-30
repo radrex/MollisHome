@@ -21,7 +21,6 @@
         {
             //------------------ UNIQUE ------------------
             product.HasIndex(x => x.Name).IsUnique();
-            //product.HasAlternateKey(x => new { x.Name, x.CategoryId });
 
             //------------------ CHECK  ------------------
             product.HasCheckConstraint("CHK_Product_Rating", "[Rating] >= 0 AND [Rating] <= 5");

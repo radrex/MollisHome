@@ -12,12 +12,14 @@
     using Microsoft.Extensions.DependencyInjection;
 
     using System;
+    using Microsoft.Data.Sqlite;
 
     public class DbFixture
     {
         //------------- CONSTRUCTORS --------------
         public DbFixture()
         {
+            // TODO: UseSqllite in memory instead, in order to check unique constrains...
             IServiceCollection services = new ServiceCollection();
             services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
             services.AddIdentityCore<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
@@ -34,7 +36,6 @@
 
             this.ServiceProvider = services.BuildServiceProvider();
 
-            //maybe I should seed here instead of serviceTests class
             ApplicationDbContext dbContext = this.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             new DatabaseSeeder().SeedAsync(dbContext, this.ServiceProvider).GetAwaiter().GetResult();
         }

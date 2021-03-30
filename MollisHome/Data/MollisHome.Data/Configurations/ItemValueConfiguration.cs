@@ -16,7 +16,6 @@
         {
             //------------------ UNIQUE ------------------
             itemValue.HasIndex(x => x.Name).IsUnique();
-            //itemValue.HasAlternateKey(x => x.Name);
 
             //--------------- COLLECTIONS ----------------
             itemValue.HasMany(ip => ip.Orders)

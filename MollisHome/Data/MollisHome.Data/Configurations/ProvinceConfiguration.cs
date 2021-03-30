@@ -16,7 +16,6 @@
         {
             //------------------ UNIQUE ------------------
             province.HasIndex(x => x.Name).IsUnique();
-            //province.HasAlternateKey(x => x.Name);
 
             //--------------- COLLECTIONS ----------------
             province.HasMany(p => p.Cities)
