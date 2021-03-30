@@ -42,6 +42,7 @@
         //-----------------------------------------------------------------------------------------------------//
         public async Task<IActionResult> Index()
         {
+            var msg = await colorsService.DeleteAsync(1);
             //---------------- Menu categories data ----------------
             var categoryDTOs = this.categoriesService.GetRootCategories();
             var categoryVMs = categoryDTOs.Select(x => mapper.Map<CategoryDTO, CategoryVM>(x)).ToList();

@@ -100,7 +100,10 @@
             this.dbContext.Remove(color);
 
             await this.dbContext.SaveChangesAsync();
-            return $"Color: {color.Name} deleted.{Environment.NewLine}Products: {String.Join(", ", products)} deleted from Stock.";
+
+            // TODO: use tuples as in product delete
+            return $"> Color: {color.Name} deleted.{Environment.NewLine}" +
+                   $"{(products.Count() != 0 ? $"  > Products deleted from Stock: {String.Join(", ", products)}" : "")}";
         }
 
         private async Task<string> DeleteSizeAndAssociates(int sizeId)
@@ -118,7 +121,10 @@
             this.dbContext.Remove(size);
 
             await this.dbContext.SaveChangesAsync();
-            return $"Size: {size.Name} deleted.{Environment.NewLine}Products: {String.Join(", ", products)} deleted from Stock.";
+
+            // TODO: use tuples as in product delete
+            return $"> Size: {size.Name} deleted.{Environment.NewLine}" +
+                   $"{(products.Count() != 0 ? $"Products deleted from Stock: {String.Join(", ", products)}" : "")}";
         }
 
         private async Task<string> DeleteGenderAndAssociates(int genderId)
@@ -136,7 +142,10 @@
             this.dbContext.Remove(gender);
 
             await this.dbContext.SaveChangesAsync();
-            return $"Gender: {gender.Name} deleted.{Environment.NewLine}Products: {String.Join(", ", products)} deleted from Stock.";
+
+            // TODO: use tuples as in product delete
+            return $"> Gender: {gender.Name} deleted.{Environment.NewLine}" +
+                   $"{(products.Count() != 0 ? $"  > Products deleted from Stock: {String.Join(", ", products)}" : "")}";
         }
 
         private async Task<string> DeleteMaterialAndAssociates(int materialId)
@@ -154,7 +163,10 @@
             this.dbContext.Remove(material);
 
             await this.dbContext.SaveChangesAsync();
-            return $"Material: {material.Name} deleted.{Environment.NewLine}Products: {String.Join(", ", products)} deleted from ProductMaterials.";
+
+            // TODO: use tuples as in product delete
+            return $"> Material: {material.Name} deleted.{Environment.NewLine}" +
+                   $"{(products.Count() != 0 ? $"  > Products deleted from ProductMaterials: {String.Join(", ", products)}" : "")} ";
         }
 
         private async Task<string> DeleteProductAndAssociates(int productId)
@@ -180,13 +192,10 @@
             this.dbContext.Remove(product);
             await this.dbContext.SaveChangesAsync();
 
-            // TODO: Check for empty collections in the message
-            return $"Product: {product.Name} deleted.{Environment.NewLine}" +
-                   $"Materials: {String.Join(", ", materials)} deleted from ProductMaterials.{Environment.NewLine}" +
-                   $"Genders: {String.Join(", ", genderSizeColor.Select(x => x.Item1))} deleted from ProductStock.{Environment.NewLine}" +
-                   $"Sizes: {String.Join(", ", genderSizeColor.Select(x => x.Item2))} deleted from ProductStock.{Environment.NewLine}" +
-                   $"Colors: {String.Join(", ", genderSizeColor.Select(x => x.Item3))} deleted from ProductStock.{Environment.NewLine}" +
-                   $"Carts for {String.Join(", ", userCarts)} users deleted from ProductCarts.";
+            return $"> Product: {product.Name} deleted.{Environment.NewLine}" +
+                   $"{(materials.Count() != 0 ? $"  > Materials: {String.Join(", ", materials)} deleted from ProductMaterials.{Environment.NewLine}" : "")}" +
+                   $"{(genderSizeColor.Count() != 0 ? $"  > ProductStock deletions: {Environment.NewLine}{String.Join(Environment.NewLine, genderSizeColor.Select(x => $"    > Gender: {x.Item1}, Size: {x.Item2}, Color: {x.Item3}"))}{Environment.NewLine}" : "")}" +
+                   $"{(userCarts.Count() != 0 ? $"  > Carts for {String.Join(", ", userCarts)} users deleted from ProductCarts." : "")}";
         }
 
         private async Task<string> DeleteCategoryAndAssociates(int categoryId)
