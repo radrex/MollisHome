@@ -44,6 +44,11 @@
             return this.dbSet.Any();
         }
 
+        public bool Exists(int id)
+        {
+            return this.dbSet.Any(x => x.Id == id);
+        }
+
         public IEnumerable<TDTO> GetAll()
         {
             return this.dbSet.Select(x => this.mapper.Map<TModel, TDTO>(x)).ToList();
@@ -73,10 +78,27 @@
             }
         }
 
-        public void Update(TModel item)
+        public async Task<string> EditAsync(TDTO item)
         {
-            this.dbContext.Entry(item).State = EntityState.Modified;
-            this.dbContext.SaveChanges();
+            if (!this.Exists(item.Id))
+            {
+                return "No such item in the database.";
+            }
+
+            //TODO: Make some kind of validation before the try catch for the db I guess...
+
+            TModel model = this.mapper.Map<TDTO, TModel>(item);
+            try // maybe use another catch for different exception, check exception order execution for that
+            {
+                this.dbSet.Update(model);
+                await this.dbContext.SaveChangesAsync();
+                return $"Entity with ID: {item.Id} updated.";
+            }
+            catch (DbUpdateException e)
+            {
+                this.dbContext.Entry<TModel>(model).State = EntityState.Detached;
+                return ExceptionPrettifier.PrettifyExceptionMessage(e.InnerException.Message);
+            }
         }
 
         public async Task<string> DeleteAsync(int id)

@@ -11,10 +11,11 @@
                                                 where TDTO : BaseDTO
     {
         bool HasEntities();
+        bool Exists(int id);
         IEnumerable<TDTO> GetAll();
         TDTO GetById(int id);
         Task<string> CreateAsync(TDTO item);
-        void Update(TModel item);
+        Task<string> EditAsync(TDTO item);
         Task<string> DeleteAsync(int id);
     }
 }
