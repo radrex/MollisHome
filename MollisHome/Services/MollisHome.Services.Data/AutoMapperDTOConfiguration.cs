@@ -7,8 +7,11 @@
     using MollisHome.Services.DTOs.Stock;
     using MollisHome.Services.DTOs.Sizes;
     using MollisHome.Services.DTOs.Colors;
+    using MollisHome.Services.DTOs.Cities;
     using MollisHome.Services.DTOs.Genders;
     using MollisHome.Services.DTOs.Products;
+    using MollisHome.Services.DTOs.Addresses;
+    using MollisHome.Services.DTOs.Provinces;
     using MollisHome.Services.DTOs.Materials;
     using MollisHome.Services.DTOs.Categories;
 
@@ -33,6 +36,9 @@
             CreateMap<Gender, GenderDTO>().ReverseMap();
             CreateMap<Size, SizeDTO>().ReverseMap();
             CreateMap<Color, ColorDTO>().ReverseMap();
+            CreateMap<Province, ProvinceDTO>().ReverseMap();
+            CreateMap<City, CityDTO>().ReverseMap();
+            CreateMap<Address, AddressDTO>().ReverseMap();
 
             CreateMap<ProductStock, StockDTO>()
                 .ForMember(

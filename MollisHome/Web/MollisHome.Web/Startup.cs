@@ -7,8 +7,11 @@ namespace MollisHome.Web
     using MollisHome.Services.Data;
     using MollisHome.Services.Data.Sizes;
     using MollisHome.Services.Data.Colors;
+    using MollisHome.Services.Data.Cities;
     using MollisHome.Services.Data.Genders;
     using MollisHome.Services.Data.Products;
+    using MollisHome.Services.Data.Provinces;
+    using MollisHome.Services.Data.Addresses;
     using MollisHome.Services.Data.Materials;
     using MollisHome.Services.Data.Categories;
 
@@ -28,6 +31,7 @@ namespace MollisHome.Web
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+
 
     public class Startup
     {
@@ -63,6 +67,9 @@ namespace MollisHome.Web
             services.AddTransient<ISizesService, SizesService>();
             services.AddTransient<IGendersService, GendersService>();
             services.AddTransient<IMaterialsService, MaterialsService>();
+            services.AddTransient<IProvincesService, ProvincesService>();
+            services.AddTransient<ICitiesService, CitiesService>();
+            services.AddTransient<IAddressesService, AddressesService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
