@@ -69,9 +69,11 @@
             {
                 await this.dbSet.AddAsync(model);
                 await this.dbContext.SaveChangesAsync();
-                return $"Entity with ID: {model.Id} created.";
+                return $"Entity with ID: {model.Id} created. ✔️";
+                // TODO: Exception is thrown on SaveChangesAsync() and all is good, but it makes the next creation overlap an index
+                // TODO: When creating invalid items it returns message as expected, but after that when creating a valid item, the ID was incremented by the invalid statement.
             }
-            catch (DbUpdateException e)
+            catch (DbUpdateException e) 
             {
                 this.dbContext.Entry<TModel>(model).State = EntityState.Detached;
                 return ExceptionPrettifier.PrettifyExceptionMessage(e.InnerException.Message);

@@ -1,9 +1,7 @@
 ﻿namespace MollisHome.Web.ViewModels.Products
 {
-    using MollisHome.Web.ViewModels.Base;
-
-    public class ProductSexVM : BaseVM
+    public class ProductSexVM
     {
-
+        public string Name { get; set; }
     }
 }

@@ -1,9 +1,7 @@
 ﻿namespace MollisHome.Web.ViewModels.Products
 {
-    using MollisHome.Web.ViewModels.Base;
-
-    public class ProductColorVM : BaseVM
+    public class ProductColorVM
     {
-
+        public string Name { get; set; }
     }
 }

@@ -36,6 +36,8 @@
 
                 { "UPDATE fails", "Update failed. Make sure you fill all fields correctly." }
             };
+
+            constraints.Keys.ToList().ForEach(key => constraints[key] += " ❌");
         }
 
         //--------------- METHODS -----------------

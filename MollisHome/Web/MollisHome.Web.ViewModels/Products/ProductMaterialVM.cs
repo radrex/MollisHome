@@ -1,9 +1,9 @@
 ﻿namespace MollisHome.Web.ViewModels.Products
 {
-    using MollisHome.Web.ViewModels.Base;
 
-    public class ProductMaterialVM : BaseVM
+    public class ProductMaterialVM
     {
+        public string Name { get; set; }
         public int? Percentage { get; set; }
     }
 }

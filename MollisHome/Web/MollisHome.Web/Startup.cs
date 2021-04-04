@@ -32,7 +32,6 @@ namespace MollisHome.Web
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
-
     public class Startup
     {
         //------------- CONSTRUCTORS --------------
@@ -83,7 +82,7 @@ namespace MollisHome.Web
                 ApplicationDbContext dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 if (env.IsDevelopment())
                 {
-                    dbContext.Database.EnsureDeleted();
+                    //dbContext.Database.EnsureDeleted();
                     dbContext.Database.Migrate(); // Apply migration/seed everytime (for development purposes)
                 }
 
@@ -112,6 +111,7 @@ namespace MollisHome.Web
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(name: "area", pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });

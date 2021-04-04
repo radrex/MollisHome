@@ -12,6 +12,7 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public string ImgUrl { get; set; }
+        public int? CategoryId { get; set; }
         public CategoryDTO Category { get; set; }
         public IEnumerable<MaterialDTO> Materials { get; set; }
         public IEnumerable<StockDTO> Stock { get; set; }
