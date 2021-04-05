@@ -58,12 +58,23 @@
                     opt => opt.MapFrom(src => src.Color)
                 ).ReverseMap();
 
-            CreateMap<Product, ProductDTO>()
+            CreateMap<ProductMaterial, ProductMaterialDTO>()
                 .ForMember(
-                    dest => dest.Materials,
-                    opt => opt.MapFrom(src => src.Materials.Select(x => x.Material).ToList())
-                ).ReverseMap()
-                .ForMember(dest => dest.Category, opt => opt.Ignore());
+                    dest => dest.Product,
+                    opt => opt.MapFrom(src => src.Product)
+                )
+                .ForMember(
+                    dest => dest.Material,
+                    opt => opt.MapFrom(src => src.Material)
+                ).ReverseMap();
+
+            CreateMap<Product, ProductDTO>().ReverseMap();
+            //CreateMap<Product, ProductDTO>()
+            //    .ForMember(
+            //        dest => dest.Materials,
+            //        opt => opt.MapFrom(src => src.Materials.Select(x => x.Material).ToList())
+            //    ).ReverseMap()
+            //    .ForMember(dest => dest.Category, opt => opt.Ignore());
         }
     }
 }

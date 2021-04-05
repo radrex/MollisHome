@@ -59,13 +59,12 @@
             return this.mapper.Map<TModel, TDTO>(this.dbSet.FirstOrDefault(x => x.Id == id));
         }
 
-        public async Task<string> CreateAsync(TDTO item)
+        public virtual async Task<string> CreateAsync(TDTO item)
         {
             //TODO: Make some kind of validation before the try catch for the db I guess...
 
             TModel model = this.mapper.Map<TDTO, TModel>(item);
-            
-            try // maybe use another catch for different exception, check exception order execution for that
+            try // TODO: Use another catch for different exception, check exception order execution for that
             {
                 await this.dbSet.AddAsync(model);
                 await this.dbContext.SaveChangesAsync();

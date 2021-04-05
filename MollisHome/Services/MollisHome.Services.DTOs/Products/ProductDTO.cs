@@ -14,7 +14,8 @@
         public string ImgUrl { get; set; }
         public int? CategoryId { get; set; }
         public CategoryDTO Category { get; set; }
-        public IEnumerable<MaterialDTO> Materials { get; set; }
+        public int[] MaterialIds { get; set; }
+        public IEnumerable<ProductMaterialDTO> Materials { get; set; }
         public IEnumerable<StockDTO> Stock { get; set; }
     }
 }

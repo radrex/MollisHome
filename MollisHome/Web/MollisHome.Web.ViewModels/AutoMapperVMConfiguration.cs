@@ -11,7 +11,11 @@
     using MollisHome.Services.DTOs.Categories;
 
     using MollisHome.Web.ViewModels.Products;
+    using MollisHome.Web.ViewModels.Materials;
     using MollisHome.Web.ViewModels.Categories;
+    using MollisHome.Web.ViewModels.Colors;
+    using MollisHome.Web.ViewModels.Genders;
+    using MollisHome.Web.ViewModels.Sizes;
 
     public class AutoMapperVMConfiguration : Profile
     {
@@ -19,10 +23,11 @@
         {
             CreateMap<CategoryDTO, CategoryVM>();
 
-            CreateMap<MaterialDTO, ProductMaterialVM>();
-            CreateMap<GenderDTO, ProductSexVM>();
-            CreateMap<SizeDTO, ProductSizeVM>();
-            CreateMap<ColorDTO, ProductColorVM>();
+            CreateMap<MaterialDTO, MaterialVM>();
+
+            CreateMap<ColorDTO, ColorVM>();
+            CreateMap<GenderDTO, GenderVM>();
+            CreateMap<SizeDTO, SizeVM>();
 
             CreateMap<StockDTO, ProductStockVM>();
             CreateMap<ProductDTO, ProductVM>();

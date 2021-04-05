@@ -1,6 +1,7 @@
 ﻿namespace MollisHome.Services.Data.Products
 {
     using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
 
     using MollisHome.Data;
     using MollisHome.Data.Models;
@@ -9,7 +10,9 @@
     using MollisHome.Services.DTOs.Products;
 
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Collections.Generic;
+
 
     public class ProductsService : BaseService<Product, ProductDTO>, IProductsService
     {
@@ -20,6 +23,29 @@
         }
 
         //--------------- METHODS -----------------
+        public override async Task<string> CreateAsync(ProductDTO item)
+        {
+            Product model = this.mapper.Map<ProductDTO, Product>(item);
+            try
+            {
+                await this.dbContext.Products.AddAsync(model);
+                await this.dbContext.SaveChangesAsync();
+
+                foreach (int materialId in model.MaterialIds)
+                {
+                    await this.dbContext.ProductMaterials.AddAsync(new ProductMaterial { ProductId = model.Id, MaterialId = materialId });
+                }
+
+                await this.dbContext.SaveChangesAsync();
+                return $"Entity with ID: {model.Id} and Name: {model.Name} created. ✔️";
+            }
+            catch (DbUpdateException e)
+            {
+                this.dbContext.Entry<Product>(model).State = EntityState.Detached;
+                return ExceptionPrettifier.PrettifyExceptionMessage(e.InnerException.Message);
+            }
+        }
+
         //---- GET LATEST ----
         public ProductDTO GetLatestProduct()
         {
