@@ -24,7 +24,7 @@
     <legend class="w-auto">Добави нов продукт</legend>
     <p class="form-group">
       <label asp-for="Name"></label>
-      <input asp-for="Name" class="form-control" />
+      <input asp-for="Name" type="text" class="form-control" />
       <span asp-validation-for="Name" class="text-danger"></span>
     </p>
     <p class="form-group">
@@ -34,13 +34,14 @@
     </p>
     <p class="form-group">
       <label asp-for="ImgUrl"></label>
-      <input asp-for="ImgUrl" class="form-control" />
+      <input asp-for="ImgUrl" type="text" class="form-control" />
       <span asp-validation-for="ImgUrl" class="text-danger"></span>
     </p>
 
+    <label asp-for="CategoryId"></label><br />
     <select asp-for="CategoryId" class="form-select" aria-label="Default select example">
       @{
-        <option selected value="@null">No category</option>
+        <option selected value="@null">Без категория</option>
         List<CategoryVM> categories = Model.Categories.ToList();
         for (int i = 0; i < categories.Count(); i++)
         {
@@ -49,6 +50,7 @@
       }
     </select>
 
+    <br /><label asp-for="MaterialIds"></label><br />
     <select asp-for="MaterialIds" size="5" class="form-select" multiple aria-label="multiple select example" title="Няма нищо избрано">
       @{
         List<MaterialVM> materials = Model.Materials.ToList();
@@ -58,6 +60,57 @@
         }
       }
     </select>
+
+    <br /><label asp-for="ColorId"></label><br />
+    <select asp-for="ColorId" class="form-select" aria-label="Default select example">
+      @{
+        List<ColorVM> colors = Model.Colors.ToList();
+        for (int i = 0; i < colors.Count(); i++)
+        {
+          <option value="@Model.ColorIds[i]">@colors[i].Name - @colors[i].HexValue</option>
+        }
+      }
+    </select>
+
+    <br /><label asp-for="GenderId"></label><br />
+    <select asp-for="GenderId" class="form-select" aria-label="Default select example">
+      @{
+        List<GenderVM> genders = Model.Genders.ToList();
+        for (int i = 0; i < genders.Count(); i++)
+        {
+          <option value="@Model.GenderIds[i]">@genders[i].Name</option>
+        }
+      }
+    </select>
+
+    <br /><label asp-for="SizeId"></label><br />
+    <select asp-for="SizeId" class="form-select" aria-label="Default select example">
+      @{
+        List<SizeVM> sizes = Model.Sizes.ToList();
+        for (int i = 0; i < sizes.Count(); i++)
+        {
+          <option value="@Model.SizeIds[i]">@sizes[i].Name</option>
+        }
+      }
+    </select>
+
+    <p class="form-group">
+      <label asp-for="Quantity"></label>
+      <input asp-for="Quantity" type="number" step="1" class="form-control" />
+      <span asp-validation-for="Quantity" class="text-danger"></span>
+    </p>
+
+    <p class="form-group">
+      <label asp-for="Price"></label>
+      <input asp-for="Price" type="number" step="0.01" class="form-control" />
+      <span asp-validation-for="Price" class="text-danger"></span>
+    </p>
+
+    <p class="form-group">
+      <label asp-for="DiscountPercentage"></label>
+      <input asp-for="DiscountPercentage" type="number" step="1" class="form-control" />
+      <span asp-validation-for="DiscountPercentage" class="text-danger"></span>
+    </p>
 
     <button type="submit" class="btn btn-success float-right">Добави</button>
   </fieldset>

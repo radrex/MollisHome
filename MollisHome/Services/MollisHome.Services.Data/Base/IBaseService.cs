@@ -12,7 +12,8 @@
     {
         bool HasEntities();
         bool Exists(int id);
-        IEnumerable<TDTO> GetAll();
+        int Count();
+        IEnumerable<TDTO> GetAll(int? take = null, int skip = 0);
         TDTO GetById(int id);
         Task<string> CreateAsync(TDTO item);
         Task<string> EditAsync(TDTO item);

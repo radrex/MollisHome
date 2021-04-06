@@ -15,22 +15,17 @@
     using MollisHome.Services.DTOs.Materials;
     using MollisHome.Services.DTOs.Categories;
 
-    using System.Linq;
-
     public class AutoMapperDTOConfiguration : Profile
     {
         public AutoMapperDTOConfiguration()
         {
+            // TODO: Ignore DTO props for reverse mappings
+
             CreateMap<Category, CategoryDTO>()
-                .ForMember(
-                    dest => dest.Categories,
-                    opt => opt.MapFrom(src => src.Categories)
-                 )
-                .ForMember(
-                    dest => dest.Products,
-                    opt => opt.MapFrom(src => src.Products)
-                ).ReverseMap()
-                 .ForMember(dest => dest.ParentCategory, opt => opt.Ignore());
+                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories))
+                .ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Products))
+                .ReverseMap()
+                .ForMember(dest => dest.ParentCategory, opt => opt.Ignore());
 
             CreateMap<Material, MaterialDTO>().ReverseMap();
             CreateMap<Gender, GenderDTO>().ReverseMap();
@@ -41,34 +36,23 @@
             CreateMap<Address, AddressDTO>().ReverseMap();
 
             CreateMap<ProductStock, StockDTO>()
-                .ForMember(
-                    dest => dest.Product,
-                    opt => opt.MapFrom(src => src.Product)
-                )
-                .ForMember(
-                    dest => dest.Gender,
-                    opt => opt.MapFrom(src => src.Gender)
-                )
-                .ForMember(
-                    dest => dest.Size,
-                    opt => opt.MapFrom(src => src.Size)
-                )
-                .ForMember(
-                    dest => dest.Color,
-                    opt => opt.MapFrom(src => src.Color)
-                ).ReverseMap();
+                .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Product))
+                .ForMember(dest => dest.Gender, opt => opt.MapFrom(src => src.Gender))
+                .ForMember(dest => dest.Size, opt => opt.MapFrom(src => src.Size))
+                .ForMember(dest => dest.Color, opt => opt.MapFrom(src => src.Color))
+                .ReverseMap();
 
             CreateMap<ProductMaterial, ProductMaterialDTO>()
-                .ForMember(
-                    dest => dest.Product,
-                    opt => opt.MapFrom(src => src.Product)
-                )
-                .ForMember(
-                    dest => dest.Material,
-                    opt => opt.MapFrom(src => src.Material)
-                ).ReverseMap();
+                .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Product))
+                .ForMember(dest => dest.Material, opt => opt.MapFrom(src => src.Material))
+                .ReverseMap();
 
             CreateMap<Product, ProductDTO>().ReverseMap();
+                //.ForMember(dest => dest.Category, opt => opt.Ignore())
+                //.ForMember(dest => dest.Stock, opt => opt.Ignore())
+                //.ForMember(dest => dest.Materials, opt => opt.Ignore())
+                //.ForMember(dest => dest.Carts, opt => opt.Ignore());
+
             //CreateMap<Product, ProductDTO>()
             //    .ForMember(
             //        dest => dest.Materials,

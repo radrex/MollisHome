@@ -13,7 +13,6 @@
     using System.Threading.Tasks;
     using System.Collections.Generic;
 
-
     public class ProductsService : BaseService<Product, ProductDTO>, IProductsService
     {
         //------------- CONSTRUCTORS --------------
@@ -35,6 +34,16 @@
                 {
                     await this.dbContext.ProductMaterials.AddAsync(new ProductMaterial { ProductId = model.Id, MaterialId = materialId });
                 }
+
+                await this.dbContext.ProductStock.AddAsync(new ProductStock {
+                    ProductId = model.Id,
+                    ColorId = item.ColorId, 
+                    GenderId = item.GenderId, 
+                    SizeId = item.SizeId,
+                    Quantity = item.Quantity,
+                    Price = item.Price,
+                    DiscountPercentage = item.DiscountPercentage,
+                });
 
                 await this.dbContext.SaveChangesAsync();
                 return $"Entity with ID: {model.Id} and Name: {model.Name} created. ✔️";

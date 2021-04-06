@@ -49,9 +49,20 @@
             return this.dbSet.Any(x => x.Id == id);
         }
 
-        public IEnumerable<TDTO> GetAll()
+        public int Count()
         {
-            return this.dbSet.Select(x => this.mapper.Map<TModel, TDTO>(x)).ToList();
+            return this.dbSet.Count();
+        }
+
+        public IEnumerable<TDTO> GetAll(int? take = null, int skip = 0)
+        {
+            IEnumerable<TDTO> DTOs = this.dbSet.Select(x => this.mapper.Map<TModel, TDTO>(x)).ToList().Skip(skip);
+            if (take.HasValue)
+            {
+                DTOs = DTOs.Take(take.Value);
+            }
+
+            return DTOs.ToList();
         }
 
         public TDTO GetById(int id)

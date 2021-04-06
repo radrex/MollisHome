@@ -22,15 +22,16 @@
         public AutoMapperVMConfiguration()
         {
             CreateMap<CategoryDTO, CategoryVM>();
-
             CreateMap<MaterialDTO, MaterialVM>();
-
-            CreateMap<ColorDTO, ColorVM>();
             CreateMap<GenderDTO, GenderVM>();
             CreateMap<SizeDTO, SizeVM>();
-
-            CreateMap<StockDTO, ProductStockVM>();
+            CreateMap<ColorDTO, ColorVM>();
+            //province
+            //city
+            //address
+            CreateMap<StockDTO, StockVM>();
             CreateMap<ProductDTO, ProductVM>();
+            CreateMap<ProductMaterialDTO, ProductMaterialVM>();
         }
     }
 }
