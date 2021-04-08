@@ -663,7 +663,8 @@ namespace MollisHome.Data.Migrations
                 name: "IX_Orders_PromoCodeId",
                 table: "Orders",
                 column: "PromoCodeId",
-                unique: true);
+                unique: true,
+                filter: "[PromoCodeId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",

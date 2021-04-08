@@ -10,7 +10,7 @@ using MollisHome.Data;
 namespace MollisHome.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210328085918_InitialMigration")]
+    [Migration("20210407235944_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -457,7 +457,6 @@ namespace MollisHome.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PromoCodeId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalPrice")
@@ -475,7 +474,8 @@ namespace MollisHome.Data.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("PromoCodeId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[PromoCodeId] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -532,7 +532,6 @@ namespace MollisHome.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("CategoryId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Description")

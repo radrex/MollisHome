@@ -455,7 +455,6 @@ namespace MollisHome.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PromoCodeId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalPrice")
@@ -473,7 +472,8 @@ namespace MollisHome.Data.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("PromoCodeId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[PromoCodeId] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -530,7 +530,6 @@ namespace MollisHome.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("CategoryId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Description")

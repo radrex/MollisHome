@@ -32,7 +32,6 @@
         public virtual ApplicationUser User { get; set; }
 
         //------------ PromoCode [FK] - ONE-TO-ONE -----------
-        [Required]
         public int? PromoCodeId { get; set; }
         public virtual PromoCode PromoCode { get; set; }
 

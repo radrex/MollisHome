@@ -1,8 +1,27 @@
 ﻿@model ProductListVM
 
-@{ 
-    List<ProductVM> products = Model.Products.ToList();
-    int increment = 0;
+@{
+  List<ProductVM> products = Model.Products.ToList();
+  int increment = 0;
+}
+
+@{
+  if (TempData.ContainsKey("ActionMessage"))
+  {
+    string message = TempData["ActionMessage"].ToString();
+    if (message.Contains("doesn't exist."))
+    {
+      <div class="alert alert-danger" role="alert">
+        <strong>@TempData["ActionMessage"]</strong>
+      </div>
+    }
+    else
+    {
+      <div class="alert alert-success" role="alert">
+        <strong>@TempData["ActionMessage"]</strong>
+      </div>
+    }
+  }
 }
 
 @for (int i = 0; i < products.Count(); i += 3)
@@ -11,52 +30,54 @@
     @if (i + 3 < products.Count())
     {
       increment = 3;
-    } 
+    }
     else
     {
       increment = products.Count() - i;
     }
 
-    @for (int j = i; j < increment; j++)
+    @for (int j = i; j < i + increment; j++)
     {
-    <div class="card">
-      <img class="card-img-top" src="@products[j].ImgUrl" alt="@products[j].Category.Name">
-      <div class="card-body">
-        <h3>@products[j].Name</h3>
-        <h5>@products[j].Category.Name</h5>
-        <h5 class="card-title"></h5>
-        <p class="card-text">@products[j].Description</p>
-        <ul>
-          @foreach (var material in products[j].Materials)
-          {
-            <li>@material.Material.Name - @material.Material.Percentage</li>
-          }
-        </ul>
-      </div>
-      <div class="card-footer">
-        @{ 
+      <div class="card">
+        <img class="card-img-top" src="@products[j].ImgUrl" alt="@(products[j].Category != null ? products[j].Category.Name : "Продуктът без категория")">
+        <div class="card-body">
+          <h3>@products[j].Name</h3>
+          <h5>@(products[j].Category != null ? products[j].Category.Name : "Продуктът няма категория")</h5>
+          <h5 class="card-title"></h5>
+          <p class="card-text">@products[j].Description</p>
+          <ul>
+            @foreach (var material in products[j].Materials)
+            {
+              <li>@material.Material.Name - @material.Material.Percentage</li>
+            }
+          </ul>
+        </div>
+        <div class="card-footer">
+          @{
             decimal total = 0.0M;
-        }
-        @foreach (var stock in products[j].Stock)
-        {
-          <ul class="text-muted">
-            <li>@stock.Color.Name (@stock.Color.HexValue) - @stock.Size.Name - @stock.Gender.Name
-              <ul>
-                <li>Количество: @stock.Quantity</li>
-                <li>Цена: @stock.Price</li>
-                <li>Отстъпка: @stock.DiscountPercentage%</li>
-                @{
+          }
+          @foreach (var stock in products[j].Stock)
+          {
+            <ul class="text-muted">
+              <li>
+                @stock.Color.Name (@stock.Color.HexValue) - @stock.Size.Name - @stock.Gender.Name
+                <ul>
+                  <li>Количество: @stock.Quantity</li>
+                  <li>Цена: @stock.Price</li>
+                  <li>Отстъпка: @stock.DiscountPercentage%</li>
+                  @{
                     decimal sum = stock.Quantity * (stock.Price *= ((100 - stock.DiscountPercentage) / 100M));
                     total += sum;
-                }
-                <li><strong>Сума: @sum.ToString("F2") лв.</strong></li>
-              </ul>
-            </li>
-          </ul>
-        }
-        <h2>Общо: @total.ToString("F2") лв.</h2>
+                  }
+                  <li><strong>Сума: @sum.ToString("F2") лв.</strong></li>
+                </ul>
+              </li>
+            </ul>
+          }
+          <h2>Общо: @total.ToString("F2") лв.</h2>
+          <partial name="_DeleteModalWarning" model="products[j]" />
+        </div>
       </div>
-    </div>
     }
   </div>
 }

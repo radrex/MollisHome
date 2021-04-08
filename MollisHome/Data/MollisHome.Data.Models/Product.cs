@@ -41,7 +41,6 @@
         public int[] ColorIds { get; set; }
 
         //------------ Category [FK] - ONE-TO-MANY -----------
-        [Required]
         public int? CategoryId { get; set; } // Nullable for creating products without knowing their category yet. You can pick the category in later time by editing that product.
         public virtual Category Category { get; set; }
 

@@ -4,13 +4,17 @@
     
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
-    
+
+    using System;
+    using System.Web;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Collections.Generic;
     
+    using MollisHome.Web.ViewModels.Sizes;
     using MollisHome.Web.ViewModels.Colors;
     using MollisHome.Web.ViewModels.Genders;
+    using MollisHome.Web.ViewModels.Products;
     using MollisHome.Web.ViewModels.Materials;
     using MollisHome.Web.InputModels.Products;
     using MollisHome.Web.ViewModels.Categories;
@@ -28,10 +32,6 @@
     using MollisHome.Services.DTOs.Products;
     using MollisHome.Services.DTOs.Materials;
     using MollisHome.Services.DTOs.Categories;
-    using MollisHome.Web.ViewModels.Sizes;
-    using MollisHome.Web.ViewModels.Products;
-
-    using System;
 
     [Area("Dashboard")]
     [Authorize(Roles = "Admin")]
@@ -87,12 +87,28 @@
             return this.View(products);
         }
 
-
         [HttpGet]
         public IActionResult ByCategory()
         {
-
             return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            // Logic for page modifier after Delete. Redirect on same page if it still has items. Redirect to previous page if no items left on the deleted item page.
+            Uri uri = new Uri(Request.Headers["Referer"].ToString());
+            bool hasPage = int.TryParse(HttpUtility.ParseQueryString(uri.Query).Get("page"), out int page);
+
+            int productsCount = this.productsService.Count();
+            if (hasPage && productsCount % ItemsPerPage == 1)
+            {
+                page--;
+            }
+
+            string message = await this.productsService.DeleteAsync(id);
+            this.TempData["ActionMessage"] = message;
+            return this.RedirectToAction("All", new { page = page });
         }
 
         [HttpGet]

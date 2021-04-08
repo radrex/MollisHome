@@ -1,0 +1,27 @@
+﻿@model ProductVM
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#warningModal">Изтрий</button>
+
+<!-- Modal -->
+<div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="warningModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="warningModalLabel">Сигурни ли сте че желаете да изтриете <strong>@(Model.Category != null ? $"{Model.Category.Name} - {Model.Name}" : $"продукта {Model.Name}")</strong>?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Допълнителна информация за CASCADE DELETE, която да уведоми ADMIN-а какво точно ще предизвика това действие.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
+        <form method="post">
+          <button type="submit" class="btn btn-danger" asp-area="Dashboard" asp-controller="Products" asp-action="Delete" asp-route-id="@Model.Id">Изтрий</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

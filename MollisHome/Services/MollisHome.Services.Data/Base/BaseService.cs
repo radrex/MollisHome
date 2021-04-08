@@ -124,7 +124,7 @@
             var color = await this.dbContext.Colors.FindAsync(colorId);
             if (color is null)
             {
-                return $"Color with {colorId} doesn't exist.";
+                return $"Color with ID: {colorId} doesn't exist.";
             }
 
             var stock = color.Products.Where(x => x.Color.Id == color.Id).ToList();
@@ -145,7 +145,7 @@
             var size = await this.dbContext.Sizes.FindAsync(sizeId);
             if (size is null)
             {
-                return $"Size with {sizeId} doesn't exist.";
+                return $"Size with ID: {sizeId} doesn't exist.";
             }
 
             var stock = size.Products.Where(x => x.Size.Id == sizeId).ToList();
@@ -166,7 +166,7 @@
             var gender = await this.dbContext.Genders.FindAsync(genderId);
             if (gender is null)
             {
-                return $"Gender with {genderId} doesn't exist.";
+                return $"Gender with ID: {genderId} doesn't exist.";
             }
 
             var stock = gender.Products.Where(x => x.Gender.Id == genderId).ToList();
@@ -187,7 +187,7 @@
             var material = await this.dbContext.Materials.FindAsync(materialId);
             if (material is null)
             {
-                return $"Material with {materialId} doesn't exist.";
+                return $"Material with ID: {materialId} doesn't exist.";
             }
 
             var productMaterials = material.Products.Where(x => x.Material.Id == materialId).ToList();
@@ -208,7 +208,7 @@
             var product = await this.dbContext.Products.FindAsync(productId);
             if (product is null)
             {
-                return $"Product with {productId} doesn't exist.";
+                return $"Product with ID: {productId} doesn't exist.";
             }
 
             var productMaterials = product.Materials.Where(x => x.Product.Id == productId).ToList();
@@ -237,7 +237,7 @@
             Category category = await this.dbContext.Categories.FindAsync(categoryId);
             if (category is null)
             {
-                return $"Category with {categoryId} doesn't exist.";
+                return $"Category with ID: {categoryId} doesn't exist.";
             }
 
             string message = this.DeleteCategoriesRecursively(category, 0);
