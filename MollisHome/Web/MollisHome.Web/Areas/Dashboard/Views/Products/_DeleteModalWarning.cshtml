@@ -1,10 +1,9 @@
 ﻿@model ProductVM
-
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#warningModal">Изтрий</button>
+<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modal@(Model.Id)">Изтрий</button>
 
 <!-- Modal -->
-<div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="warningModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal@(Model.Id)" tabindex="-1" role="dialog" aria-labelledby="warningModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
