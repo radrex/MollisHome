@@ -10,6 +10,7 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public string ImgUrl { get; set; }
+        public int Rating { get; set; }
         public CategoryVM Category { get; set; }
         public IEnumerable<ProductMaterialVM> Materials { get; set; }
         public IEnumerable<StockVM> Stock { get; set; }

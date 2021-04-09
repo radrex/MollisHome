@@ -38,7 +38,7 @@
     public class ProductsController : Controller
     {
         //-------------- CONSTANTS ----------------
-        private const int ItemsPerPage = 2;
+        private const int ItemsPerPage = 3;
         
         //---------------- FIELDS -----------------
         private readonly IMapper mapper;

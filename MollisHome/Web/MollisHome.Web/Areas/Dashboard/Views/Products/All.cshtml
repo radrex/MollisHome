@@ -63,7 +63,7 @@
                 @stock.Color.Name (@stock.Color.HexValue) - @stock.Size.Name - @stock.Gender.Name
                 <ul>
                   <li>Количество: @stock.Quantity</li>
-                  <li>Цена: @stock.Price</li>
+                  <li>Цена: @stock.Price лв.</li>
                   <li>Отстъпка: @stock.DiscountPercentage%</li>
                   @{
                     decimal sum = stock.Quantity * (stock.Price *= ((100 - stock.DiscountPercentage) / 100M));
@@ -76,6 +76,7 @@
           }
           <h2>Общо: @total.ToString("F2") лв.</h2>
           <partial name="_DeleteModalWarning" model="products[j]" />
+          <partial name="_DetailsModal" model="products[j]" />
         </div>
       </div>
     }
