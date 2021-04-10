@@ -75,8 +75,9 @@
             </ul>
           }
           <h2>Общо: @total.ToString("F2") лв.</h2>
-          <partial name="_DeleteModalWarning" model="products[j]" />
           <partial name="_DetailsModal" model="products[j]" />
+          <a class="btn btn-outline-success" asp-area="Dashboard" asp-controller="Products" asp-action="Edit" asp-route-id="@products[j].Id">Промени</a>
+          <partial name="_DeleteModalWarning" model="products[j]" />
         </div>
       </div>
     }

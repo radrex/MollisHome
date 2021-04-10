@@ -21,8 +21,7 @@
 
 <form method="post" asp-area="Dashboard" asp-controller="Products" asp-action="Create">
   <fieldset class="border p-3">
-    <legend class="w-auto">Добави нов продукт</legend>
-
+    <legend class="w-auto">Промяна на информация за продукт</legend>
     <div class="row">
       <div class="col">
         <p class="form-group">
@@ -43,7 +42,7 @@
       </div>
 
       <div class="col">
-        <label asp-for="CategoryId"></label>
+        <label asp-for="CategoryId"></label><br />
         <select asp-for="CategoryId" class="form-select form-control" aria-label="Default select example">
           @{
             <option selected value="@null">Без категория</option>
@@ -55,7 +54,7 @@
           }
         </select>
 
-        <br /><label asp-for="MaterialIds"></label>
+        <br /><label asp-for="MaterialIds"></label><br />
         <select asp-for="MaterialIds" size="5" class="form-select form-control" multiple aria-label="multiple select example" title="Няма нищо избрано">
           @{
             List<MaterialVM> materials = Model.Materials.ToList();
@@ -70,70 +69,74 @@
   </fieldset>
 
   <fieldset class="border p-3">
-    <legend class="w-auto">Добави нов вариант на продукта</legend>
-
+    <legend class="w-auto">Промяна на информация за складова наличност</legend>
     <div class="row">
-        <!-- TODO: Dynamically create new ProductStock if 1 is not enough (2 cols a row ?) -->
-        @foreach (var productVariant in Model.ProductVariants)
-        {
-        <div class="col-4">
-          <label asp-for="@productVariant.ColorId"></label>
-          <select asp-for="@productVariant.ColorId" class="form-select form-control" aria-label="Default select example">
+      @{
+        var productVariants = Model.ProductVariants.ToList();
+      }
+
+      @for (int i = 0; i < productVariants.Count(); i++)
+      {
+        <div class="col-3">
+          <label asp-for="@productVariants[i].ColorId"></label><br />
+          <select asp-for="@productVariants[i].ColorId" class="form-select form-control w-75" aria-label="Default select example">
             @{
-              List<ColorVM> colors = productVariant.Colors.ToList();
-              for (int i = 0; i < colors.Count(); i++)
+              List<ColorVM> colors = productVariants[i].Colors.ToList();
+              for (int j = 0; j < colors.Count(); j++)
               {
-                <option value="@colors[i].Id">@colors[i].Name - @colors[i].HexValue</option>
+                <option value="@colors[j].Id">@colors[j].Name - @colors[j].HexValue</option>
               }
             }
           </select>
 
-          <label asp-for="@productVariant.GenderId"></label>
-          <select asp-for="@productVariant.GenderId" class="form-select form-control" aria-label="Default select example">
+          <br /><label asp-for="@productVariants[i].GenderId"></label><br />
+          <select asp-for="@productVariants[i].GenderId" class="form-select form-control w-75" aria-label="Default select example">
             @{
-              List<GenderVM> genders = productVariant.Genders.ToList();
-              for (int i = 0; i < genders.Count(); i++)
+              List<GenderVM> genders = productVariants[i].Genders.ToList();
+              for (int j = 0; j < genders.Count(); j++)
               {
-                <option value="@genders[i].Id">@genders[i].Name</option>
+                <option value="@genders[j].Id">@genders[j].Name</option>
               }
             }
           </select>
 
-          <label asp-for="@productVariant.SizeId"></label>
-          <select asp-for="@productVariant.SizeId" class="form-select form-control" aria-label="Default select example">
+          <br /><label asp-for="@productVariants[i].SizeId"></label><br />
+          <select asp-for="@productVariants[i].SizeId" class="form-select form-control w-75" aria-label="Default select example">
             @{
-              List<SizeVM> sizes = productVariant.Sizes.ToList();
-              for (int i = 0; i < sizes.Count(); i++)
+              List<SizeVM> sizes = productVariants[i].Sizes.ToList();
+              for (int j = 0; j < sizes.Count(); j++)
               {
-                <option value="@sizes[i].Id">@sizes[i].Name</option>
+                <option value="@sizes[j].Id">@sizes[j].Name</option>
               }
             }
           </select>
 
           <p class="form-group">
-            <label asp-for="@productVariant.Quantity"></label>
-            <input asp-for="@productVariant.Quantity" type="number" step="1" class="form-control" />
-            <span asp-validation-for="@productVariant.Quantity" class="text-danger"></span>
+            <label asp-for="@productVariants[i].Quantity"></label>
+            <input asp-for="@productVariants[i].Quantity" type="number" step="1" class="form-control w-75" />
+            <span asp-validation-for="@productVariants[i].Quantity" class="text-danger"></span>
           </p>
 
           <p class="form-group">
-            <label asp-for="@productVariant.Price"></label>
-            <input asp-for="@productVariant.Price" type="number" step="0.01" class="form-control" />
-            <span asp-validation-for="@productVariant.Price" class="text-danger"></span>
+            <label asp-for="@productVariants[i].Price"></label>
+            <input asp-for="@productVariants[i].Price" type="number" step="0.01" class="form-control w-75" />
+            <span asp-validation-for="@productVariants[i].Price" class="text-danger"></span>
           </p>
 
           <p class="form-group">
-            <label asp-for="@productVariant.DiscountPercentage"></label>
-            <input asp-for="@productVariant.DiscountPercentage" type="number" step="1" class="form-control" />
-            <span asp-validation-for="@productVariant.DiscountPercentage" class="text-danger"></span>
+            <label asp-for="@productVariants[i].DiscountPercentage"></label>
+            <input asp-for="@productVariants[i].DiscountPercentage" type="number" step="1" class="form-control w-75" />
+            <span asp-validation-for="@productVariants[i].DiscountPercentage" class="text-danger"></span>
           </p>
         </div>
-        }
+      }
+
     </div>
   </fieldset>
-
-  <button type="submit" class="btn btn-success">Добави</button>
-
+  
+  <br />
+  <button type="submit" class="btn btn-success">Запази</button>
+  <a class="btn btn-info" asp-area="Dashboard" asp-controller="Products" asp-action="All">Върни се обратно</a>
 </form>
 
 @section Scripts {

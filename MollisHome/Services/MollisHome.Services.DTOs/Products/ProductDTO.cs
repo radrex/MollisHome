@@ -22,10 +22,9 @@
         public int ColorId { get; set; }
         public int GenderId { get; set; }
         public int SizeId { get; set; }
-        public IEnumerable<StockDTO> Stock { get; set; }
-
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public byte DiscountPercentage { get; set; }
+        public IEnumerable<StockDTO> Stock { get; set; }
     }
 }
