@@ -303,7 +303,7 @@
     {
       "id": 1,
       "name": "Сидни",
-      "description": "Лорем ипсум бате",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tristique leo imperdiet felis mattis, ac luctus quam condimentum. Fusce ornare felis dui, at lacinia augue aliquam eget. Donec sollicitudin eleifend mi. Nullam faucibus metus non lectus gravida, id vehicula nisl rutrum.",
       "imgUrl": "https://images-na.ssl-images-amazon.com/images/I/71qnyuaeRLL._SX425_.jpg",
       "categoryId": 8,
       "rating": 0,
@@ -318,7 +318,7 @@
     {
       "id": 2,
       "name": "Рига",
-      "description": "Лорем ипсум бате",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tristique leo imperdiet felis mattis, ac luctus quam condimentum. Fusce ornare felis dui, at lacinia augue aliquam eget. Donec sollicitudin eleifend mi. Nullam faucibus metus non lectus gravida, id vehicula nisl rutrum.",
       "imgUrl": "https://cdn.shopify.com/s/files/1/2195/8261/products/celene-luxury-bath-towel-bath-towels-myhouse-4842376527944.jpg?v=1582028112",
       "categoryId": 8,
       "rating": 3,
@@ -333,7 +333,7 @@
     {
       "id": 3,
       "name": "Лима",
-      "description": "Лорем ипсум бате",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tristique leo imperdiet felis mattis, ac luctus quam condimentum. Fusce ornare felis dui, at lacinia augue aliquam eget. Donec sollicitudin eleifend mi. Nullam faucibus metus non lectus gravida, id vehicula nisl rutrum.",
       "imgUrl": "https://shop.bcsoftwear.co.uk/images/serenity-spa-waffle-patterned-towels-450gsm-p93-7710_image.jpg",
       "categoryId": 8,
       "rating": 5,

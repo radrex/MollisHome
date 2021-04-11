@@ -6,6 +6,7 @@
 
     public class StockVM
     {
+        public ProductVM Product { get; set; }
         public GenderVM Gender { get; set; }
         public SizeVM Size { get; set; }
         public ColorVM Color { get; set; }

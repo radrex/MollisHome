@@ -38,48 +38,83 @@
 
     @for (int j = i; j < i + increment; j++)
     {
-      <div class="card">
-        <img class="card-img-top" src="@products[j].ImgUrl" alt="@(products[j].Category != null ? products[j].Category.Name : "Продуктът без категория")">
-        <div class="card-body">
-          <h3>@products[j].Name</h3>
-          <h5>@(products[j].Category != null ? products[j].Category.Name : "Продуктът няма категория")</h5>
-          <h5 class="card-title"></h5>
-          <p class="card-text">@products[j].Description</p>
-          <ul>
-            @foreach (var material in products[j].Materials)
-            {
-              <li>@material.Material.Name - @material.Material.Percentage</li>
-            }
-          </ul>
-        </div>
-        <div class="card-footer">
-          @{
-            decimal total = 0.0M;
+    <div class="card">
+      <img class="card-img-top" src="@products[j].ImgUrl" alt="@(products[j].Category != null ? products[j].Category.Name : "Продуктът без категория")">
+      <div class="card-body">
+        <h3>@products[j].Name</h3>
+        <h5>@(products[j].Category != null ? products[j].Category.Name : "Продуктът няма категория")</h5>
+        <h5 class="card-title"></h5>
+        <p class="card-text">@products[j].Description</p>
+
+        <h5 class="card-title">Материали:</h5>
+        <ul>
+          @foreach (var material in products[j].Materials)
+          {
+            <li>@material.Material.Name - @material.Material.Percentage</li>
           }
+        </ul>
+      </div>
+      <div class="card-footer">
+        @{
+          decimal total = 0.0M;
+          string accordionId = $"acc{j}";
+
+          bool ariaExpanded = true;
+          string show = "show";
+        }
+
+        <div class="accordion mb-3" id="@accordionId">
           @foreach (var stock in products[j].Stock)
           {
-            <ul class="text-muted">
-              <li>
-                @stock.Color.Name (@stock.Color.HexValue) - @stock.Size.Name - @stock.Gender.Name
-                <ul>
-                  <li>Количество: @stock.Quantity</li>
-                  <li>Цена: @stock.Price лв.</li>
-                  <li>Отстъпка: @stock.DiscountPercentage%</li>
-                  @{
-                    decimal sum = stock.Quantity * (stock.Price *= ((100 - stock.DiscountPercentage) / 100M));
-                    total += sum;
-                  }
-                  <li><strong>Сума: @sum.ToString("F2") лв.</strong></li>
-                </ul>
-              </li>
-            </ul>
+            string key = $"collapse{stock.Product.Id}{stock.Color.Id}{stock.Gender.Id}{@stock.Size.Id}";
+            string headingKey = $"heading{stock.Product.Id}{stock.Color.Id}{stock.Gender.Id}{@stock.Size.Id}";
+
+            <div class="card">
+              <div class="card-header" id="@headingKey">
+                <h5 class="mb-0">
+                  <button class="btn" data-toggle="collapse" data-target="#@key" aria-expanded="@ariaExpanded" aria-controls="@key">
+                    @stock.Color.Name (@stock.Color.HexValue) - @stock.Size.Name - @stock.Gender.Name
+                  </button>
+                </h5>
+              </div>
+
+              <div id="@key" class="collapse @show" aria-labelledby="@headingKey" data-parent="#@accordionId">
+                <div class="card-body">
+                  <ul class="text-muted">
+                    <li>Количество: @stock.Quantity</li>
+                    <li>Цена: @stock.Price лв.</li>
+                    <li>Отстъпка: @stock.DiscountPercentage%</li>
+                    @{
+                      decimal sum = stock.Quantity * (stock.Price *= ((100 - stock.DiscountPercentage) / 100M));
+                      total += sum;
+                    }
+                    <li><strong>Сума: @sum.ToString("F2") лв.</strong></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            ariaExpanded = false;
+            show = "";
           }
-          <h2>Общо: @total.ToString("F2") лв.</h2>
-          <partial name="_DetailsModal" model="products[j]" />
-          <a class="btn btn-outline-success" asp-area="Dashboard" asp-controller="Products" asp-action="Edit" asp-route-id="@products[j].Id">Промени</a>
-          <partial name="_DeleteModalWarning" model="products[j]" />
+
+          <div class="card">
+            <div class="card-header">
+              <h4 class="text-center">Общо: @total.ToString("F2") лв.</h4>
+            </div>
+          </div>
         </div>
+
+        <div class="container">
+          <div class="row justify-content-around">
+            <partial name="_DetailsModal" model="products[j]" />
+            <a class="btn btn-outline-success" asp-area="Dashboard" asp-controller="Products" asp-action="Edit" asp-route-id="@products[j].Id">Промени</a>
+            <partial name="_DeleteModalWarning" model="products[j]" />
+          </div>
+        </div>
+
       </div>
+    </div>
     }
   </div>
 }

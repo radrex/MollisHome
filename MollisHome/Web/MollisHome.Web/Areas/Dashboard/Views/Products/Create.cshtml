@@ -73,10 +73,10 @@
     <legend class="w-auto">Добави нов вариант на продукта</legend>
 
     <div class="row">
-        <!-- TODO: Dynamically create new ProductStock if 1 is not enough (2 cols a row ?) -->
-        @foreach (var productVariant in Model.ProductVariants)
-        {
-        <div class="col-4">
+      <!-- TODO: Dynamically create new ProductStock if 1 is not enough (2 cols a row ?) -->
+      @foreach (var productVariant in Model.ProductVariants)
+      {
+        <div class="col-3">
           <label asp-for="@productVariant.ColorId"></label>
           <select asp-for="@productVariant.ColorId" class="form-select form-control" aria-label="Default select example">
             @{
@@ -128,11 +128,12 @@
             <span asp-validation-for="@productVariant.DiscountPercentage" class="text-danger"></span>
           </p>
         </div>
-        }
+      }
     </div>
   </fieldset>
 
   <button type="submit" class="btn btn-success">Добави</button>
+  <a class="btn btn-info" asp-area="Dashboard" asp-controller="Products" asp-action="All">Върни се обратно</a>
 
 </form>
 

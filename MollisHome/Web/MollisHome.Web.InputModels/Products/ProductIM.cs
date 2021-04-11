@@ -13,7 +13,7 @@
         public int Id { get; set; }
 
         [Display(Name = "Име на продукт")]
-        [Remote(action: "VerifyName", controller: "Products",)]
+        [Remote(action: "VerifyName", controller: "Products")]
         [Required(ErrorMessage = "Моля въведете име на продукт.")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Името на продукта трябва да е с дължина от {2} до {1} символа.")]
         public string Name { get; set; }

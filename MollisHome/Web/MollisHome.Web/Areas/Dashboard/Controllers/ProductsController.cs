@@ -227,6 +227,7 @@
 
             ProductDTO productDTO = new ProductDTO
             {
+                Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
                 ImgUrl = product.ImgUrl,
@@ -242,7 +243,8 @@
             };
 
             await this.productsService.EditAsync(productDTO);
-            return this.RedirectToAction("All", new { id = 1 }); // what page to pass ?
+            // TODO: Add Message for deletion
+            return this.RedirectToAction("Edit", new { id = product.Id }); 
         }
 
         [HttpPost]

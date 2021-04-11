@@ -60,7 +60,14 @@
             List<MaterialVM> materials = Model.Materials.ToList();
             for (int i = 0; i < materials.Count(); i++)
             {
-              <option value="@Model.MaterialIds[i]">@materials[i].Name - @materials[i].Percentage%</option>
+              if (Model.SelectedMaterialIds.Contains(Model.MaterialIds[i]))
+              {
+                <option selected="selected" value="@Model.MaterialIds[i]">@materials[i].Name - @materials[i].Percentage%</option>                
+              }
+              else
+              {
+                <option value="@Model.MaterialIds[i]">@materials[i].Name - @materials[i].Percentage%</option>
+              }
             }
           }
         </select>

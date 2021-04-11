@@ -18,13 +18,14 @@
             <div class="col-xl-12 media">
               <div class="media-body">
                 <h3 class="mt-0 mb-1">@Model.Category.Name - @Model.Name</h3>
-                @Model.Description
-              <ul>
-                @foreach (var material in Model.Materials)
-                {
-                  <li>@material.Material.Name - @material.Material.Percentage%</li>
-                }
-              </ul>
+                <p>@Model.Description</p>
+                <h4>Материали: </h4>
+                <ul>
+                  @foreach (var material in Model.Materials)
+                  {
+                    <li>@material.Material.Name - @material.Material.Percentage%</li>
+                  }
+                </ul>
               </div>
               <img style="width:200px; height:auto;" class="ml-3" src="@Model.ImgUrl" alt="@Model.Description">
             </div>
