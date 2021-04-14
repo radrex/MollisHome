@@ -72,63 +72,12 @@
   <fieldset class="border p-3">
     <legend class="w-auto">Добави нов вариант на продукта</legend>
 
-    <div class="row">
-      <!-- TODO: Dynamically create new ProductStock if 1 is not enough (2 cols a row ?) -->
-      @foreach (var productVariant in Model.ProductVariants)
-      {
-        <div class="col-3">
-          <label asp-for="@productVariant.ColorId"></label>
-          <select asp-for="@productVariant.ColorId" class="form-select form-control" aria-label="Default select example">
-            @{
-              List<ColorVM> colors = productVariant.Colors.ToList();
-              for (int i = 0; i < colors.Count(); i++)
-              {
-                <option value="@colors[i].Id">@colors[i].Name - @colors[i].HexValue</option>
-              }
-            }
-          </select>
+    <div id="product-variants" class="row">
+      <!-- Render _CreateVariant Partial on button click here -->
+      <div class="col-3 align-self-center text-center mb-4">
+        <button id="create-variant-btn" class="btn btn-warning">➕ New Variant</button>
+      </div>
 
-          <label asp-for="@productVariant.GenderId"></label>
-          <select asp-for="@productVariant.GenderId" class="form-select form-control" aria-label="Default select example">
-            @{
-              List<GenderVM> genders = productVariant.Genders.ToList();
-              for (int i = 0; i < genders.Count(); i++)
-              {
-                <option value="@genders[i].Id">@genders[i].Name</option>
-              }
-            }
-          </select>
-
-          <label asp-for="@productVariant.SizeId"></label>
-          <select asp-for="@productVariant.SizeId" class="form-select form-control" aria-label="Default select example">
-            @{
-              List<SizeVM> sizes = productVariant.Sizes.ToList();
-              for (int i = 0; i < sizes.Count(); i++)
-              {
-                <option value="@sizes[i].Id">@sizes[i].Name</option>
-              }
-            }
-          </select>
-
-          <p class="form-group">
-            <label asp-for="@productVariant.Quantity"></label>
-            <input asp-for="@productVariant.Quantity" type="number" step="1" class="form-control" />
-            <span asp-validation-for="@productVariant.Quantity" class="text-danger"></span>
-          </p>
-
-          <p class="form-group">
-            <label asp-for="@productVariant.Price"></label>
-            <input asp-for="@productVariant.Price" type="number" step="0.01" class="form-control" />
-            <span asp-validation-for="@productVariant.Price" class="text-danger"></span>
-          </p>
-
-          <p class="form-group">
-            <label asp-for="@productVariant.DiscountPercentage"></label>
-            <input asp-for="@productVariant.DiscountPercentage" type="number" step="1" class="form-control" />
-            <span asp-validation-for="@productVariant.DiscountPercentage" class="text-danger"></span>
-          </p>
-        </div>
-      }
     </div>
   </fieldset>
 
@@ -139,4 +88,29 @@
 
 @section Scripts {
   <partial name="_ValidationScriptsPartial" />
+  <script type="text/javascript">
+
+    document.getElementById('product-variants').addEventListener('click', (evt) => {
+      evt.preventDefault();
+
+      if (evt.target && evt.target.nodeName === 'BUTTON') {
+        if (evt.target.id === 'create-variant-btn') {
+          fetch('CreateVariant') // Action in the controller
+            .then(res => {
+              if (!res.ok) {
+                return Promise.reject('_CreateVariant Partial not found.');
+              }
+              return res.text();
+            })
+            .then(htmlString => {
+              const domParser = new DOMParser();
+              const col = domParser.parseFromString(htmlString, 'text/html');
+              document.getElementById('product-variants').insertBefore(col.body.firstChild, evt.target.parentNode);
+            });
+        } else if (evt.target.id === 'remove-variant-btn') {
+          evt.target.parentNode.remove();
+        }
+      }
+    });
+  </script>
 }

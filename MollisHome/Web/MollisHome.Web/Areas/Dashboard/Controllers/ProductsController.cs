@@ -92,12 +92,67 @@
         {
             IEnumerable<CategoryDTO> categoryDTOs = this.categoriesService.GetAll(); // TODO: Extract method to get only the lastNode Categories, or make a recursive select when choosing a category for the product
             IEnumerable<MaterialDTO> materialDTOs = this.materialsService.GetAll();
+
+            ProductIM productIM = new ProductIM
+            {
+                Categories = categoryDTOs.Select(x => mapper.Map<CategoryDTO, CategoryVM>(x)).ToList(),
+                CategoryIds = categoryDTOs.Select(x => x.Id).ToArray(),
+
+                Materials = materialDTOs.Select(x => mapper.Map<MaterialDTO, MaterialVM>(x)).ToList(),
+                MaterialIds = materialDTOs.Select(x => x.Id).ToArray(),
+
+                ProductVariants = new List<ProductVariantIM>(),
+            };
+
+            return this.View(productIM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ProductIM product)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.RedirectToAction("Create");
+            }
+
+            //foreach ProductVariant
+            foreach (ProductVariantIM productVariantIM in product.ProductVariants)
+            {
+                var a = 2;
+            }
+
+
+            ProductDTO productDTO = new ProductDTO
+            {
+                Name = product.Name,
+                Description = product.Description,
+                ImgUrl = product.ImgUrl,
+                CategoryId = product.CategoryId,
+                MaterialIds = product.MaterialIds,
+
+
+
+                //ColorId = product.ProductVariants.Select(x => x.ColorId).FirstOrDefault(),
+                //GenderId = product.ProductVariants.Select(x => x.GenderId).FirstOrDefault(),
+                //SizeId = product.ProductVariants.Select(x => x.SizeId).FirstOrDefault(),
+                //Quantity = product.ProductVariants.Select(x => x.Quantity).FirstOrDefault(),
+                //Price = product.ProductVariants.Select(x => x.Price).FirstOrDefault(),
+                //DiscountPercentage = product.ProductVariants.Select(x => x.DiscountPercentage).FirstOrDefault(),
+            };
+
+            string message = await this.productsService.CreateAsync(productDTO);
+            this.TempData["ActionMessage"] = message;
+            return this.RedirectToAction("Create");
+        }
+
+        [HttpGet]
+        public IActionResult CreateVariant()
+        {
             IEnumerable<ColorDTO> colorDTOs = this.colorsService.GetAll();
             IEnumerable<GenderDTO> genderDTOs = this.gendersService.GetAll();
             IEnumerable<SizeDTO> sizeDTOs = this.sizesService.GetAll();
 
-            List<ProductVariantIM> productVariants = new List<ProductVariantIM>();
-            productVariants.Add(new ProductVariantIM()
+            return this.PartialView("_CreateVariant", new ProductVariantIM()
             {
                 ColorIds = colorDTOs.Select(x => x.Id).ToArray(),
                 Colors = colorDTOs.Select(x => mapper.Map<ColorDTO, ColorVM>(x)).ToList(),
@@ -108,53 +163,6 @@
                 SizeIds = sizeDTOs.Select(x => x.Id).ToArray(),
                 Sizes = sizeDTOs.Select(x => mapper.Map<SizeDTO, SizeVM>(x)).ToList(),
             });
-
-            ProductIM productIM = new ProductIM
-            {
-                Categories = categoryDTOs.Select(x => mapper.Map<CategoryDTO, CategoryVM>(x)).ToList(),
-                CategoryIds = categoryDTOs.Select(x => x.Id).ToArray(),
-
-                Materials = materialDTOs.Select(x => mapper.Map<MaterialDTO, MaterialVM>(x)).ToList(),
-                MaterialIds = materialDTOs.Select(x => x.Id).ToArray(),
-
-                ProductVariants = productVariants,
-            };
-
-            return this.View(productIM);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(ProductIM product)
-        {
-            if (!this.productsService.Exists(product.Id))
-            {
-                return this.BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return this.RedirectToAction("Create");
-            }
-
-            ProductDTO productDTO = new ProductDTO
-            {
-                Name = product.Name,
-                Description = product.Description,
-                ImgUrl = product.ImgUrl,
-                CategoryId = product.CategoryId,
-                MaterialIds = product.MaterialIds,
-
-                ColorId = product.ProductVariants.Select(x => x.ColorId).FirstOrDefault(),
-                GenderId = product.ProductVariants.Select(x => x.GenderId).FirstOrDefault(),
-                SizeId = product.ProductVariants.Select(x => x.SizeId).FirstOrDefault(),
-                Quantity = product.ProductVariants.Select(x => x.Quantity).FirstOrDefault(),
-                Price = product.ProductVariants.Select(x => x.Price).FirstOrDefault(),
-                DiscountPercentage = product.ProductVariants.Select(x => x.DiscountPercentage).FirstOrDefault(),
-            };
-
-            string message = await this.productsService.CreateAsync(productDTO);
-            this.TempData["ActionMessage"] = message;
-            return this.RedirectToAction("Create");
         }
 
         [HttpGet]
@@ -234,12 +242,12 @@
                 CategoryId = product.CategoryId,
                 MaterialIds = product.MaterialIds,
 
-                ColorId = product.ProductVariants.Select(x => x.ColorId).FirstOrDefault(),
-                GenderId = product.ProductVariants.Select(x => x.GenderId).FirstOrDefault(),
-                SizeId = product.ProductVariants.Select(x => x.SizeId).FirstOrDefault(),
-                Quantity = product.ProductVariants.Select(x => x.Quantity).FirstOrDefault(),
-                Price = product.ProductVariants.Select(x => x.Price).FirstOrDefault(),
-                DiscountPercentage = product.ProductVariants.Select(x => x.DiscountPercentage).FirstOrDefault(),
+                //ColorId = product.ProductVariants.Select(x => x.ColorId).FirstOrDefault(),
+                //GenderId = product.ProductVariants.Select(x => x.GenderId).FirstOrDefault(),
+                //SizeId = product.ProductVariants.Select(x => x.SizeId).FirstOrDefault(),
+                //Quantity = product.ProductVariants.Select(x => x.Quantity).FirstOrDefault(),
+                //Price = product.ProductVariants.Select(x => x.Price).FirstOrDefault(),
+                //DiscountPercentage = product.ProductVariants.Select(x => x.DiscountPercentage).FirstOrDefault(),
             };
 
             await this.productsService.EditAsync(productDTO);

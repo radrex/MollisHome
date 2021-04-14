@@ -41,6 +41,6 @@
         public IEnumerable<MaterialVM> Materials { get; set; }
 
         //--------------- GENDER, SIZE, COLOR  ----------------
-        public IEnumerable<ProductVariantIM> ProductVariants { get; set; }
+        public IEnumerable<ProductVariantIM> ProductVariants { get; set; } = new HashSet<ProductVariantIM>();
     }
 }

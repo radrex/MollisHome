@@ -37,12 +37,12 @@
 
                 await this.dbContext.ProductStock.AddAsync(new ProductStock {
                     ProductId = model.Id,
-                    ColorId = item.ColorId, 
-                    GenderId = item.GenderId, 
-                    SizeId = item.SizeId,
-                    Quantity = item.Quantity,
-                    Price = item.Price,
-                    DiscountPercentage = item.DiscountPercentage,
+                    //ColorId = item.ColorId, 
+                    //GenderId = item.GenderId, 
+                    //SizeId = item.SizeId,
+                    //Quantity = item.Quantity,
+                    //Price = item.Price,
+                    //DiscountPercentage = item.DiscountPercentage,
                 });
 
                 await this.dbContext.SaveChangesAsync();
