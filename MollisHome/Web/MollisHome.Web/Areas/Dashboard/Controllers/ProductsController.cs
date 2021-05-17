@@ -32,6 +32,7 @@
     using MollisHome.Services.DTOs.Products;
     using MollisHome.Services.DTOs.Materials;
     using MollisHome.Services.DTOs.Categories;
+    using MollisHome.Services.DTOs.Stock;
 
     [Area("Dashboard")]
     [Authorize(Roles = "Admin")]
@@ -100,8 +101,6 @@
 
                 Materials = materialDTOs.Select(x => mapper.Map<MaterialDTO, MaterialVM>(x)).ToList(),
                 MaterialIds = materialDTOs.Select(x => x.Id).ToArray(),
-
-                ProductVariants = new List<ProductVariantIM>(),
             };
 
             return this.View(productIM);
@@ -110,17 +109,26 @@
         [HttpPost]
         public async Task<IActionResult> Create(ProductIM product)
         {
+            // TODO: Validation not working on nested IM
             if (!ModelState.IsValid)
             {
                 return this.RedirectToAction("Create");
             }
 
-            //foreach ProductVariant
-            foreach (ProductVariantIM productVariantIM in product.ProductVariants)
+            // TODO: Get collection of input models instead of array of Ids and values if possible
+            List<StockDTO> stock = new List<StockDTO>();
+            for (int i = 0; i < product.ColorId.Length; i++)
             {
-                var a = 2;
+                stock.Add(new StockDTO
+                {
+                    ColorId = product.ColorId[i],
+                    GenderId = product.GenderId[i],
+                    SizeId = product.SizeId[i],
+                    Quantity = product.Quantity[i],
+                    Price = product.Price[i],
+                    DiscountPercentage = (byte)product.DiscountPercentage[i]
+                });
             }
-
 
             ProductDTO productDTO = new ProductDTO
             {
@@ -129,15 +137,7 @@
                 ImgUrl = product.ImgUrl,
                 CategoryId = product.CategoryId,
                 MaterialIds = product.MaterialIds,
-
-
-
-                //ColorId = product.ProductVariants.Select(x => x.ColorId).FirstOrDefault(),
-                //GenderId = product.ProductVariants.Select(x => x.GenderId).FirstOrDefault(),
-                //SizeId = product.ProductVariants.Select(x => x.SizeId).FirstOrDefault(),
-                //Quantity = product.ProductVariants.Select(x => x.Quantity).FirstOrDefault(),
-                //Price = product.ProductVariants.Select(x => x.Price).FirstOrDefault(),
-                //DiscountPercentage = product.ProductVariants.Select(x => x.DiscountPercentage).FirstOrDefault(),
+                Stock = stock,
             };
 
             string message = await this.productsService.CreateAsync(productDTO);
@@ -214,7 +214,7 @@
                 Materials = materialDTOs.Select(x => mapper.Map<MaterialDTO, MaterialVM>(x)).ToList(),
                 MaterialIds = materialDTOs.Select(x => x.Id).ToArray(),
 
-                ProductVariants = productVariants,
+                //ProductVariants = productVariants,
             };
 
             return this.View(productIM);

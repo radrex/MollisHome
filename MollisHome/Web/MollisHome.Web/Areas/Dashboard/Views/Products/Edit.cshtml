@@ -78,8 +78,8 @@
   <fieldset class="border p-3">
     <legend class="w-auto">Промяна на информация за складова наличност</legend>
     <div class="row">
-      @{
-        var productVariants = Model.ProductVariants.ToList();
+      @*@{
+          var productVariants = Model.ProductVariants.ToList();
       }
 
       @for (int i = 0; i < productVariants.Count(); i++)
@@ -136,7 +136,7 @@
             <span asp-validation-for="@productVariants[i].DiscountPercentage" class="text-danger"></span>
           </p>
         </div>
-      }
+      }*@
 
     </div>
   </fieldset>
