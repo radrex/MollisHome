@@ -26,13 +26,13 @@
     using MollisHome.Services.Data.Materials;
     using MollisHome.Services.Data.Categories;
 
+    using MollisHome.Services.DTOs.Stock;
     using MollisHome.Services.DTOs.Sizes;
     using MollisHome.Services.DTOs.Colors;
     using MollisHome.Services.DTOs.Genders;
     using MollisHome.Services.DTOs.Products;
     using MollisHome.Services.DTOs.Materials;
     using MollisHome.Services.DTOs.Categories;
-    using MollisHome.Services.DTOs.Stock;
 
     [Area("Dashboard")]
     [Authorize(Roles = "Admin")]
@@ -93,6 +93,9 @@
         {
             IEnumerable<CategoryDTO> categoryDTOs = this.categoriesService.GetAll(); // TODO: Extract method to get only the lastNode Categories, or make a recursive select when choosing a category for the product
             IEnumerable<MaterialDTO> materialDTOs = this.materialsService.GetAll();
+            IEnumerable<ColorDTO> colorDTOs = this.colorsService.GetAll();
+            IEnumerable<GenderDTO> genderDTOs = this.gendersService.GetAll();
+            IEnumerable<SizeDTO> sizeDTOs = this.sizesService.GetAll();
 
             ProductIM productIM = new ProductIM
             {
@@ -101,6 +104,10 @@
 
                 Materials = materialDTOs.Select(x => mapper.Map<MaterialDTO, MaterialVM>(x)).ToList(),
                 MaterialIds = materialDTOs.Select(x => x.Id).ToArray(),
+
+                Colors = colorDTOs.Select(x => mapper.Map<ColorDTO, ColorVM>(x)).ToList(),
+                Genders = genderDTOs.Select(x => mapper.Map<GenderDTO, GenderVM>(x)).ToList(),
+                Sizes = sizeDTOs.Select(x => mapper.Map<SizeDTO, SizeVM>(x)).ToList(),
             };
 
             return this.View(productIM);

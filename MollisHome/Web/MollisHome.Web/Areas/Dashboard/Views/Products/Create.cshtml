@@ -73,6 +73,13 @@
     <legend class="w-auto">Добави нов вариант на продукта</legend>
 
     <div id="product-variants" class="row">
+      <!-- Modal form buttons for creating Color, Type, Size -->
+      <div class="col-12 mb-4 text-center" role="group" aria-label="Basic mixed styles example">
+        <partial name="../Colors/_AllModal.cshtml" model="@Model.Colors" />
+        <partial name="../Genders/_AllModal.cshtml" model="@Model.Genders" />
+        <partial name="../Sizes/_AllModal.cshtml" model="@Model.Sizes" />
+      </div>
+
       <!-- Render _CreateVariant Partial on button click here -->
       <div class="col-3 align-self-center text-center mb-4">
         <button id="create-variant-btn" class="btn btn-warning">➕ Нов Вариант</button>

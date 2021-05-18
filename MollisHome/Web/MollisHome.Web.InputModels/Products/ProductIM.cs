@@ -2,6 +2,9 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
+    using MollisHome.Web.ViewModels.Sizes;
+    using MollisHome.Web.ViewModels.Colors;
+    using MollisHome.Web.ViewModels.Genders;
     using MollisHome.Web.ViewModels.Materials;
     using MollisHome.Web.ViewModels.Categories;
     
@@ -35,18 +38,25 @@
         public IEnumerable<CategoryVM> Categories { get; set; }
 
         //-------------- MATERIALS - MULTIPLE DROPDOWN -------------
-        [Display(Name = "Материали")]
         public int[] SelectedMaterialIds { get; set; }
+        
+        [Display(Name = "Материали")]
         public int[] MaterialIds { get; set; }
         public IEnumerable<MaterialVM> Materials { get; set; }
 
         //--------------- GENDER, SIZE, COLOR, QUANTITY, DISCOUNT  ----------------
         public int[] ColorId { get; set; }
+        public IEnumerable<ColorVM> Colors { get; set; }
+
         public int[] GenderId { get; set; }
+        public IEnumerable<GenderVM> Genders { get; set; }
+
         public int[] SizeId { get; set; }
+        public IEnumerable<SizeVM> Sizes { get; set; }
+
         public int[] Quantity { get; set; }
         public decimal[] Price { get; set; }
         public int[] DiscountPercentage { get; set; }
-        public IEnumerable<ProductVariantIM> ProductVariants { get; set; } = new HashSet<ProductVariantIM>(); // Do I even need this ?
+        public IEnumerable<ProductVariantIM> ProductVariants { get; set; } = new HashSet<ProductVariantIM>(); // TODO: Do I even need this ?
     }
 }
