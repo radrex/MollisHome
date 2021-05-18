@@ -39,7 +39,7 @@
     public class ProductsController : Controller
     {
         //-------------- CONSTANTS ----------------
-        private const int ItemsPerPage = 3;
+        private const int ItemsPerPage = 6;
         
         //---------------- FIELDS -----------------
         private readonly IMapper mapper;
@@ -109,7 +109,7 @@
         [HttpPost]
         public async Task<IActionResult> Create(ProductIM product)
         {
-            // TODO: Validation not working on nested IM
+            // TODO: Validation not working on nested IM, also check for duplicity
             if (!ModelState.IsValid)
             {
                 return this.RedirectToAction("Create");

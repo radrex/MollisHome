@@ -29,18 +29,24 @@
             {
                 await this.dbContext.Products.AddAsync(model);
                 await this.dbContext.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                this.dbContext.Entry<Product>(model).State = EntityState.Detached;
+                return ExceptionPrettifier.PrettifyExceptionMessage(e.InnerException.Message);
+            }
 
+            try
+            {
                 foreach (int materialId in model.MaterialIds)
                 {
                     await this.dbContext.ProductMaterials.AddAsync(new ProductMaterial { ProductId = model.Id, MaterialId = materialId });
+                    await this.dbContext.SaveChangesAsync();
                 }
 
-                foreach (ProductStock productVariant in model.Stock)
-                {
-                    await this.dbContext.ProductStock.AddAsync(productVariant);
-                }
+                model.Stock.ToList().ForEach(async productVariant => await this.dbContext.ProductStock.AddAsync(productVariant));
 
-                return $"Entity with ID: {model.Id} and Name: {model.Name} created. ✔️";
+                return $"Продукт с ID: {model.Id} и Име: {model.Name} създаден успешно. ✔️";
             }
             catch (DbUpdateException e)
             {
