@@ -95,9 +95,10 @@
 
 @section Scripts {
   <partial name="_ValidationScriptsPartial" />
-  <script type="text/javascript">
 
-    document.getElementById('product-variants').addEventListener('click', (evt) => {
+  <script type="text/javascript">
+    //TODO: EXTRACT Scripts into organized functions
+    document.getElementById('product-variants').addEventListener('click', evt => {
       evt.preventDefault();
 
       if (evt.target && evt.target.nodeName === 'BUTTON') {
@@ -119,5 +120,70 @@
         }
       }
     });
+  </script>
+
+  <script type="text/javascript">
+
+    let colorsModal = document.getElementById('colors-modal');
+    let tableBody = document.getElementById('colors-table-body');
+    let createColorBtn = document.getElementById('create-color-btn');
+
+    const createColorCallback = function (evt) { // Loading input fields for new color creation
+      evt.preventDefault();
+      fetch('Create')
+        .then(res => {
+          if (!res.ok) {
+            return Promise.reject('_Create PartialView not found.');
+          }
+          return res.text();
+        })
+        .then(htmlString => {
+          tableBody.innerHTML += htmlString; // Using innerHTML because domParser doesn't parse the partial correctly
+
+          let cancelBtn = document.getElementById('cancel'); // Cancelling add new color operation
+          cancelBtn.addEventListener('click', evt => {
+            evt.preventDefault();
+            tableBody.removeChild(cancelBtn.parentElement.parentElement);
+            colorsModal.appendChild(createColorBtn);
+          });
+
+          createColorBtn.remove(); // Remove the button for new color (Limiting to only 1 Add operation at a time)
+        });
+    };
+
+    const callback = function (mutationsList, observer) {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+          const modalStyle = mutation.target.attributes.style.value;
+          if (modalStyle.includes("display: block")) { // OPENED MODAL
+            history.pushState({}, '', `${window.location.origin}/Dashboard/Colors/Create`);
+
+            createColorBtn.removeEventListener('click', createColorCallback);
+            createColorBtn.addEventListener('click', createColorCallback); // Attach event listener
+
+          } else if (modalStyle.includes("display: none")) { // CLOSED MODAL
+            history.replaceState({}, '', `${window.location.origin}/Dashboard/Products/Create`);
+            // or window.location.replace(url); to refresh the page so i can get the new values from the db ?
+
+            let cancelBtn = document.getElementById('cancel');
+            if (cancelBtn !== null) {
+              tableBody.removeChild(document.getElementById('cancel').parentElement.parentElement);
+              createColorBtn = document.createElement('button');
+              createColorBtn.id = 'create-color-btn';
+              createColorBtn.type = 'button';
+              createColorBtn.classList.add('btn', 'btn-warning');
+              createColorBtn.textContent = "➕ Нов цвят";
+              colorsModal.appendChild(createColorBtn);
+            }
+          }
+        }
+      }
+    };
+
+    const targetNode = document.getElementById('colors');
+    const config = { attributes: true, childList: false, subtree: false };
+    const observer = new MutationObserver(callback);
+    observer.observe(targetNode, config);
+      //observer.disconnect();
   </script>
 }

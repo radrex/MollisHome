@@ -7,6 +7,10 @@
 
     using MollisHome.Services.Data.Colors;
 
+    using System;
+    using System.Web;
+    using System.Threading.Tasks;
+
     [Area("Dashboard")]
     [Authorize(Roles = "Admin")]
     public class ColorsController : Controller
@@ -26,8 +30,18 @@
         //                                           ACTION METHODS                                            //
         //-----------------------------------------------------------------------------------------------------//
 
-        //----------------------- LISTING FOR COLORS --------------------------
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            string message = await this.colorsService.DeleteAsync(id);
+            this.TempData["ActionMessage"] = message;
+            return this.RedirectToAction("Create", "Products");
+        }
 
-
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return this.PartialView("_Create");
+        }
     }
 }

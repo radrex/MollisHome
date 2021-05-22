@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<ColorVM>
 
-@{ 
-    List<ColorVM> colors = Model.ToList();
+@{
+  List<ColorVM> colors = Model.ToList();
 }
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-info" data-toggle="modal" data-target="#colors">Цветова Палитра</button>
+<button id="colors-pallete-btn" type="button" class="btn btn-info" data-toggle="modal" data-target="#colors">Цветова Палитра</button>
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" id="colors" tabindex="-1" role="dialog" aria-labelledby="colorsModalLabel" aria-hidden="true">
@@ -17,26 +17,36 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <table class="table table-hover table-sm">
+      <div id="colors-modal" class="modal-body">
+        <!-- CREATE COLOR FORM -->
+        <form method="post" id="create-color-form" asp-area="Dashboard" asp-controller="Colors" asp-action="Create"></form>
+
+        <!-- TABLE WITH COLORS -->
+        <table class="table table-bordered table-hover table-sm">
           <thead>
             <tr>
               <th scope="col">№</th>
               <th scope="col">Цвят</th>
               <th scope="col">Стойност</th>
+              <th scope="col">Опции</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="colors-table-body">
             @for (int i = 0; i < colors.Count; i++)
             {
               <tr>
-                <th scope="row">@(i+1)</th>
+                <td>@(i+1)</td>
                 <td>@colors[i].Name</td>
                 <td>@colors[i].HexValue</td>
+                <td>
+                  <button type="button" class="btn btn-outline-success">Промени</button>
+                  <partial name="../Colors/_DeleteModalWarning.cshtml" model="colors[i]" />
+                </td>
               </tr>
             }
           </tbody>
         </table>
+        <button id="create-color-btn" type="button" class="btn btn-warning">➕ Нов цвят</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
