@@ -46,7 +46,7 @@
 
                 model.Stock.ToList().ForEach(async productVariant => await this.dbContext.ProductStock.AddAsync(productVariant));
 
-                return $"Продукт с ID: {model.Id} и Име: {model.Name} създаден успешно. ✔️";
+                return $"Продуктът '{model.Name}' създаден успешно. ✔️";
             }
             catch (DbUpdateException e)
             {

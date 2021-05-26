@@ -75,9 +75,9 @@
     <div id="product-variants" class="row">
       <!-- Modal form buttons for creating Color, Type, Size -->
       <div class="col-12 mb-4 text-center" role="group" aria-label="Basic mixed styles example">
-        <partial name="../Colors/_AllModal.cshtml" model="@Model.Colors" />
-        <partial name="../Genders/_AllModal.cshtml" model="@Model.Genders" />
-        <partial name="../Sizes/_AllModal.cshtml" model="@Model.Sizes" />
+        @*<partial name="../Colors/_AllModal.cshtml" model="@Model.Colors" />
+          <partial name="../Genders/_AllModal.cshtml" model="@Model.Genders" />
+          <partial name="../Sizes/_AllModal.cshtml" model="@Model.Sizes" />*@
       </div>
 
       <!-- Render _CreateVariant Partial on button click here -->
@@ -90,8 +90,17 @@
 
   <button type="submit" class="btn btn-success">Добави</button>
   <a class="btn btn-info" asp-area="Dashboard" asp-controller="Products" asp-action="All">Върни се обратно</a>
-
 </form>
+
+
+@{
+  ColorIM colorsModel = new ColorIM();
+  colorsModel.Colors = Model.Colors;
+}
+
+<partial name="../Colors/_All.cshtml" model="colorsModel" />
+<partial name="../Genders/_AllModal.cshtml" model="@Model.Genders" />
+<partial name="../Sizes/_AllModal.cshtml" model="@Model.Sizes" />
 
 @section Scripts {
   <partial name="_ValidationScriptsPartial" />
@@ -123,32 +132,24 @@
   </script>
 
   <script type="text/javascript">
-
     let colorsModal = document.getElementById('colors-modal');
-    let tableBody = document.getElementById('colors-table-body');
     let createColorBtn = document.getElementById('create-color-btn');
+    let tr = document.getElementById('creation-row');
 
     const createColorCallback = function (evt) { // Loading input fields for new color creation
       evt.preventDefault();
-      fetch('Create')
-        .then(res => {
-          if (!res.ok) {
-            return Promise.reject('_Create PartialView not found.');
-          }
-          return res.text();
-        })
-        .then(htmlString => {
-          tableBody.innerHTML += htmlString; // Using innerHTML because domParser doesn't parse the partial correctly
+      tr.style.display = '';
+      document.getElementById('cancel').addEventListener('click', evt => { // Cancelling add new color operation
+        evt.preventDefault();
+        tr.style.display = 'none';
+        document.getElementById('color-name').value = '';
+        document.getElementById('color-hex').value = '';
+        document.getElementById('color-name-msg').textContent = '';
+        document.getElementById('color-hex-msg').textContent = '';
+        colorsModal.appendChild(createColorBtn);
+      });
 
-          let cancelBtn = document.getElementById('cancel'); // Cancelling add new color operation
-          cancelBtn.addEventListener('click', evt => {
-            evt.preventDefault();
-            tableBody.removeChild(cancelBtn.parentElement.parentElement);
-            colorsModal.appendChild(createColorBtn);
-          });
-
-          createColorBtn.remove(); // Remove the button for new color (Limiting to only 1 Add operation at a time)
-        });
+      createColorBtn.remove(); // Remove the button for new color (Limiting to only 1 Add operation at a time)
     };
 
     const callback = function (mutationsList, observer) {
@@ -165,9 +166,12 @@
             history.replaceState({}, '', `${window.location.origin}/Dashboard/Products/Create`);
             // or window.location.replace(url); to refresh the page so i can get the new values from the db ?
 
-            let cancelBtn = document.getElementById('cancel');
-            if (cancelBtn !== null) {
-              tableBody.removeChild(document.getElementById('cancel').parentElement.parentElement);
+            if (tr.style.display !== 'none') {
+              tr.style.display = 'none';
+              document.getElementById('color-name').value = '';
+              document.getElementById('color-hex').value = '';
+              document.getElementById('color-name-msg').textContent = '';
+              document.getElementById('color-hex-msg').textContent = '';
               createColorBtn = document.createElement('button');
               createColorBtn.id = 'create-color-btn';
               createColorBtn.type = 'button';
@@ -184,6 +188,6 @@
     const config = { attributes: true, childList: false, subtree: false };
     const observer = new MutationObserver(callback);
     observer.observe(targetNode, config);
-      //observer.disconnect();
+    //observer.disconnect();
   </script>
 }

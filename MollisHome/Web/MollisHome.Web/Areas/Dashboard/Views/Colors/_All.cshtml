@@ -1,0 +1,77 @@
+﻿@model ColorIM
+
+@{
+  List<ColorVM> colors = Model.Colors.ToList();
+}
+
+@*------------------------- COLORS MODAL -------------------------*@
+<!-- Button trigger modal -->
+<button id="colors-pallete-btn" type="button" class="btn btn-info" data-toggle="modal" data-target="#colors">Цветова Палитра</button>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="colors" tabindex="-1" role="dialog" aria-labelledby="colorsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="colorsModalLabel"><strong>Цветова Палитра</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="colors-modal" class="modal-body">
+
+        <!-- TABLE WITH COLORS -->
+        <form method="post" asp-area="Dashboard" asp-controller="Colors" asp-action="Create" novalidate="novalidate">
+          <table class="table table-bordered table-hover table-sm">
+            <thead>
+              <tr>
+                <th scope="col">№</th>
+                <th scope="col">Цвят</th>
+                <th scope="col">Стойност</th>
+                <th scope="col" style="text-align: center;">Опции</th>
+              </tr>
+            </thead>
+            <tbody id="colors-table-body">
+              @for (int i = 0; i < colors.Count; i++)
+              {
+                <tr>
+                  <td>@(i+1)</td>
+                  <td>@colors[i].Name</td>
+                  <td>@colors[i].HexValue</td>
+                  <td style="text-align: center;">
+                    <button type="button" class="btn btn-outline-success">Промени</button>
+                    <partial name="../Colors/_DeleteModalWarning.cshtml" model="colors[i]" />
+                  </td>
+                </tr>
+              }
+              <tr id="creation-row" style="display: none;">
+                <td>@(colors.Count + 1)</td>
+                <td>
+                  <input id="color-name" asp-for="Name" type="text" placeholder="Name" class="form-control" />
+                </td>
+
+                <td>
+                  <input id="color-hex" asp-for="HexValue" type="text" placeholder="HexValue" class="form-control" />
+                </td>
+
+                <td style="text-align: center;">
+                  <button type="submit" class="btn btn-success">Добави</button>
+                  <button id="cancel" type="button" class="btn btn-danger">Премахни</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <span id="color-name-msg" asp-validation-for="Name" class="text-danger"></span><br />
+          <span id="color-hex-msg" asp-validation-for="HexValue" class="text-danger"></span>
+
+        </form>
+
+        <button id="create-color-btn" type="button" class="btn btn-warning">➕ Нов цвят</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
+      </div>
+    </div>
+  </div>
+</div>

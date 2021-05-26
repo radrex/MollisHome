@@ -7,6 +7,6 @@
 
     public interface IColorsService : IBaseService<Color, ColorDTO>
     {
-
+        ColorDTO GetByName(string colorName);
     }
 }

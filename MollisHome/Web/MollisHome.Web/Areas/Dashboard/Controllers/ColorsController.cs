@@ -10,6 +10,8 @@
     using System;
     using System.Web;
     using System.Threading.Tasks;
+    using MollisHome.Web.InputModels.Colors;
+    using MollisHome.Services.DTOs.Colors;
 
     [Area("Dashboard")]
     [Authorize(Roles = "Admin")]
@@ -31,6 +33,25 @@
         //-----------------------------------------------------------------------------------------------------//
 
         [HttpPost]
+        public async Task<IActionResult> Create(ColorIM color)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.RedirectToAction("Create", "Products"); // have to redirect and then open the modal with new colors or smth
+            }
+
+            ColorDTO colorDTO = new ColorDTO
+            {
+                Name = color.Name,
+                HexValue = color.HexValue,
+            };
+
+            string message = await this.colorsService.CreateAsync(colorDTO);
+            this.TempData["ActionMessage"] = message;
+            return this.RedirectToAction("Create", "Products");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
             string message = await this.colorsService.DeleteAsync(id);
@@ -38,10 +59,16 @@
             return this.RedirectToAction("Create", "Products");
         }
 
-        [HttpGet]
-        public IActionResult Create()
+        //----------------------- VALIDATIONS --------------------------
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult VerifyName(string name)
         {
-            return this.PartialView("_Create");
+            if (this.colorsService.GetByName(name) != null) // TODO: Add exists method with overloads for different props
+            {
+                return this.Json($"Цвят с името '{name}' вече съществува.");
+            }
+
+            return this.Json(true);
         }
     }
 }
