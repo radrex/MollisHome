@@ -21,7 +21,7 @@
       <div id="colors-modal" class="modal-body">
 
         <!-- TABLE WITH COLORS -->
-        <form method="post" asp-area="Dashboard" asp-controller="Colors" asp-action="Create" novalidate="novalidate">
+        <form method="post" asp-area="Dashboard" asp-controller="Colors" asp-action="Create">
           <table class="table table-bordered table-hover table-sm">
             <thead>
               <tr>
@@ -35,11 +35,11 @@
               @for (int i = 0; i < colors.Count; i++)
               {
                 <tr>
-                  <td>@(i+1)</td>
+                  <td>@(i + 1)</td>
                   <td>@colors[i].Name</td>
                   <td>@colors[i].HexValue</td>
                   <td style="text-align: center;">
-                    <button type="button" class="btn btn-outline-success">Промени</button>
+                    <partial name="../Colors/_EditModal.cshtml" model="@new ColorIM() { Id = colors[i].Id, Name = colors[i].Name, HexValue = colors[i].HexValue }" />
                     <partial name="../Colors/_DeleteModalWarning.cshtml" model="colors[i]" />
                   </td>
                 </tr>

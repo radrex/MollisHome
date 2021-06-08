@@ -2,16 +2,14 @@
 {
     using AutoMapper;
 
+    using MollisHome.Services.Data.Colors;
+    using MollisHome.Services.DTOs.Colors;
+    using MollisHome.Web.InputModels.Colors;
+
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
 
-    using MollisHome.Services.Data.Colors;
-
-    using System;
-    using System.Web;
     using System.Threading.Tasks;
-    using MollisHome.Web.InputModels.Colors;
-    using MollisHome.Services.DTOs.Colors;
 
     [Area("Dashboard")]
     [Authorize(Roles = "Admin")]
@@ -57,6 +55,26 @@
             string message = await this.colorsService.DeleteAsync(id);
             this.TempData["ActionMessage"] = message;
             return this.RedirectToAction("Create", "Products");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ColorIM color)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.RedirectToAction("Create", "Products"); // have to redirect and then open the modal with new colors or smth
+            }
+
+            ColorDTO colorDTO = new ColorDTO
+            {
+                Id = color.Id,
+                Name = color.Name,
+                HexValue = color.HexValue,
+            };
+
+            string message = await this.colorsService.EditAsync(colorDTO);
+            this.TempData["ActionMessage"] = message;
+            return this.RedirectToAction("Create", "Products"); // have to redirect and then open the modal with new colors or smth
         }
 
         //----------------------- VALIDATIONS --------------------------
