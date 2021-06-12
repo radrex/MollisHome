@@ -1,0 +1,27 @@
+﻿body {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas:
+        "hd   hd   hd   hd   hd   hd   hd   hd   hd   hd   hd   hd" 
+        "main main main main main main main main main main main main" 
+        "ft   ft   ft   ft   ft   ft   ft   ft   ft   ft   ft   ft";
+}
+
+header {
+    grid-area: hd;
+    background-color: rgb(99, 90, 90);
+}
+
+main {
+    grid-area: main;
+    background-color: rgb(70, 13, 13);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+footer {
+    grid-area: ft;
+    background-color: rgb(170, 105, 7);
+}
