@@ -22,4 +22,11 @@
     <ProjectReference Include="..\MollisHome.Web.ViewModels\MollisHome.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\svgs\" />
+    <Folder Include="wwwroot\scss\components\" />
+    <Folder Include="wwwroot\scss\pages\" />
+  </ItemGroup>
+
 </Project>

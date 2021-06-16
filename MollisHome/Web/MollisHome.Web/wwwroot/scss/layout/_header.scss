@@ -1,1 +1,67 @@
-﻿
+﻿@use '../abstracts';
+
+header {
+    background-color: abstracts.$p2c1;
+    border-radius: 0px 0px 3px 3px;
+}
+
+//--------------------- HAMBURGER MENU ---------------------
+.hamburger {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    width: 128px;
+    height: 128px;
+    border-radius: 5px 5px 5px 5px;
+    background-color: rgb(231, 215, 193, 0.1);
+    border: 1px solid rgb(175, 159, 137, 0.2);
+
+    svg {
+        width: 128px;
+        height: 128px;
+
+        #text {
+            opacity: 0;
+        }
+    }
+}
+
+#menu-toggler {
+    display: none;
+
+    &:checked {
+        ~ .hamburger {
+            #slice1 {
+                transform: translate(0px, 3.5px);
+                transition: 1s;
+                opacity: 0;
+            }
+
+            #slice2 {
+                transition: 1s;
+                transform: scale(1.1);
+                transform-origin: 50% 50%;
+            }
+
+            #slice3 {
+                transform: translate(0px, -3.5px);
+                transition: 1s;
+                opacity: 0;
+            }
+
+            #text {
+                transition: 1s;
+                opacity: 1;
+            }
+        }
+    }
+
+    &:not(:checked) {
+        ~ .hamburger {
+            #slice1, #slice2, #slice3, #text {
+                transition: 1s;
+            }
+        }
+    }
+}
